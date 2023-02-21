@@ -14,7 +14,7 @@ format:
       - theme.scss
     fig-dpi: 300
     fig-align: center
-    footer: "[https://jthomasmock.github.io/arrow-dplyr](https://jthomasmock.github.io/arrow-dplyr)"
+    footer: "[https://pmassicotte.github.io/efficient_data_manipulation_with_r](https://pmassicotte.github.io/efficient_data_manipulation_with_r)"
     highlight-style: a11y
     height: 1080
     width: 1920
@@ -40,7 +40,6 @@ editor: source
 
 editor_options: 
   chunk_output_type: console
-bibliography: references.bib
 ---
 
 ```{r}
@@ -190,7 +189,7 @@ df |>
   ggplot(aes(x = n, y = statut, fill = faculte_daffiliation_ul)) +
   geom_col(color = "white") +
   ggthemes::scale_fill_tableau(
-    name = NULL, 
+    name = NULL,
     labels = \(x) str_wrap(x, 30),
     guide = guide_legend(
       direction = "vertical",
@@ -205,7 +204,7 @@ df |>
     y = NULL
   ) +
   theme(
-    panel.grid = element_blank(), 
+    panel.grid = element_blank(),
     axis.ticks = element_blank(),
     panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
     plot.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
@@ -215,7 +214,7 @@ df |>
     strip.background = element_blank(),
     legend.spacing.y = unit(0.25, "cm"),
     text = element_text(size = 14)
-  ) 
+  )
 ```
 
 ## Prerequisites
@@ -391,6 +390,52 @@ Note that the base R function to read a CSV file is `read.csv()`. Do not confuse
 
 ::::
 
+## Reading files online
+
+It is also possible to read files hosted online by providing an URL. For example, let's read daily weather updates from the Curiosity Rover on Mars.
+
+::: {.small}
+
+```{r}
+mars <- read_csv("https://query.data.world/s/nig6iktbywlhnws22gfz6tvstwtmuu")
+
+mars
+```
+:::
+
+## Reading files online
+
+```{r}
+#| fig-width: 7
+#| fig-height: 3.5
+#| fig-align: center
+mars |>
+  pivot_longer(contains("temp")) |>
+  ggplot(aes(x = terrestrial_date, y = value, color = name)) +
+  geom_point(size = 0.5, alpha = 0.25, show.legend = FALSE) +
+  geom_smooth(se = FALSE) +
+  ggthemes::scale_color_tableau(
+    breaks = c("min_temp", "max_temp"),
+    labels = c("Min. temp.", "Max. temp.")
+  ) +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  labs(
+    title = "Daily weather updates from the Curiosity Rover on Mars",
+    caption = "Source: https://data.world/the-pudding/mars-weather",
+    x = NULL,
+    y = str_wrap("Temperature (in °C) observed during a single Martian sol", 30)
+  ) +
+  theme(
+    plot.title = element_text(size = 14),
+    plot.caption = element_text(size = 8, color = "gray65"),
+    legend.title = element_blank(),
+    panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    plot.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    legend.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    legend.key = element_rect(fill = "#FDF6E3", color = "#FDF6E3")
+  )
+```
+
 ## Exporting data
 
 Similarly, exporting a data frame into a file can be done using: `write_*()`.
@@ -444,7 +489,7 @@ head(as_tibble(mtcars[, 1:5], rownames = "model"), 12)
 #| echo: false
 fs::dir_create("data")
 
-USArrests |> 
+USArrests |>
   as_tibble(rownames = "state") |>
   write_csv("data/usarrests.csv")
 ```
@@ -475,32 +520,28 @@ read_csv("data/usarrests.csv")
 
 Your turn: try reading the data (CSV file) located at this location: 
 
-[https://bit.ly/2U487zA](https://bit.ly/2U487zA){style="font-size:2em;"}
+[https://bit.ly/3xrnh3U](https://bit.ly/3xrnh3U){style="font-size:2em;"}
+
+Use the [**<-**]{style="font-family:ubuntu;"} operator to create a new variable (ex.: `df`).
 
 . . .
 
 :::: {.columns .small}
 
-::: {.column width='35%'}
+::: {.column width='38%'}
 
-This command reads the data, but does not assign it to a variable.
 
 ```{r}
-#| eval: false
 library(readr)
 
-read_csv("https://bit.ly/2U487zA")
+df <- read_csv("https://bit.ly/3xrnh3U")
 ```
 :::
 
-::: {.column width='65%'}
+::: {.column width='62%'}
 
-Use the [**<-**]{style="font-family:ubuntu;"} operator to create a new variable (ex.: `df`).
 
 ```{r}
-library(readr)
-
-df <- read_csv("https://bit.ly/2U487zA")
 df
 ```
 :::
@@ -717,7 +758,7 @@ filter(flights, dep_delay > 180)
 Example 3: select all flights from `carriers` "**MQ**" or "**EV**".
 
 ```{r}
-filter(flights, carrier ==  "MQ" | carrier == "EV")
+filter(flights, carrier == "MQ" | carrier == "EV")
 ```
 
 ## The `filter()` function
@@ -725,7 +766,7 @@ filter(flights, carrier ==  "MQ" | carrier == "EV")
 Another option using the `%in%` operator.
 
 ```{r}
-filter(flights, carrier %in%  c("MQ", "EV"))
+filter(flights, carrier %in% c("MQ", "EV"))
 ```
 
 ## The `filter()` function
@@ -810,13 +851,13 @@ select(flights, year, month, starts_with("dep_"))
 
 ## The `mutate()` function
 
-Example 1: add a new column named "**distance_km**" which converts the `distance` column, which shows the flight distance in miles, into km.
+Example 1: add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km.
 
 ```{r}
 #| code-line-numbers: "1-5|2|3|4|1-5"
 mutate(
-  flights, 
-  distance_km = distance / 0.62137, 
+  flights,
+  distance_km = distance / 0.62137,
   .keep = "used"
 )
 ```
@@ -956,7 +997,7 @@ summarise(
 ```{r}
 #| code-line-numbers: "1-5|3"
 summarise(
-  weather, 
+  weather,
   across(where(is.numeric), mean, na.rm = TRUE),
   n = n()
 )
@@ -1002,14 +1043,13 @@ summarise(
 #| output-location: slide
 #| code-line-numbers: "1-5|3"
 summarise(
-  flights_grouped, 
+  flights_grouped,
   across(where(is.numeric), mean, na.rm = TRUE),
   n = n()
 )
 ```
 
 ```{r}
-
 ```
 
 ## Working with grouped data
@@ -1029,7 +1069,7 @@ summarise(
 ```{r}
 starwars_grouped <- group_by(starwars, species, homeworld)
 summarise(
-  starwars_grouped, 
+  starwars_grouped,
   mean_height = mean(height)
 )
 ```
@@ -1039,8 +1079,8 @@ summarise(
 
 ```{r}
 summarise(
-  starwars, 
-  mean_height = mean(height), 
+  starwars,
+  mean_height = mean(height),
   .by = c(species, homeworld)
 )
 ```
@@ -1088,7 +1128,6 @@ titanic |>
 titanic |>
   summarise(mean_ticket_price = mean(fare, na.rm = TRUE), .by = c(pclass)) |>
   arrange(mean_ticket_price)
-
 ```
 
 # Piping operations {background-color="#2C404A"}
@@ -1180,8 +1219,8 @@ flights |> # Take the flight data frame
 
 ```{r}
 #| eval: false
-10  |> rnorm() # Same as rnorm(n = 10, mean = 0, sd = 1)
-10  |> rnorm(5, mean = _) # Same as rnorm(5, mean = 10, sd = 1)
+10 |> rnorm() # Same as rnorm(n = 10, mean = 0, sd = 1)
+10 |> rnorm(5, mean = _) # Same as rnorm(5, mean = 10, sd = 1)
 ```
 
 . . .
@@ -1196,7 +1235,7 @@ You have to use the placeholder with named parameters.
 ```{r}
 #| eval: false
 10  |> rnorm(5, _) # Not good!
-10  |> rnorm(5, mean = _) # Good!
+10 |> rnorm(5, mean = _) # Good!
 ```
 
 # Joining tables {background-color="#2C404A"}
@@ -1242,7 +1281,6 @@ sites |>
   tab_options(
     table.background.color = "#FFFFFF00"
   )
-
 ```
 
 . . .
@@ -1270,7 +1308,7 @@ measurements |>
 ```{r}
 #| label: export-join-tables
 #| echo: false
- 
+
 write_csv(sites, here::here("data", "sites.csv"))
 write_csv(measurements, here::here("data", "measurements.csv"))
 ```
@@ -1289,7 +1327,6 @@ measurements <- read_csv("https://bit.ly/3Sepl9a")
 sites
 measurements
 ```
-
 
 ## Left joins
 
@@ -1529,21 +1566,6 @@ Your turn: question
   <figcaption>Source: [R for Data Science](https://bookdown.org/asmundhreinn/r4ds-master/)</figcaption>
   </center>
 </figure>
-
-
-```{r}
-
-weather |>
-  summarise(mean_temp = mean(temp, na.rm = TRUE), .by = month) |>
-  filter(mean_temp == max(mean_temp)) |>
-  left_join(flights) |>
-  summarise(month = unique(month), n = n(), .by = carrier) |>
-  left_join(airlines) |>
-  arrange(desc(n))
-
-flights |>
-  count(month, day, sort = TRUE)
-```
 
 # Time to practice {background-color="#2C404A"}
 
