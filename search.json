@@ -1,0 +1,660 @@
+[
+  {
+    "objectID": "index.html#who-am-i",
+    "href": "index.html#who-am-i",
+    "title": "Efficient data manipulation with R",
+    "section": "Who am I",
+    "text": "Who am I\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nResearch assistant at Takuvik (Laval University)\nRemote sensing, modelling, data science, data visualization\n My GitHub\n Follow me on Twitter\n Follow me on Mastodon\n www.pmassicotte.com"
+  },
+  {
+    "objectID": "index.html#context",
+    "href": "index.html#context",
+    "title": "Efficient data manipulation with R",
+    "section": "Context",
+    "text": "Context\n\n\n\n\n\n\nArtwork by Allison Horst\n\n\n\n\n\nIt is often said that 80% of data analysis is spent on cleaning and preparing data. And it’s not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected."
+  },
+  {
+    "objectID": "index.html#context-1",
+    "href": "index.html#context-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Context",
+    "text": "Context\n\n\n\n\n\n\nArtwork by Allison Horst\n\n\n\n\n\nData preprocessing is one of the main steps in the data science project life cycle which involves converting raw data into a refined form amenable to data analysis. Source: https://towardsdatascience.com"
+  },
+  {
+    "objectID": "index.html#objectives",
+    "href": "index.html#objectives",
+    "title": "Efficient data manipulation with R",
+    "section": "Objectives",
+    "text": "Objectives\n\n\nUnderstand the basics of data manipulation techniques using R.\nLearn how to clean and transform raw data into a format suitable for analysis using dplyr and tidyr.\nDevelop the ability to manipulate and analyze datasets: grouping, filtering and summarizing.\nAcquire knowledge on how to join, merge and aggregate data from multiple sources to produce meaningful insights."
+  },
+  {
+    "objectID": "index.html#who-are-you",
+    "href": "index.html#who-are-you",
+    "title": "Efficient data manipulation with R",
+    "section": "Who are you?",
+    "text": "Who are you?\n\nDiverse faculties and academic backgrounds.\nEfforts to offer examples that are pertinent to everyone in the classroom."
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Efficient data manipulation with R",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nThis workshop is not an introduction to R programming.\nI am assuming that you already have basic knowledge of R.\nYou should know how to:\n\nInstall R packages\nUse R Studio or another of your choice\nCreate R scripts\nImport data\nWork with data frame\nPerform basic calculations"
+  },
+  {
+    "objectID": "index.html#getting-ready-to-code",
+    "href": "index.html#getting-ready-to-code",
+    "title": "Efficient data manipulation with R",
+    "section": "Getting ready to code!",
+    "text": "Getting ready to code!\nIf you do not have R/R Studio installed on your laptop, I have created a pre-configured cloud instance of R with all the packages needed for this workshop. If you choose this option, you need to have a free Posit account.\n\nStep 1: Open the course project\n\nGo to this URL: https://posit.cloud/spaces/338666/.\nYou will have to create or login into your Posit account first.\n\n\n\n\n\nStep 2: Make a copy of the project"
+  },
+  {
+    "objectID": "index.html#data-frames-1",
+    "href": "index.html#data-frames-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Data frames",
+    "text": "Data frames\n\n\nData frames are important objects in R which are created when reading (most) tabular text files.\nThe most useful data structure for data scientists.\nThey allow for efficient data manipulation:\n\nFiltering\nSummarizing\nAggregating\nJoining\nAnd much more!"
+  },
+  {
+    "objectID": "index.html#data-frames-2",
+    "href": "index.html#data-frames-2",
+    "title": "Efficient data manipulation with R",
+    "section": "Data frames",
+    "text": "Data frames\n\nA data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables.\n\n\n\n\n\nSource: Tidyverse cookbook\n\n\n\n\n\n\n\n\n\nNote\n\n\nA data frame can be seen as a matrix with the difference that columns (variables) can be of different types (numerics, dates, characters, etc.)."
+  },
+  {
+    "objectID": "index.html#data-frames-3",
+    "href": "index.html#data-frames-3",
+    "title": "Efficient data manipulation with R",
+    "section": "Data frames",
+    "text": "Data frames\nThe mtcars data frame is included in base R.\n\n\n\nThe data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).\n\n\n\nmtcars\n\n                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb\nMazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4\nMazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4\nDatsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1\nHornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1\nHornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2\nValiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1\nDuster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4\nMerc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2\nMerc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2\nMerc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4\nMerc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4\nMerc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3\nMerc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3\nMerc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3\nCadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4\nLincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4\nChrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4\nFiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1\nHonda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2\nToyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1\nToyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1\nDodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2\nAMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2\nCamaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4\nPontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2\nFiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1\nPorsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2\nLotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2\nFord Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4\nFerrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6\nMaserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8\nVolvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2"
+  },
+  {
+    "objectID": "index.html#reading-files",
+    "href": "index.html#reading-files",
+    "title": "Efficient data manipulation with R",
+    "section": "Reading files",
+    "text": "Reading files\n\nWhy bother about data frame? Most of the time, this is the data structure that will be created when importing data in R.\nThere are many functions to import data in R.\n\n\n\n\nFile format\nFunction\nPackage\n\n\n\n\nComma separated values (.csv)\nread_csv()\nreadr\n\n\nOther text files (.txt, .dat, …)\nread_delim()\nreadr\n\n\nExcel (.xls, .xlsx)\nread_excel()\nreadxl\n\n\nStata\nread_stata()\nhaven\n\n\nSPSS\nread_spss()\nhaven\n\n\nSAS\nread_sas()\nhaven\n\n\nMatlab file (.mat)\nreadMat()\nR.matlab"
+  },
+  {
+    "objectID": "index.html#reading-excel-files",
+    "href": "index.html#reading-excel-files",
+    "title": "Efficient data manipulation with R",
+    "section": "Reading Excel files",
+    "text": "Reading Excel files\n\n\nTo read Excel files, we can use read_excel() from the readxl package.\n\n# Load the readxl package\nlibrary(readxl)\n\n# Read the first sheet in a file\nmydata <- read_excel(\"/path/to/myfile.xls\")\n\n# Read the third sheet in a file\nmydata <- read_excel(\"/path/to/myfile.xlsx\", sheet = 3)"
+  },
+  {
+    "objectID": "index.html#reading-csv-files",
+    "href": "index.html#reading-csv-files",
+    "title": "Efficient data manipulation with R",
+    "section": "Reading CSV files",
+    "text": "Reading CSV files\n\n\nTo read CSV files, we can use read_csv() from the readr package.\n\n# Load the readr package\nlibrary(readr)\n\n# If the column delimiter is \",\"\nmydata <- read_csv(\"/path/to/myfile.csv\")\n\n# If the column delimiter is \";\"\nmydata <- read_csv2(\"/path/to/myfile.csv\")\n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nNote that the base R function to read a CSV file is read.csv(). Do not confuse with the read_csv() function from readr."
+  },
+  {
+    "objectID": "index.html#exporting-data",
+    "href": "index.html#exporting-data",
+    "title": "Efficient data manipulation with R",
+    "section": "Exporting data",
+    "text": "Exporting data\nSimilarly, exporting a data frame into a file can be done using: write_*().\n\nwrite_csv(df, \"/path/to/myfile.csv\")\nwrite_csv2(df, \"/path/to/myfile.csv\")\nwrite_tsv(df, \"/path/to/myfile.tsv\")\nwrite_delim(df, \"/path/to/myfile.tab\")\n\nFor example, you could export the mtcars data frame in tab-delimited and comma-delimited files on your desktop:\n\nwrite_delim(mtcars, \"~/Desktop/mtcars.tab\")\nwrite_csv(mtcars, \"~/Desktop/mtcars.csv\")"
+  },
+  {
+    "objectID": "index.html#what-is-a-tibble",
+    "href": "index.html#what-is-a-tibble",
+    "title": "Efficient data manipulation with R",
+    "section": "What is a tibble?",
+    "text": "What is a tibble?\nIn base R, the main object holding sheet-like data is called a data.frame. In the tidyverse ecosystem, they are called tibble, which can be seen as a pimped version of a data.frame.\n\n\nThis is a data.frame\n\nhead(mtcars[, 1:5], 12)\n\n                   mpg cyl  disp  hp drat\nMazda RX4         21.0   6 160.0 110 3.90\nMazda RX4 Wag     21.0   6 160.0 110 3.90\nDatsun 710        22.8   4 108.0  93 3.85\nHornet 4 Drive    21.4   6 258.0 110 3.08\nHornet Sportabout 18.7   8 360.0 175 3.15\nValiant           18.1   6 225.0 105 2.76\nDuster 360        14.3   8 360.0 245 3.21\nMerc 240D         24.4   4 146.7  62 3.69\nMerc 230          22.8   4 140.8  95 3.92\nMerc 280          19.2   6 167.6 123 3.92\nMerc 280C         17.8   6 167.6 123 3.92\nMerc 450SE        16.4   8 275.8 180 3.07\n\n\n\nThis is a tibble\n\nhead(as_tibble(mtcars[, 1:5], rownames = \"model\"), 12)\n\n# A tibble: 12 × 6\n   model               mpg   cyl  disp    hp  drat\n   <chr>             <dbl> <dbl> <dbl> <dbl> <dbl>\n 1 Mazda RX4          21       6  160    110  3.9 \n 2 Mazda RX4 Wag      21       6  160    110  3.9 \n 3 Datsun 710         22.8     4  108     93  3.85\n 4 Hornet 4 Drive     21.4     6  258    110  3.08\n 5 Hornet Sportabout  18.7     8  360    175  3.15\n 6 Valiant            18.1     6  225    105  2.76\n 7 Duster 360         14.3     8  360    245  3.21\n 8 Merc 240D          24.4     4  147.    62  3.69\n 9 Merc 230           22.8     4  141.    95  3.92\n10 Merc 280           19.2     6  168.   123  3.92\n11 Merc 280C          17.8     6  168.   123  3.92\n12 Merc 450SE         16.4     8  276.   180  3.07"
+  },
+  {
+    "objectID": "index.html#reading-csv-files-an-example",
+    "href": "index.html#reading-csv-files-an-example",
+    "title": "Efficient data manipulation with R",
+    "section": "Reading CSV files (an example)",
+    "text": "Reading CSV files (an example)\n\n\n\n\n\nReading using base R creates a data frame\n\nread.csv(\"data/usarrests.csv\")\n\n            state Murder Assault UrbanPop Rape\n1         Alabama   13.2     236       58 21.2\n2          Alaska   10.0     263       48 44.5\n3         Arizona    8.1     294       80 31.0\n4        Arkansas    8.8     190       50 19.5\n5      California    9.0     276       91 40.6\n6        Colorado    7.9     204       78 38.7\n7     Connecticut    3.3     110       77 11.1\n8        Delaware    5.9     238       72 15.8\n9         Florida   15.4     335       80 31.9\n10        Georgia   17.4     211       60 25.8\n11         Hawaii    5.3      46       83 20.2\n12          Idaho    2.6     120       54 14.2\n13       Illinois   10.4     249       83 24.0\n14        Indiana    7.2     113       65 21.0\n15           Iowa    2.2      56       57 11.3\n16         Kansas    6.0     115       66 18.0\n17       Kentucky    9.7     109       52 16.3\n18      Louisiana   15.4     249       66 22.2\n19          Maine    2.1      83       51  7.8\n20       Maryland   11.3     300       67 27.8\n21  Massachusetts    4.4     149       85 16.3\n22       Michigan   12.1     255       74 35.1\n23      Minnesota    2.7      72       66 14.9\n24    Mississippi   16.1     259       44 17.1\n25       Missouri    9.0     178       70 28.2\n26        Montana    6.0     109       53 16.4\n27       Nebraska    4.3     102       62 16.5\n28         Nevada   12.2     252       81 46.0\n29  New Hampshire    2.1      57       56  9.5\n30     New Jersey    7.4     159       89 18.8\n31     New Mexico   11.4     285       70 32.1\n32       New York   11.1     254       86 26.1\n33 North Carolina   13.0     337       45 16.1\n34   North Dakota    0.8      45       44  7.3\n35           Ohio    7.3     120       75 21.4\n36       Oklahoma    6.6     151       68 20.0\n37         Oregon    4.9     159       67 29.3\n38   Pennsylvania    6.3     106       72 14.9\n39   Rhode Island    3.4     174       87  8.3\n40 South Carolina   14.4     279       48 22.5\n41   South Dakota    3.8      86       45 12.8\n42      Tennessee   13.2     188       59 26.9\n43          Texas   12.7     201       80 25.5\n44           Utah    3.2     120       80 22.9\n45        Vermont    2.2      48       32 11.2\n46       Virginia    8.5     156       63 20.7\n47     Washington    4.0     145       73 26.2\n48  West Virginia    5.7      81       39  9.3\n49      Wisconsin    2.6      53       66 10.8\n50        Wyoming    6.8     161       60 15.6\n\n\n\nReading using readr creates a tibble\n\nread_csv(\"data/usarrests.csv\")\n\n# A tibble: 50 × 5\n   state       Murder Assault UrbanPop  Rape\n   <chr>        <dbl>   <dbl>    <dbl> <dbl>\n 1 Alabama       13.2     236       58  21.2\n 2 Alaska        10       263       48  44.5\n 3 Arizona        8.1     294       80  31  \n 4 Arkansas       8.8     190       50  19.5\n 5 California     9       276       91  40.6\n 6 Colorado       7.9     204       78  38.7\n 7 Connecticut    3.3     110       77  11.1\n 8 Delaware       5.9     238       72  15.8\n 9 Florida       15.4     335       80  31.9\n10 Georgia       17.4     211       60  25.8\n# … with 40 more rows"
+  },
+  {
+    "objectID": "index.html#importing-data",
+    "href": "index.html#importing-data",
+    "title": "Efficient data manipulation with R",
+    "section": "Importing data",
+    "text": "Importing data\nYour turn: try reading the data (CSV file) located at this location:\nhttps://bit.ly/2U487zA\n\n\n\nThis command reads the data, but does not assign it to a variable.\n\nlibrary(readr)\n\nread_csv(\"https://bit.ly/2U487zA\")\n\n\nUse the <- operator to create a new variable (ex.: df).\n\nlibrary(readr)\n\ndf <- read_csv(\"https://bit.ly/2U487zA\")\ndf\n\n# A tibble: 891 × 12\n   PassengerId Survived Pclass Name   Sex     Age SibSp Parch Ticket  Fare Cabin\n         <dbl>    <dbl>  <dbl> <chr>  <chr> <dbl> <dbl> <dbl> <chr>  <dbl> <chr>\n 1           1        0      3 Braun… male     22     1     0 A/5 2…  7.25 <NA> \n 2           2        1      1 Cumin… fema…    38     1     0 PC 17… 71.3  C85  \n 3           3        1      3 Heikk… fema…    26     0     0 STON/…  7.92 <NA> \n 4           4        1      1 Futre… fema…    35     1     0 113803 53.1  C123 \n 5           5        0      3 Allen… male     35     0     0 373450  8.05 <NA> \n 6           6        0      3 Moran… male     NA     0     0 330877  8.46 <NA> \n 7           7        0      1 McCar… male     54     0     0 17463  51.9  E46  \n 8           8        0      3 Palss… male      2     3     1 349909 21.1  <NA> \n 9           9        1      3 Johns… fema…    27     0     2 347742 11.1  <NA> \n10          10        1      2 Nasse… fema…    14     1     0 237736 30.1  <NA> \n# … with 881 more rows, and 1 more variable: Embarked <chr>"
+  },
+  {
+    "objectID": "index.html#data-manipulation",
+    "href": "index.html#data-manipulation",
+    "title": "Efficient data manipulation with R",
+    "section": "Data manipulation",
+    "text": "Data manipulation\nThere are two main characteristics of good data manipulation:\n\n\nspeed: results are returned in a reasonable time\n\n\n\n\nelegance: easy to use and to understand what the code is doing\n\n\n\n\nThe tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
+  },
+  {
+    "objectID": "index.html#the-tidyverse",
+    "href": "index.html#the-tidyverse",
+    "title": "Efficient data manipulation with R",
+    "section": "The tidyverse",
+    "text": "The tidyverse\nThe tidyverse provides a set of packages which provides flexible tools for data manipulation."
+  },
+  {
+    "objectID": "index.html#the-tidyverse-1",
+    "href": "index.html#the-tidyverse-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The tidyverse",
+    "text": "The tidyverse\nThe package is not included in the base installation of R.\n\n# Install the tidyverse packages\ninstall.packages(\"tidyverse\")\n\n\n# Load all the packages included in tidyverse\nlibrary(tidyverse)\n\nYou can refer to the printed cheat sheet for an overview of the package’s functions."
+  },
+  {
+    "objectID": "index.html#dplyr",
+    "href": "index.html#dplyr",
+    "title": "Efficient data manipulation with R",
+    "section": "dplyr",
+    "text": "dplyr\n\ndplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges\n\nAll dplyr functions use the same scheme: the first argument to provide is a data frame.\n\nUseful functions\n\n\n\n\n\n\nFunction\nDefinition\n\n\n\n\nfilter(df, ...)\nSelect a subset of the rows of a data frame.\n\n\narrange(df, ...)\nReorder rows of a data frame.\n\n\nselect(df, ...)\nSelect columns of a data frame.\n\n\nmutate(df, ...)\nAdd or modify columns in a data frame.\n\n\nsummarise(df, ...)\nSummarize a data frame into a single row. This function is very helpful in combination with the group_by() function.\n\n\ngroup_by(df, ...)\nGroup a data frame based on the specified columns."
+  },
+  {
+    "objectID": "index.html#the-nycflights13-datasets",
+    "href": "index.html#the-nycflights13-datasets",
+    "title": "Efficient data manipulation with R",
+    "section": "The nycflights13 datasets",
+    "text": "The nycflights13 datasets\n\n\nTo learn how to use these functions, we will use datasets from package nycflights13.\nThis package contains information about all flights that departed from New York airports (i.e., EWR, JFK and LGA) in 2013.\nNot included in base R, we first need to install it.\n\n\n\n\n# Install the dataset package\ninstall.packages(\"nycflights13\")"
+  },
+  {
+    "objectID": "index.html#relationships",
+    "href": "index.html#relationships",
+    "title": "Efficient data manipulation with R",
+    "section": "Relationships",
+    "text": "Relationships\n\n\n\n\nSource: R for Data Science\n\n\n\n\nThe flights table connects to planes via a single variable, tailnum.\nThe flights table connects to airports in two ways: via the origin and dest variables."
+  },
+  {
+    "objectID": "index.html#nycflights13",
+    "href": "index.html#nycflights13",
+    "title": "Efficient data manipulation with R",
+    "section": "nycflights13",
+    "text": "nycflights13\nFor the following examples we are going to use fights, planes, airports, airlines tables.\n\n# Libraries for data manipulation and visualization\nlibrary(tidyverse)\n\n# Load the data package\nlibrary(nycflights13)\n\n# Loads all the five data frame included in nycflights13\ndata(flights)\ndata(planes)\ndata(airports)\ndata(airlines)\ndata(weather)"
+  },
+  {
+    "objectID": "index.html#the-flights-table",
+    "href": "index.html#the-flights-table",
+    "title": "Efficient data manipulation with R",
+    "section": "The flights table",
+    "text": "The flights table\n\nglimpse(flights)\n\nRows: 336,776\nColumns: 19\n$ year           <int> 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…\n$ month          <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ day            <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ dep_time       <int> 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 558, …\n$ sched_dep_time <int> 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 600, …\n$ dep_delay      <dbl> 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2, -1…\n$ arr_time       <int> 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, 849,…\n$ sched_arr_time <int> 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, 851,…\n$ arr_delay      <dbl> 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7, -1…\n$ carrier        <chr> \"UA\", \"UA\", \"AA\", \"B6\", \"DL\", \"UA\", \"B6\", \"EV\", \"B6\", \"…\n$ flight         <int> 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 301, 4…\n$ tailnum        <chr> \"N14228\", \"N24211\", \"N619AA\", \"N804JB\", \"N668DN\", \"N394…\n$ origin         <chr> \"EWR\", \"LGA\", \"JFK\", \"JFK\", \"LGA\", \"EWR\", \"EWR\", \"LGA\",…\n$ dest           <chr> \"IAH\", \"IAH\", \"MIA\", \"BQN\", \"ATL\", \"ORD\", \"FLL\", \"IAD\",…\n$ air_time       <dbl> 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 149, 1…\n$ distance       <dbl> 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 733, …\n$ hour           <dbl> 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…\n$ minute         <dbl> 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…\n$ time_hour      <dttm> 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…"
+  },
+  {
+    "objectID": "index.html#the-flights-table-1",
+    "href": "index.html#the-flights-table-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The flights table",
+    "text": "The flights table\n\n\n\n\n\n\n  \n  \n    \n      year\n      month\n      day\n      dep_time\n      sched_dep_time\n      dep_delay\n      arr_time\n      sched_arr_time\n      arr_delay\n      carrier\n      flight\n      tailnum\n      origin\n      dest\n      air_time\n      distance\n      hour\n      minute\n      time_hour\n    \n  \n  \n    2013\n1\n1\n517\n515\n2\n830\n819\n11\nUA\n1545\nN14228\nEWR\nIAH\n227\n1400\n5\n15\n2013-01-01 05:00:00\n    2013\n1\n1\n533\n529\n4\n850\n830\n20\nUA\n1714\nN24211\nLGA\nIAH\n227\n1416\n5\n29\n2013-01-01 05:00:00\n    2013\n1\n1\n542\n540\n2\n923\n850\n33\nAA\n1141\nN619AA\nJFK\nMIA\n160\n1089\n5\n40\n2013-01-01 05:00:00\n    2013\n1\n1\n544\n545\n-1\n1004\n1022\n-18\nB6\n725\nN804JB\nJFK\nBQN\n183\n1576\n5\n45\n2013-01-01 05:00:00\n    2013\n1\n1\n554\n600\n-6\n812\n837\n-25\nDL\n461\nN668DN\nLGA\nATL\n116\n762\n6\n0\n2013-01-01 06:00:00\n    2013\n1\n1\n554\n558\n-4\n740\n728\n12\nUA\n1696\nN39463\nEWR\nORD\n150\n719\n5\n58\n2013-01-01 05:00:00"
+  },
+  {
+    "objectID": "index.html#the-planes-table",
+    "href": "index.html#the-planes-table",
+    "title": "Efficient data manipulation with R",
+    "section": "The planes table",
+    "text": "The planes table\n\nglimpse(planes)\n\nRows: 3,322\nColumns: 9\n$ tailnum      <chr> \"N10156\", \"N102UW\", \"N103US\", \"N104UW\", \"N10575\", \"N105UW…\n$ year         <int> 2004, 1998, 1999, 1999, 2002, 1999, 1999, 1999, 1999, 199…\n$ type         <chr> \"Fixed wing multi engine\", \"Fixed wing multi engine\", \"Fi…\n$ manufacturer <chr> \"EMBRAER\", \"AIRBUS INDUSTRIE\", \"AIRBUS INDUSTRIE\", \"AIRBU…\n$ model        <chr> \"EMB-145XR\", \"A320-214\", \"A320-214\", \"A320-214\", \"EMB-145…\n$ engines      <int> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …\n$ seats        <int> 55, 182, 182, 182, 55, 182, 182, 182, 182, 182, 55, 55, 5…\n$ speed        <int> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ engine       <chr> \"Turbo-fan\", \"Turbo-fan\", \"Turbo-fan\", \"Turbo-fan\", \"Turb…"
+  },
+  {
+    "objectID": "index.html#the-planes-table-1",
+    "href": "index.html#the-planes-table-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The planes table",
+    "text": "The planes table\n\n\n\n\n\n\n  \n  \n    \n      tailnum\n      year\n      type\n      manufacturer\n      model\n      engines\n      seats\n      speed\n      engine\n    \n  \n  \n    N10156\n2004\nFixed wing multi engine\nEMBRAER\nEMB-145XR\n2\n55\nNA\nTurbo-fan\n    N102UW\n1998\nFixed wing multi engine\nAIRBUS INDUSTRIE\nA320-214\n2\n182\nNA\nTurbo-fan\n    N103US\n1999\nFixed wing multi engine\nAIRBUS INDUSTRIE\nA320-214\n2\n182\nNA\nTurbo-fan\n    N104UW\n1999\nFixed wing multi engine\nAIRBUS INDUSTRIE\nA320-214\n2\n182\nNA\nTurbo-fan\n    N10575\n2002\nFixed wing multi engine\nEMBRAER\nEMB-145LR\n2\n55\nNA\nTurbo-fan\n    N105UW\n1999\nFixed wing multi engine\nAIRBUS INDUSTRIE\nA320-214\n2\n182\nNA\nTurbo-fan"
+  },
+  {
+    "objectID": "index.html#the-airports-table",
+    "href": "index.html#the-airports-table",
+    "title": "Efficient data manipulation with R",
+    "section": "The airports table",
+    "text": "The airports table\n\nglimpse(airports)\n\nRows: 1,458\nColumns: 8\n$ faa   <chr> \"04G\", \"06A\", \"06C\", \"06N\", \"09J\", \"0A9\", \"0G6\", \"0G7\", \"0P2\", \"…\n$ name  <chr> \"Lansdowne Airport\", \"Moton Field Municipal Airport\", \"Schaumbur…\n$ lat   <dbl> 41.13047, 32.46057, 41.98934, 41.43191, 31.07447, 36.37122, 41.4…\n$ lon   <dbl> -80.61958, -85.68003, -88.10124, -74.39156, -81.42778, -82.17342…\n$ alt   <dbl> 1044, 264, 801, 523, 11, 1593, 730, 492, 1000, 108, 409, 875, 10…\n$ tz    <dbl> -5, -6, -6, -5, -5, -5, -5, -5, -5, -8, -5, -6, -5, -5, -5, -5, …\n$ dst   <chr> \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"U\", \"A\", \"A\", \"U\", \"A\",…\n$ tzone <chr> \"America/New_York\", \"America/Chicago\", \"America/Chicago\", \"Ameri…"
+  },
+  {
+    "objectID": "index.html#the-airlines-table",
+    "href": "index.html#the-airlines-table",
+    "title": "Efficient data manipulation with R",
+    "section": "The airlines table",
+    "text": "The airlines table\n\nglimpse(airlines)\n\nRows: 16\nColumns: 2\n$ carrier <chr> \"9E\", \"AA\", \"AS\", \"B6\", \"DL\", \"EV\", \"F9\", \"FL\", \"HA\", \"MQ\", \"O…\n$ name    <chr> \"Endeavor Air Inc.\", \"American Airlines Inc.\", \"Alaska Airline…"
+  },
+  {
+    "objectID": "index.html#the-weather-table",
+    "href": "index.html#the-weather-table",
+    "title": "Efficient data manipulation with R",
+    "section": "The weather table",
+    "text": "The weather table\n\nglimpse(weather)\n\nRows: 26,115\nColumns: 15\n$ origin     <chr> \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EW…\n$ year       <int> 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013,…\n$ month      <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ day        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ hour       <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, …\n$ temp       <dbl> 39.02, 39.02, 39.02, 39.92, 39.02, 37.94, 39.02, 39.92, 39.…\n$ dewp       <dbl> 26.06, 26.96, 28.04, 28.04, 28.04, 28.04, 28.04, 28.04, 28.…\n$ humid      <dbl> 59.37, 61.63, 64.43, 62.21, 64.43, 67.21, 64.43, 62.21, 62.…\n$ wind_dir   <dbl> 270, 250, 240, 250, 260, 240, 240, 250, 260, 260, 260, 330,…\n$ wind_speed <dbl> 10.35702, 8.05546, 11.50780, 12.65858, 12.65858, 11.50780, …\n$ wind_gust  <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 20.…\n$ precip     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ pressure   <dbl> 1012.0, 1012.3, 1012.5, 1012.2, 1011.9, 1012.4, 1012.2, 101…\n$ visib      <dbl> 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,…\n$ time_hour  <dttm> 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 03:00…"
+  },
+  {
+    "objectID": "index.html#getting-more-information",
+    "href": "index.html#getting-more-information",
+    "title": "Efficient data manipulation with R",
+    "section": "Getting more information",
+    "text": "Getting more information\nIf you want more information on a specific table, use the ? operator. This will open the help file and describe all variables included in the data frame.\n\n?flights\n\n?planes\n\n?airports\n\n?airlines\n\n?weather"
+  },
+  {
+    "objectID": "index.html#the-filter-function",
+    "href": "index.html#the-filter-function",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\n\nThe filter() allows you to select a subset of the rows of a data frame.\nThe first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame."
+  },
+  {
+    "objectID": "index.html#the-filter-function-1",
+    "href": "index.html#the-filter-function-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\nExample 1: select all flights with a tail number equal to “N14228”.\n\nfilter(flights, tailnum == \"N14228\")\n\n# A tibble: 111 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      517        515       2     830     819      11 UA     \n 2  2013     1     8     1435       1440      -5    1717    1746     -29 UA     \n 3  2013     1     9      717        700      17     812     815      -3 UA     \n 4  2013     1     9     1143       1144      -1    1425    1445     -20 UA     \n 5  2013     1    13      835        824      11    1030     951      39 UA     \n 6  2013     1    16     1829       1730      59    2117    2023      54 UA     \n 7  2013     1    22     1902       1808      54    2214    2106      68 UA     \n 8  2013     1    23     1050       1056      -6    1143    1208     -25 UA     \n 9  2013     1    23     1533       1529       4    1641    1645      -4 UA     \n10  2013     1    25      724        720       4    1000    1023     -23 UA     \n# … with 101 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-filter-function-2",
+    "href": "index.html#the-filter-function-2",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\nExample 2: select all flights with a departure delay greater than 180 minutes.\n\nfilter(flights, dep_delay > 180)\n\n# A tibble: 3,893 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      848       1835     853    1001    1950     851 MQ     \n 2  2013     1     1     1815       1325     290    2120    1542     338 EV     \n 3  2013     1     1     1842       1422     260    1958    1535     263 EV     \n 4  2013     1     1     2006       1630     216    2230    1848     222 EV     \n 5  2013     1     1     2115       1700     255    2330    1920     250 9E     \n 6  2013     1     1     2205       1720     285      46    2040     246 AA     \n 7  2013     1     1     2312       2000     192      21    2110     191 EV     \n 8  2013     1     1     2343       1724     379     314    1938     456 EV     \n 9  2013     1     2     1244        900     224    1431    1104     207 EV     \n10  2013     1     2     1332        904     268    1616    1128     288 EV     \n# … with 3,883 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-filter-function-3",
+    "href": "index.html#the-filter-function-3",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\nExample 3: select all flights from carriers “MQ” or “EV”.\n\nfilter(flights, carrier ==  \"MQ\" | carrier == \"EV\")\n\n# A tibble: 80,570 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      557        600      -3     709     723     -14 EV     \n 2  2013     1     1      600        600       0     837     825      12 MQ     \n 3  2013     1     1      602        605      -3     821     805      16 MQ     \n 4  2013     1     1      608        600       8     807     735      32 MQ     \n 5  2013     1     1      624        630      -6     909     840      29 EV     \n 6  2013     1     1      624        630      -6     840     830      10 MQ     \n 7  2013     1     1      632        608      24     740     728      12 EV     \n 8  2013     1     1      656        705      -9    1007     940      27 MQ     \n 9  2013     1     1      749        710      39     939     850      49 MQ     \n10  2013     1     1      800        810     -10     949     955      -6 MQ     \n# … with 80,560 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-filter-function-4",
+    "href": "index.html#the-filter-function-4",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\nAnother option using the %in% operator.\n\nfilter(flights, carrier %in%  c(\"MQ\", \"EV\"))\n\n# A tibble: 80,570 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      557        600      -3     709     723     -14 EV     \n 2  2013     1     1      600        600       0     837     825      12 MQ     \n 3  2013     1     1      602        605      -3     821     805      16 MQ     \n 4  2013     1     1      608        600       8     807     735      32 MQ     \n 5  2013     1     1      624        630      -6     909     840      29 EV     \n 6  2013     1     1      624        630      -6     840     830      10 MQ     \n 7  2013     1     1      632        608      24     740     728      12 EV     \n 8  2013     1     1      656        705      -9    1007     940      27 MQ     \n 9  2013     1     1      749        710      39     939     850      49 MQ     \n10  2013     1     1      800        810     -10     949     955      -6 MQ     \n# … with 80,560 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-filter-function-5",
+    "href": "index.html#the-filter-function-5",
+    "title": "Efficient data manipulation with R",
+    "section": "The filter() function",
+    "text": "The filter() function\nYour turn: write code that uses the flights table and return all the flights with delayed departures between 100 and 200 minutes from the “FL” carrier.\n\n\nfilter(flights, dep_delay >= 100 & dep_delay <= 200 & carrier == \"FL\")\n\n# A tibble: 127 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1    27     1522       1308     134    1809    1542     147 FL     \n 2  2013     1    30     2300       2030     150      23    2206     137 FL     \n 3  2013    10     7     2132       1859     153    2339    2126     133 FL     \n 4  2013    10     7     2240       2030     130    2356    2201     115 FL     \n 5  2013    10    11     1946       1738     128    2156    2005     111 FL     \n 6  2013    10    11     2144       1859     165    2344    2126     138 FL     \n 7  2013    10    28      956        810     106    1217    1037     100 FL     \n 8  2013    11    12     1937       1729     128    2221    1955     146 FL     \n 9  2013    11    27     1901       1720     101    2144    1948     116 FL     \n10  2013    12     5     2314       2033     161      38    2206     152 FL     \n# … with 117 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-arrange-function",
+    "href": "index.html#the-arrange-function",
+    "title": "Efficient data manipulation with R",
+    "section": "The arrange() function",
+    "text": "The arrange() function\n\narrange() reorders the rows of a data frame.\nThe function takes a data frame, and a set of column name(s) to order by."
+  },
+  {
+    "objectID": "index.html#the-arrange-function-1",
+    "href": "index.html#the-arrange-function-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The arrange() function",
+    "text": "The arrange() function\nExample 1: reorder flights on departure month.\n\narrange(flights, month)\n\n# A tibble: 336,776 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      517        515       2     830     819      11 UA     \n 2  2013     1     1      533        529       4     850     830      20 UA     \n 3  2013     1     1      542        540       2     923     850      33 AA     \n 4  2013     1     1      544        545      -1    1004    1022     -18 B6     \n 5  2013     1     1      554        600      -6     812     837     -25 DL     \n 6  2013     1     1      554        558      -4     740     728      12 UA     \n 7  2013     1     1      555        600      -5     913     854      19 B6     \n 8  2013     1     1      557        600      -3     709     723     -14 EV     \n 9  2013     1     1      557        600      -3     838     846      -8 B6     \n10  2013     1     1      558        600      -2     753     745       8 AA     \n# … with 336,766 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-arrange-function-2",
+    "href": "index.html#the-arrange-function-2",
+    "title": "Efficient data manipulation with R",
+    "section": "The arrange() function",
+    "text": "The arrange() function\nExample 2: reorder flights on departure month and departure time.\n\narrange(flights, month, dep_time)\n\n# A tibble: 336,776 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1    13        1       2249      72     108    2357      71 B6     \n 2  2013     1    31        1       2100     181     124    2225     179 WN     \n 3  2013     1     9        2       2359       3     432     444     -12 B6     \n 4  2013     1    13        2       2359       3     502     444      18 B6     \n 5  2013     1    16        2       2125     157     119    2250     149 MQ     \n 6  2013     1    10        3       2359       4     426     437     -11 B6     \n 7  2013     1    13        3       2030     213     340    2350     230 B6     \n 8  2013     1    16        3       1946     257     212    2154     258 EV     \n 9  2013     1    30        3       2159     124     100    2306     114 EV     \n10  2013     1    31        4       2359       5     455     444      11 B6     \n# … with 336,766 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-arrange-function-3",
+    "href": "index.html#the-arrange-function-3",
+    "title": "Efficient data manipulation with R",
+    "section": "The arrange() function",
+    "text": "The arrange() function\nExample 3: reorder flights on departure month and by decreasing departure time.\n\narrange(flights, month, desc(dep_time))\n\n# A tibble: 336,776 × 19\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     7     2359       2359       0     506     437      29 B6     \n 2  2013     1    12     2359       2359       0     429     437      -8 B6     \n 3  2013     1    13     2359       2130     149     435     218     137 B6     \n 4  2013     1    18     2359       2359       0     439     437       2 B6     \n 5  2013     1    19     2359       2359       0     437     444      -7 B6     \n 6  2013     1    25     2359       2359       0     500     444      16 B6     \n 7  2013     1     4     2358       2359      -1     429     437      -8 B6     \n 8  2013     1     4     2358       2359      -1     436     445      -9 B6     \n 9  2013     1    13     2358       2045     193     233    2310     203 B6     \n10  2013     1    16     2358       2359      -1     502     437      25 B6     \n# … with 336,766 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#the-select-function",
+    "href": "index.html#the-select-function",
+    "title": "Efficient data manipulation with R",
+    "section": "The select() function",
+    "text": "The select() function\n\nselect() is used to extract column(s) from a data frame.\nUseful when you want to perform data analysis on specific column(s) and not the complete dataset."
+  },
+  {
+    "objectID": "index.html#the-select-function-1",
+    "href": "index.html#the-select-function-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The select() function",
+    "text": "The select() function\nExample 1: select “faa” and “name” columns from the airports data frame.\n\nselect(airports, faa, name)\n\n# A tibble: 1,458 × 2\n   faa   name                          \n   <chr> <chr>                         \n 1 04G   Lansdowne Airport             \n 2 06A   Moton Field Municipal Airport \n 3 06C   Schaumburg Regional           \n 4 06N   Randall Airport               \n 5 09J   Jekyll Island Airport         \n 6 0A9   Elizabethton Municipal Airport\n 7 0G6   Williams County Airport       \n 8 0G7   Finger Lakes Regional Airport \n 9 0P2   Shoestring Aviation Airfield  \n10 0S9   Jefferson County Intl         \n# … with 1,448 more rows"
+  },
+  {
+    "objectID": "index.html#the-select-function-2",
+    "href": "index.html#the-select-function-2",
+    "title": "Efficient data manipulation with R",
+    "section": "The select() function",
+    "text": "The select() function\nYou can also use select() to remove columns with the - operator.\nExample 2: select all columns from airports except “faa” and “name”.\n\nselect(airports, -faa, -name)\n\n# A tibble: 1,458 × 6\n     lat    lon   alt    tz dst   tzone              \n   <dbl>  <dbl> <dbl> <dbl> <chr> <chr>              \n 1  41.1  -80.6  1044    -5 A     America/New_York   \n 2  32.5  -85.7   264    -6 A     America/Chicago    \n 3  42.0  -88.1   801    -6 A     America/Chicago    \n 4  41.4  -74.4   523    -5 A     America/New_York   \n 5  31.1  -81.4    11    -5 A     America/New_York   \n 6  36.4  -82.2  1593    -5 A     America/New_York   \n 7  41.5  -84.5   730    -5 A     America/New_York   \n 8  42.9  -76.8   492    -5 A     America/New_York   \n 9  39.8  -76.6  1000    -5 U     America/New_York   \n10  48.1 -123.    108    -8 A     America/Los_Angeles\n# … with 1,448 more rows"
+  },
+  {
+    "objectID": "index.html#the-select-function-3",
+    "href": "index.html#the-select-function-3",
+    "title": "Efficient data manipulation with R",
+    "section": "The select() function",
+    "text": "The select() function\nIt is also possible to select columns using helper functions.\nExample 3: select “year”, “month” and all columns that start with “dep_” from flights.\n\nselect(flights, year, month, starts_with(\"dep_\"))\n\n# A tibble: 336,776 × 4\n    year month dep_time dep_delay\n   <int> <int>    <int>     <dbl>\n 1  2013     1      517         2\n 2  2013     1      533         4\n 3  2013     1      542         2\n 4  2013     1      544        -1\n 5  2013     1      554        -6\n 6  2013     1      554        -4\n 7  2013     1      555        -5\n 8  2013     1      557        -3\n 9  2013     1      557        -3\n10  2013     1      558        -2\n# … with 336,766 more rows"
+  },
+  {
+    "objectID": "index.html#the-mutate-function",
+    "href": "index.html#the-mutate-function",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\n\nThe mutate() function is used to add or modify existing column(s) inside a data frame.\nThe function takes a data frame, and one or more expressions that add/modify columns."
+  },
+  {
+    "objectID": "index.html#the-mutate-function-1",
+    "href": "index.html#the-mutate-function-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\nExample 1: add a new column named “distance_km” which converts the distance column, which shows the flight distance in miles, into km.\n\nmutate(\n  flights, \n  distance_km = distance / 0.62137, \n  .keep = \"used\"\n)\n\n# A tibble: 336,776 × 2\n   distance distance_km\n      <dbl>       <dbl>\n 1     1400       2253.\n 2     1416       2279.\n 3     1089       1753.\n 4     1576       2536.\n 5      762       1226.\n 6      719       1157.\n 7     1065       1714.\n 8      229        369.\n 9      944       1519.\n10      733       1180.\n# … with 336,766 more rows"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-2",
+    "href": "index.html#the-mutate-function-2",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\nIt is also possible to add many new variables in a single operation.\n\nmutate(\n  flights,\n  distance_km = distance / 0.62137,\n  distance_knot = distance / 1.15078,\n  .keep = \"used\"\n)\n\n# A tibble: 336,776 × 3\n   distance distance_km distance_knot\n      <dbl>       <dbl>         <dbl>\n 1     1400       2253.         1217.\n 2     1416       2279.         1230.\n 3     1089       1753.          946.\n 4     1576       2536.         1370.\n 5      762       1226.          662.\n 6      719       1157.          625.\n 7     1065       1714.          925.\n 8      229        369.          199.\n 9      944       1519.          820.\n10      733       1180.          637.\n# … with 336,766 more rows"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-3",
+    "href": "index.html#the-mutate-function-3",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\nThe mutate() function is very powerful as it allows to use of some helper functions to mutate multiple columns at once.\nFor the following examples, we will use the weather table.\n\nweather\n\n# A tibble: 26,115 × 15\n   origin  year month   day  hour  temp  dewp humid wind_dir wind_speed wind_g…¹\n   <chr>  <int> <int> <int> <int> <dbl> <dbl> <dbl>    <dbl>      <dbl>    <dbl>\n 1 EWR     2013     1     1     1  39.0  26.1  59.4      270      10.4        NA\n 2 EWR     2013     1     1     2  39.0  27.0  61.6      250       8.06       NA\n 3 EWR     2013     1     1     3  39.0  28.0  64.4      240      11.5        NA\n 4 EWR     2013     1     1     4  39.9  28.0  62.2      250      12.7        NA\n 5 EWR     2013     1     1     5  39.0  28.0  64.4      260      12.7        NA\n 6 EWR     2013     1     1     6  37.9  28.0  67.2      240      11.5        NA\n 7 EWR     2013     1     1     7  39.0  28.0  64.4      240      15.0        NA\n 8 EWR     2013     1     1     8  39.9  28.0  62.2      250      10.4        NA\n 9 EWR     2013     1     1     9  39.9  28.0  62.2      260      15.0        NA\n10 EWR     2013     1     1    10  41    28.0  59.6      260      13.8        NA\n# … with 26,105 more rows, 4 more variables: precip <dbl>, pressure <dbl>,\n#   visib <dbl>, time_hour <dttm>, and abbreviated variable name ¹​wind_gust"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-4",
+    "href": "index.html#the-mutate-function-4",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\nLet’s say we want to round all the numerical columns of the weather data frame. It could be fastidious to do it manually for the 13 numerical columns.\n\nglimpse(weather)\n\nRows: 26,115\nColumns: 15\n$ origin     <chr> \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EWR\", \"EW…\n$ year       <int> 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013,…\n$ month      <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ day        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ hour       <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, …\n$ temp       <dbl> 39.02, 39.02, 39.02, 39.92, 39.02, 37.94, 39.02, 39.92, 39.…\n$ dewp       <dbl> 26.06, 26.96, 28.04, 28.04, 28.04, 28.04, 28.04, 28.04, 28.…\n$ humid      <dbl> 59.37, 61.63, 64.43, 62.21, 64.43, 67.21, 64.43, 62.21, 62.…\n$ wind_dir   <dbl> 270, 250, 240, 250, 260, 240, 240, 250, 260, 260, 260, 330,…\n$ wind_speed <dbl> 10.35702, 8.05546, 11.50780, 12.65858, 12.65858, 11.50780, …\n$ wind_gust  <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 20.…\n$ precip     <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ pressure   <dbl> 1012.0, 1012.3, 1012.5, 1012.2, 1011.9, 1012.4, 1012.2, 101…\n$ visib      <dbl> 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,…\n$ time_hour  <dttm> 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 03:00…"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-5",
+    "href": "index.html#the-mutate-function-5",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\nWould require a lot of typing (and I am very lazy!):\n\nmutate(\n  weather,\n  year = round(year),\n  month = round(month),\n  day = round(day),\n  hour = round(hour),\n  temp = round(temp),\n  dewp = round(dewp),\n  humid = round(humid),\n  wind_dir = round(wind_dir),\n  wind_speed = round(wind_speed),\n  wind_gust = round(wind_gust),\n  precip = round(precip),\n  pressure = round(pressure)\n)"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-6",
+    "href": "index.html#the-mutate-function-6",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\n\nOne option, is to use the across(cols, function_to_apply) function.\nThe following code says:\n\napply the mean() function to all the columns between temp and pressure\n\nmutate(weather, across(year:pressure, round), .keep = \"used\")\n\n# A tibble: 26,115 × 12\n    year month   day  hour  temp  dewp humid wind_dir wind_speed wind_g…¹ precip\n   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>      <dbl>    <dbl>  <dbl>\n 1  2013     1     1     1    39    26    59      270         10       NA      0\n 2  2013     1     1     2    39    27    62      250          8       NA      0\n 3  2013     1     1     3    39    28    64      240         12       NA      0\n 4  2013     1     1     4    40    28    62      250         13       NA      0\n 5  2013     1     1     5    39    28    64      260         13       NA      0\n 6  2013     1     1     6    38    28    67      240         12       NA      0\n 7  2013     1     1     7    39    28    64      240         15       NA      0\n 8  2013     1     1     8    40    28    62      250         10       NA      0\n 9  2013     1     1     9    40    28    62      260         15       NA      0\n10  2013     1     1    10    41    28    60      260         14       NA      0\n# … with 26,105 more rows, 1 more variable: pressure <dbl>, and abbreviated\n#   variable name ¹​wind_gust"
+  },
+  {
+    "objectID": "index.html#the-mutate-function-7",
+    "href": "index.html#the-mutate-function-7",
+    "title": "Efficient data manipulation with R",
+    "section": "The mutate() function",
+    "text": "The mutate() function\n\nAnother option is to use a combination of across() and where() functions.\nThe following code says:\n\napply the mean() function to all the numerical columns\n\nmutate(weather, across(where(is.numeric), round), .keep = \"used\")\n\n# A tibble: 26,115 × 13\n    year month   day  hour  temp  dewp humid wind_dir wind_speed wind_g…¹ precip\n   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>      <dbl>    <dbl>  <dbl>\n 1  2013     1     1     1    39    26    59      270         10       NA      0\n 2  2013     1     1     2    39    27    62      250          8       NA      0\n 3  2013     1     1     3    39    28    64      240         12       NA      0\n 4  2013     1     1     4    40    28    62      250         13       NA      0\n 5  2013     1     1     5    39    28    64      260         13       NA      0\n 6  2013     1     1     6    38    28    67      240         12       NA      0\n 7  2013     1     1     7    39    28    64      240         15       NA      0\n 8  2013     1     1     8    40    28    62      250         10       NA      0\n 9  2013     1     1     9    40    28    62      260         15       NA      0\n10  2013     1     1    10    41    28    60      260         14       NA      0\n# … with 26,105 more rows, 2 more variables: pressure <dbl>, visib <dbl>, and\n#   abbreviated variable name ¹​wind_gust"
+  },
+  {
+    "objectID": "index.html#the-summarise-function",
+    "href": "index.html#the-summarise-function",
+    "title": "Efficient data manipulation with R",
+    "section": "The summarise() function",
+    "text": "The summarise() function\n\nThe summarise() function allows summarising columns from a data frame.\nCompress a data frame into single values (i.e. one row).\n\nHence, you have to provide a function that will be used to calculate a certain value."
+  },
+  {
+    "objectID": "index.html#the-summarise-function-1",
+    "href": "index.html#the-summarise-function-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The summarise() function",
+    "text": "The summarise() function\nExample 1: Calculate the mean/average values for the dep_delay and arr_delay columns.\n\nsummarise(\n  flights,\n  average_departure_delay = mean(dep_delay),\n  average_arrival_delay = mean(arr_delay)\n)\n\n# A tibble: 1 × 2\n  average_departure_delay average_arrival_delay\n                    <dbl>                 <dbl>\n1                      NA                    NA\n\n\n\nWhat is going on? Why do we have NA’s?"
+  },
+  {
+    "objectID": "index.html#the-summarise-function-2",
+    "href": "index.html#the-summarise-function-2",
+    "title": "Efficient data manipulation with R",
+    "section": "The summarise() function",
+    "text": "The summarise() function\nExample 1: Calculate the mean/average values for the dep_delay and arr_delay columns.\n\nsummarise(\n  flights,\n  average_departure_delay = mean(dep_delay, na.rm = TRUE),\n  average_arrival_delay = mean(arr_delay, na.rm = TRUE)\n)\n\n# A tibble: 1 × 2\n  average_departure_delay average_arrival_delay\n                    <dbl>                 <dbl>\n1                    12.6                  6.90"
+  },
+  {
+    "objectID": "index.html#the-summarise-function-3",
+    "href": "index.html#the-summarise-function-3",
+    "title": "Efficient data manipulation with R",
+    "section": "The summarise() function",
+    "text": "The summarise() function\n\nIt could be interesting to know how many observations were used in the computation.\nFor this, we can use the n() helper function.\n\n\nsummarise(\n  flights,\n  average_departure_delay = mean(dep_delay, na.rm = TRUE),\n  average_arrival_delay = mean(arr_delay, na.rm = TRUE),\n  n = n() # Adding a new column \"n\" with the number of used observations\n)\n\n# A tibble: 1 × 3\n  average_departure_delay average_arrival_delay      n\n                    <dbl>                 <dbl>  <int>\n1                    12.6                  6.90 336776"
+  },
+  {
+    "objectID": "index.html#the-summarise-function-4",
+    "href": "index.html#the-summarise-function-4",
+    "title": "Efficient data manipulation with R",
+    "section": "The summarise() function",
+    "text": "The summarise() function\n\nSimilarly as with mutate(), we can use the across() function to avoid extra typing.\n\n\nsummarise(\n  weather, \n  across(where(is.numeric), mean, na.rm = TRUE),\n  n = n()\n)\n\n# A tibble: 1 × 14\n   year month   day  hour  temp  dewp humid wind_dir wind_speed wind_g…¹  precip\n  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>    <dbl>      <dbl>    <dbl>   <dbl>\n1  2013  6.50  15.7  11.5  55.3  41.4  62.5     200.       10.5     25.5 0.00447\n# … with 3 more variables: pressure <dbl>, visib <dbl>, n <int>, and\n#   abbreviated variable name ¹​wind_gust"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data",
+    "href": "index.html#working-with-grouped-data",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\n\nAlone, the summarise() function is not helpful because it collapses a data frame to a single row.\nUsually, we want to work on grouped data.\ngroup_by() “prepares” a data frame to send it to the summarise() function."
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-1",
+    "href": "index.html#working-with-grouped-data-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\nExample 1: Calculate the average departure delay by carrier.\nFirst, let’s group the data by carrier.\n\nflights_grouped <- group_by(flights, carrier)\nflights_grouped\n\n# A tibble: 336,776 × 19\n# Groups:   carrier [16]\n    year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier\n   <int> <int> <int>    <int>      <int>   <dbl>   <int>   <int>   <dbl> <chr>  \n 1  2013     1     1      517        515       2     830     819      11 UA     \n 2  2013     1     1      533        529       4     850     830      20 UA     \n 3  2013     1     1      542        540       2     923     850      33 AA     \n 4  2013     1     1      544        545      -1    1004    1022     -18 B6     \n 5  2013     1     1      554        600      -6     812     837     -25 DL     \n 6  2013     1     1      554        558      -4     740     728      12 UA     \n 7  2013     1     1      555        600      -5     913     854      19 B6     \n 8  2013     1     1      557        600      -3     709     723     -14 EV     \n 9  2013     1     1      557        600      -3     838     846      -8 B6     \n10  2013     1     1      558        600      -2     753     745       8 AA     \n# … with 336,766 more rows, 9 more variables: flight <int>, tailnum <chr>,\n#   origin <chr>, dest <chr>, air_time <dbl>, distance <dbl>, hour <dbl>,\n#   minute <dbl>, time_hour <dttm>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-2",
+    "href": "index.html#working-with-grouped-data-2",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\nExample 1: Calculate the average departure delay by carrier.\nSecondly, use summarise() as we did before by now using flights_grouped instead of flights.\n\nsummarise(\n  flights_grouped,\n  average_departure_delay = mean(dep_delay, na.rm = TRUE),\n  n = n()\n)"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-2-output",
+    "href": "index.html#working-with-grouped-data-2-output",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\n\n# A tibble: 16 × 3\n   carrier average_departure_delay     n\n   <chr>                     <dbl> <int>\n 1 9E                        16.7  18460\n 2 AA                         8.59 32729\n 3 AS                         5.80   714\n 4 B6                        13.0  54635\n 5 DL                         9.26 48110\n 6 EV                        20.0  54173\n 7 F9                        20.2    685\n 8 FL                        18.7   3260\n 9 HA                         4.90   342\n10 MQ                        10.6  26397\n11 OO                        12.6     32\n12 UA                        12.1  58665\n13 US                         3.78 20536\n14 VX                        12.9   5162\n15 WN                        17.7  12275\n16 YV                        19.0    601"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-3",
+    "href": "index.html#working-with-grouped-data-3",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\n\nWe can also summarise() multiple columns at once.\n\n\nsummarise(\n  flights_grouped, \n  across(where(is.numeric), mean, na.rm = TRUE),\n  n = n()\n)"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-3-output",
+    "href": "index.html#working-with-grouped-data-3-output",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\n\n# A tibble: 16 × 16\n   carrier  year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵\n   <chr>   <dbl> <dbl> <dbl>    <dbl>      <dbl>   <dbl>   <dbl>   <dbl>   <dbl>\n 1 9E       2013  6.56  15.6    1487.      1472.   16.7    1639.   1671.   7.38 \n 2 AA       2013  6.48  15.7    1297.      1290.    8.59   1521.   1545.   0.364\n 3 AS       2013  6.41  15.8    1295.      1285.    5.80   1565.   1595.  -9.93 \n 4 B6       2013  6.52  15.8    1381.      1397.   13.0    1406.   1469.   9.46 \n 5 DL       2013  6.57  15.8    1351.      1346.    9.26   1573.   1596.   1.64 \n 6 EV       2013  6.58  15.7    1369.      1354.   20.0    1488.   1532.  15.8  \n 7 F9       2013  6.59  15.6    1438.      1408.   20.2    1672.   1646.  21.9  \n 8 FL       2013  6.02  15.7    1387.      1372.   18.7    1574.   1585.  20.1  \n 9 HA       2013  6.27  15.7     949.       974.    4.90   1474.   1492.  -6.92 \n10 MQ       2013  6.47  15.7    1393.      1387.   10.6    1551.   1564.  10.8  \n11 OO       2013  8.75  16.3    1725.      1731.   12.6    1913.   1890.  11.9  \n12 UA       2013  6.56  15.7    1327.      1313.   12.1    1509.   1544.   3.56 \n13 US       2013  6.55  15.7    1231.      1246.    3.78   1402.   1412.   2.13 \n14 VX       2013  6.93  15.7    1280.      1265.   12.9    1523.   1596.   1.76 \n15 WN       2013  6.63  15.7    1281.      1260.   17.7    1443.   1450.   9.65 \n16 YV       2013  6.91  15.8    1601.      1575.   19.0    1761.   1743.  15.6  \n# … with 6 more variables: flight <dbl>, air_time <dbl>, distance <dbl>,\n#   hour <dbl>, minute <dbl>, n <int>, and abbreviated variable names\n#   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay"
+  },
+  {
+    "objectID": "index.html#working-with-grouped-data-4",
+    "href": "index.html#working-with-grouped-data-4",
+    "title": "Efficient data manipulation with R",
+    "section": "Working with grouped data",
+    "text": "Working with grouped data\n\n\n\n\n\n\nNew in dplyr 1.1.0\n\n\n.by/by is an experimental alternative to group_by() that supports per-operation grouping for mutate(), summarise(), filter(), and the slice() family.\n\n\n\nWe want to calculate the average height for each combination of species and homeworld in the starwars data frame.\n\n\n\nstarwars_grouped <- group_by(starwars, species, homeworld)\nsummarise(\n  starwars_grouped, \n  mean_height = mean(height)\n)\n\n# A tibble: 58 × 3\n# Groups:   species [38]\n   species  homeworld   mean_height\n   <chr>    <chr>             <dbl>\n 1 Aleena   Aleen Minor          79\n 2 Besalisk Ojom                198\n 3 Cerean   Cerea               198\n 4 Chagrian Champala            196\n 5 Clawdite Zolan               168\n 6 Droid    Naboo                96\n 7 Droid    Tatooine            132\n 8 Droid    <NA>                 NA\n 9 Dug      Malastare           112\n10 Ewok     Endor                88\n# … with 48 more rows\n\n\n\n\nsummarise(\n  starwars, \n  mean_height = mean(height), \n  .by = c(species, homeworld)\n)\n\n# A tibble: 58 × 3\n   species homeworld mean_height\n   <chr>   <chr>           <dbl>\n 1 Human   Tatooine         179.\n 2 Droid   Tatooine         132 \n 3 Droid   Naboo             96 \n 4 Human   Alderaan         176.\n 5 Human   Stewjon          182 \n 6 Human   Eriadu           180 \n 7 Wookiee Kashyyyk         231 \n 8 Human   Corellia         175 \n 9 Rodian  Rodia            173 \n10 Hutt    Nal Hutta        175 \n# … with 48 more rows"
+  },
+  {
+    "objectID": "index.html#the-titanic",
+    "href": "index.html#the-titanic",
+    "title": "Efficient data manipulation with R",
+    "section": "The Titanic",
+    "text": "The Titanic\n\ntitanic <- read_csv(\"https://bit.ly/3xrnh3U\")\nglimpse(titanic)\n\nRows: 1,309\nColumns: 9\n$ pclass      <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…\n$ sex         <chr> \"female\", \"male\", \"female\", \"male\", \"female\", \"male\", \"fem…\n$ age         <dbl> 29.00, 0.92, 2.00, 30.00, 25.00, 48.00, 63.00, 39.00, 53.0…\n$ family_size <dbl> 0, 3, 3, 3, 3, 0, 1, 0, 2, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0…\n$ ticket      <chr> \"24160\", \"113781\", \"113781\", \"113781\", \"113781\", \"19952\", …\n$ fare        <dbl> 211.3375, 151.5500, 151.5500, 151.5500, 151.5500, 26.5500,…\n$ cabin       <chr> \"B5\", \"C22 C26\", \"C22 C26\", \"C22 C26\", \"C22 C26\", \"E12\", \"…\n$ embarked    <chr> \"S\", \"S\", \"S\", \"S\", \"S\", \"S\", \"S\", \"S\", \"S\", \"C\", \"C\", \"C\"…\n$ survived    <dbl> 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0…"
+  },
+  {
+    "objectID": "index.html#the-titanic-1",
+    "href": "index.html#the-titanic-1",
+    "title": "Efficient data manipulation with R",
+    "section": "The Titanic",
+    "text": "The Titanic\nUsing your newly acquired skills, try answering the following questions:\n\nWhat was the average age of passengers on the Titanic?\nHow many passengers on the Titanic were from first class?\nWhat was the proportion of passengers who survived the Titanic disaster?\nWhat was the average ticket price by cabin class?"
+  },
+  {
+    "objectID": "index.html#piping-operations-1",
+    "href": "index.html#piping-operations-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Piping operations",
+    "text": "Piping operations\nWe have seen that to summarise grouped data, we need to perform two operations:\n\nflights_grouped <- group_by(flights, carrier)\n\nres <- summarise(\n  flights_grouped,\n  average_departure_delay = mean(dep_delay, na.rm = TRUE),\n  n = n()\n)\n\nThe thing is that we never directly use flights_grouped; it is only used as an intermediate object."
+  },
+  {
+    "objectID": "index.html#piping-operations-2",
+    "href": "index.html#piping-operations-2",
+    "title": "Efficient data manipulation with R",
+    "section": "Piping operations",
+    "text": "Piping operations\n\nWith R 4.1.0+, we can use the pipe operator (|>) to chain operations.\nBasically, (|>) takes the left-hand side (lhs) object and passes it as the first argument in the right-hand side (rhs) function.\n\n\n\n\n# Same as log(10)\n10 |> log()\n\n[1] 2.302585\n\n\n\n\n# Same has:\n# toupper(\"my string\")\n\"my string\" |> toupper()\n\n[1] \"MY STRING\"\n\n\n\n\n# Same has:\n# head(chickwts), 6)\nchickwts |> head(6)\n\n  weight      feed\n1    179 horsebean\n2    160 horsebean\n3    136 horsebean\n4    227 horsebean\n5    217 horsebean\n6    168 horsebean"
+  },
+  {
+    "objectID": "index.html#piping-operations-3",
+    "href": "index.html#piping-operations-3",
+    "title": "Efficient data manipulation with R",
+    "section": "Piping operations",
+    "text": "Piping operations\n\nWhy is this useful? Because we can chain intermediate steps in data analysis.\nFor example:\n\nTake flights and pass it as the first argument in group_by().\nGroup the data based on the carrier column.\nSummarise the data to calculate the average departure delay.\n\n\n\nflights |> # Take the flight data frame\n  group_by(carrier) |> # Then group it by carrier\n  summarise( # Then calculate the average departure delay (by group)\n    average_departure_delay = mean(dep_delay, na.rm = TRUE),\n    n = n()\n  )"
+  },
+  {
+    "objectID": "index.html#piping-operations-3-output",
+    "href": "index.html#piping-operations-3-output",
+    "title": "Efficient data manipulation with R",
+    "section": "Piping operations",
+    "text": "Piping operations\n\n# A tibble: 16 × 3\n   carrier average_departure_delay     n\n   <chr>                     <dbl> <int>\n 1 9E                        16.7  18460\n 2 AA                         8.59 32729\n 3 AS                         5.80   714\n 4 B6                        13.0  54635\n 5 DL                         9.26 48110\n 6 EV                        20.0  54173\n 7 F9                        20.2    685\n 8 FL                        18.7   3260\n 9 HA                         4.90   342\n10 MQ                        10.6  26397\n11 OO                        12.6     32\n12 UA                        12.1  58665\n13 US                         3.78 20536\n14 VX                        12.9   5162\n15 WN                        17.7  12275\n16 YV                        19.0    601"
+  },
+  {
+    "objectID": "index.html#piping-operations-4",
+    "href": "index.html#piping-operations-4",
+    "title": "Efficient data manipulation with R",
+    "section": "Piping operations",
+    "text": "Piping operations\n\nBy default, the pipe operator passes the lhs object as the first parameter in the rhs function. We can control this behaviour using the “_” placeholder.\nFor example, rnorm(n, mean = 0, sd = 1) has three arguments.\n\n\n10  |> rnorm() # Same as rnorm(n = 10, mean = 0, sd = 1)\n10  |> rnorm(5, mean = _) # Same as rnorm(5, mean = 10, sd = 1)\n\n\n\n\n\n\n\n\nAttention!!!\n\n\nYou have to use the placeholder with named parameters.\n\n\n\n\n10  |> rnorm(5, _) # Not good!\n10  |> rnorm(5, mean = _) # Good!"
+  },
+  {
+    "objectID": "index.html#joining-tables-1",
+    "href": "index.html#joining-tables-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Joining tables",
+    "text": "Joining tables\n\nData are rarely stored in a single data frame or a single file.\nGood database practices recommend having similar data in separate tables.\nJoins are used to merge data frame together."
+  },
+  {
+    "objectID": "index.html#understanding-joins",
+    "href": "index.html#understanding-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Understanding joins",
+    "text": "Understanding joins\n\n\n\n\nTypes of equality and filtering joins"
+  },
+  {
+    "objectID": "index.html#understanding-joins-1",
+    "href": "index.html#understanding-joins-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Understanding joins",
+    "text": "Understanding joins\nSuppose that we have two data frames: sites and measurements.\n\n\n\n\n\n\n\n  \n    \n      The sites table contains information where about sampling locations\n    \n    \n  \n  \n    \n      site_id\n      latitude\n      longitude\n    \n  \n  \n    Site A\n45.5231\n-122.6765\n    Site B\n46.1234\n-123.4567\n    Site C\n47.3456\n-124.5678\n  \n  \n  \n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      The measurements table contains temperature measurements\n    \n    \n  \n  \n    \n      site_name\n      temperature\n      date\n    \n  \n  \n    Site A\n20.5\n2020-01-01\n    Site A\n21.3\n2020-01-02\n    Site B\n18.9\n2020-02-01"
+  },
+  {
+    "objectID": "index.html#understanding-joins-2",
+    "href": "index.html#understanding-joins-2",
+    "title": "Efficient data manipulation with R",
+    "section": "Understanding joins",
+    "text": "Understanding joins\nIf you want to follow along, you can read the toy data as this:\n\nsites <- read_csv(\"https://bit.ly/3xAwqr1\")\nmeasurements <- read_csv(\"https://bit.ly/3Sepl9a\")\n\n\nsites\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\nmeasurements\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01"
+  },
+  {
+    "objectID": "index.html#left-joins",
+    "href": "index.html#left-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Left joins",
+    "text": "Left joins\n\n\nsites\nmeasurements\n\n\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01\n\n\n\n\n\nIf we try to join sites and measurements together, we get the following error.\n\nleft_join(sites, measurements)\n\nError in `left_join()`:\n! `by` must be supplied when `x` and `y` have no common variables.\nℹ Use `cross_join()` to perform a cross-join.\n\n\n\n\n\n\n\n\n\nGood practice\n\n\nThe *_join() family functions will try to automatically join tables using columns with the same names. However, it is of good practice to be explicit on which columns to use with the by argument."
+  },
+  {
+    "objectID": "index.html#left-joins-1",
+    "href": "index.html#left-joins-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Left joins",
+    "text": "Left joins\n\nWe can specify the columns to use for the join with the by argument.\nThe following code says:\n\nUse the site_id column in sites and the site_name column in measurements to join both tables together.\n\nleft_join(sites, measurements, by = c(\"site_id\" = \"site_name\"))\n\n# A tibble: 4 × 5\n  site_id latitude longitude temperature date      \n  <chr>      <dbl>     <dbl>       <dbl> <date>    \n1 Site A      45.5     -123.        20.5 2020-01-01\n2 Site A      45.5     -123.        21.3 2020-01-02\n3 Site B      46.1     -123.        18.9 2020-02-01\n4 Site C      47.3     -125.        NA   NA"
+  },
+  {
+    "objectID": "index.html#inner-joins",
+    "href": "index.html#inner-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Inner joins",
+    "text": "Inner joins\n\n\nsites\nmeasurements\n\n\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01\n\n\n\n\n\nAn inner_join() keeps only the observations that match between the tables.\n\ninner_join(sites, measurements, by = c(\"site_id\" = \"site_name\"))\n\n# A tibble: 3 × 5\n  site_id latitude longitude temperature date      \n  <chr>      <dbl>     <dbl>       <dbl> <date>    \n1 Site A      45.5     -123.        20.5 2020-01-01\n2 Site A      45.5     -123.        21.3 2020-01-02\n3 Site B      46.1     -123.        18.9 2020-02-01"
+  },
+  {
+    "objectID": "index.html#full-joins",
+    "href": "index.html#full-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Full joins",
+    "text": "Full joins\n\n\nsites\nmeasurements\n\n\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01\n\n\n\n\n\nA full_join() keeps all the observations contained in the tables. NA will be used as a fill value when there are no matches.\n\nfull_join(sites, measurements, by = c(\"site_id\" = \"site_name\"))\n\n# A tibble: 4 × 5\n  site_id latitude longitude temperature date      \n  <chr>      <dbl>     <dbl>       <dbl> <date>    \n1 Site A      45.5     -123.        20.5 2020-01-01\n2 Site A      45.5     -123.        21.3 2020-01-02\n3 Site B      46.1     -123.        18.9 2020-02-01\n4 Site C      47.3     -125.        NA   NA"
+  },
+  {
+    "objectID": "index.html#anti-joins",
+    "href": "index.html#anti-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Anti joins",
+    "text": "Anti joins\n\n\nsites\nmeasurements\n\n\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01\n\n\n\n\n\nAn anti-join() find all observations that have no match between tables. The next bloc of code says:\nfind all observations in sites that have no match in measurements\n\nanti_join(sites, measurements, by = c(\"site_id\" = \"site_name\"))\n\n# A tibble: 1 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site C      47.3     -125."
+  },
+  {
+    "objectID": "index.html#anti-joins-1",
+    "href": "index.html#anti-joins-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Anti joins",
+    "text": "Anti joins\n\n\nsites\nmeasurements\n\n\n\n# A tibble: 3 × 3\n  site_id latitude longitude\n  <chr>      <dbl>     <dbl>\n1 Site A      45.5     -123.\n2 Site B      46.1     -123.\n3 Site C      47.3     -125.\n\n\n# A tibble: 3 × 3\n  site_name temperature date      \n  <chr>           <dbl> <date>    \n1 Site A           20.5 2020-01-01\n2 Site A           21.3 2020-01-02\n3 Site B           18.9 2020-02-01\n\n\n\n\n\nIf we inverse the order of the data frames, we get a different result. The next bloc of code says:\nfind all observations in measurements that have no match in sites\n\nanti_join(measurements, sites, by = c(\"site_name\" = \"site_id\"))\n\n# A tibble: 0 × 3\n# … with 3 variables: site_name <chr>, temperature <dbl>, date <date>"
+  },
+  {
+    "objectID": "index.html#inequality-and-rolling-joins",
+    "href": "index.html#inequality-and-rolling-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Inequality and rolling joins",
+    "text": "Inequality and rolling joins\nSo far, we have joined tables on the exact match: both tables need to have columns sharing the same value.\n\n\n\nNow, consider these two data frames to merge using the depth_m column.\n\n\n\ndf_temperature\n\n# A tibble: 2 × 2\n  depth_m  chla\n    <dbl> <dbl>\n1     1.1   0.1\n2     1.4   0.3\n\n\n\n\ndf_o2\n\n# A tibble: 2 × 2\n  depth_m  doxy\n    <dbl> <dbl>\n1    1.12   200\n2    1.2    250\n\n\n\n\n\nWhat will happen if I try to join them?"
+  },
+  {
+    "objectID": "index.html#inequality-joins",
+    "href": "index.html#inequality-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Inequality joins",
+    "text": "Inequality joins\nJoining these table is not working because there are no values of depth_m that match between df_temperature and df_o2\n\n\ndf_temperature\ndf_o2\n\n\n\n# A tibble: 2 × 2\n  depth_m  chla\n    <dbl> <dbl>\n1     1.1   0.1\n2     1.4   0.3\n\n\n# A tibble: 2 × 2\n  depth_m  doxy\n    <dbl> <dbl>\n1    1.12   200\n2    1.2    250\n\n\n\n\n\n\n\n\nleft_join(df_temperature, df_o2, by = \"depth_m\")\n\n# A tibble: 2 × 3\n  depth_m  chla  doxy\n    <dbl> <dbl> <dbl>\n1     1.1   0.1    NA\n2     1.4   0.3    NA\n\n\n\n\ninner_join(df_temperature, df_o2, by = \"depth_m\")\n\n# A tibble: 0 × 3\n# … with 3 variables: depth_m <dbl>, chla <dbl>, doxy <dbl>"
+  },
+  {
+    "objectID": "index.html#inequality-joins-1",
+    "href": "index.html#inequality-joins-1",
+    "title": "Efficient data manipulation with R",
+    "section": "Inequality joins",
+    "text": "Inequality joins\nBecause there are no exact matches in the depth_m column, we can use an inequality join with the join_by() function.\n\nleft_join(df_temperature, df_o2, by = join_by(depth_m <= depth_m))\n\n# A tibble: 3 × 4\n  depth_m.x  chla depth_m.y  doxy\n      <dbl> <dbl>     <dbl> <dbl>\n1       1.1   0.1      1.12   200\n2       1.1   0.1      1.2    250\n3       1.4   0.3     NA       NA\n\n\nThe previous bloc of code says:\nleft join df_temperature and df_o2 where depth_m in df_temperature is smaller or equal to depth_m in df_o2"
+  },
+  {
+    "objectID": "index.html#inequality-joins-2",
+    "href": "index.html#inequality-joins-2",
+    "title": "Efficient data manipulation with R",
+    "section": "Inequality joins",
+    "text": "Inequality joins\n\n\ndf_temperature\ndf_o2\n\n\n\n# A tibble: 2 × 2\n  depth_m  chla\n    <dbl> <dbl>\n1     1.1   0.1\n2     1.4   0.3\n\n\n# A tibble: 2 × 2\n  depth_m  doxy\n    <dbl> <dbl>\n1    1.12   200\n2    1.2    250\n\n\n\n\n\nNote that there are two rows in df_o2 that match the specified condition. This is why we end up with three rows after joining.\n\nleft_join(df_temperature, df_o2, by = join_by(depth_m <= depth_m))\n\n# A tibble: 3 × 4\n  depth_m.x  chla depth_m.y  doxy\n      <dbl> <dbl>     <dbl> <dbl>\n1       1.1   0.1      1.12   200\n2       1.1   0.1      1.2    250\n3       1.4   0.3     NA       NA"
+  },
+  {
+    "objectID": "index.html#rolling-joins",
+    "href": "index.html#rolling-joins",
+    "title": "Efficient data manipulation with R",
+    "section": "Rolling joins",
+    "text": "Rolling joins\nInstead of using an inequality join, we can try a rolling join. This type of join limits the results returned from an inequality join condition and uses the closest() function.\n\nleft_join(df_temperature, df_o2, by = join_by(closest(depth_m <= depth_m)))\n\n# A tibble: 2 × 4\n  depth_m.x  chla depth_m.y  doxy\n      <dbl> <dbl>     <dbl> <dbl>\n1       1.1   0.1      1.12   200\n2       1.4   0.3     NA       NA\n\n\nThe previous bloc of code says:\nleft join df_temperature and df_o2 where depth_m in df_temperature is smaller or equal to depth_m in df_o2 but only keep the closest match"
+  },
+  {
+    "objectID": "index.html#exercise",
+    "href": "index.html#exercise",
+    "title": "Efficient data manipulation with R",
+    "section": "Exercise",
+    "text": "Exercise\nYour turn: question\n\n\n\n\nSource: R for Data Science\n\n\n\n\nweather |>\n  summarise(mean_temp = mean(temp, na.rm = TRUE), .by = month) |>\n  filter(mean_temp == max(mean_temp)) |>\n  left_join(flights) |>\n  summarise(month = unique(month), n = n(), .by = carrier) |>\n  left_join(airlines) |>\n  arrange(desc(n))\n\n# A tibble: 15 × 4\n   carrier month     n name                       \n   <chr>   <int> <int> <chr>                      \n 1 UA          7  5066 United Air Lines Inc.      \n 2 B6          7  4984 JetBlue Airways            \n 3 EV          7  4641 ExpressJet Airlines Inc.   \n 4 DL          7  4251 Delta Air Lines Inc.       \n 5 AA          7  2882 American Airlines Inc.     \n 6 MQ          7  2261 Envoy Air                  \n 7 US          7  1786 US Airways Inc.            \n 8 9E          7  1494 Endeavor Air Inc.          \n 9 WN          7  1076 Southwest Airlines Co.     \n10 VX          7   489 Virgin America             \n11 FL          7   263 AirTran Airways Corporation\n12 YV          7    81 Mesa Airlines Inc.         \n13 AS          7    62 Alaska Airlines Inc.       \n14 F9          7    58 Frontier Airlines Inc.     \n15 HA          7    31 Hawaiian Airlines Inc.     \n\nflights |>\n  count(month, day, sort = TRUE)\n\n# A tibble: 365 × 3\n   month   day     n\n   <int> <int> <int>\n 1    11    27  1014\n 2     7    11  1006\n 3     7     8  1004\n 4     7    10  1004\n 5    12     2  1004\n 6     7    18  1003\n 7     7    25  1003\n 8     7    12  1002\n 9     7     9  1001\n10     7    17  1001\n# … with 355 more rows"
+  },
+  {
+    "objectID": "index.html#sql-murder-mystery-1",
+    "href": "index.html#sql-murder-mystery-1",
+    "title": "Efficient data manipulation with R",
+    "section": "SQL Murder Mystery",
+    "text": "SQL Murder Mystery\n\n\n\nThere’s been a Murder in SQL City! The SQL Murder Mystery is designed to be both a self-directed lesson to learn SQL concepts and commands and a fun game for experienced SQL users to solve an intriguing crime https://mystery.knightlab.com/.\n\n\n\n\n\nPhoto by David von Diemar on Unsplash"
+  },
+  {
+    "objectID": "index.html#sql-murder-mystery-2",
+    "href": "index.html#sql-murder-mystery-2",
+    "title": "Efficient data manipulation with R",
+    "section": "SQL Murder Mystery",
+    "text": "SQL Murder Mystery\n\nA crime has taken place and the detective needs your help.\nThe detective gave you the crime scene report, but you somehow lost it.\nYou vaguely remember that the crime was a ​murder​ that occurred sometime on ​Jan.15, 2018​ and that it took place in ​SQL City​.\nStart by retrieving the corresponding crime scene report from the police department’s database."
+  },
+  {
+    "objectID": "index.html#sql-murder-mystery-3",
+    "href": "index.html#sql-murder-mystery-3",
+    "title": "Efficient data manipulation with R",
+    "section": "SQL Murder Mystery",
+    "text": "SQL Murder Mystery\n\nThere are several files (tables) with all the information you need to find the murderer.\n\n\n\ndata/sql_murder_mystery/\n├── crime_scene_report.csv\n├── drivers_license.csv\n├── facebook_event_checkin.csv\n├── get_fit_now_check_in.csv\n├── get_fit_now_member.csv\n├── income.csv\n├── interview.csv\n├── person.csv\n└── solution.csv"
+  },
+  {
+    "objectID": "index.html#sql-murder-mystery-4",
+    "href": "index.html#sql-murder-mystery-4",
+    "title": "Efficient data manipulation with R",
+    "section": "SQL Murder Mystery",
+    "text": "SQL Murder Mystery\nEntity-relationship (ER) diagram of the SQL murder tables"
+  },
+  {
+    "objectID": "index.html#sql-murder-mystery-5",
+    "href": "index.html#sql-murder-mystery-5",
+    "title": "Efficient data manipulation with R",
+    "section": "SQL Murder Mystery",
+    "text": "SQL Murder Mystery\nYour challenges consist in:\n\nFind the murderer\nFind who commissioned the murder\n\n\n\n\n\n\n\nGetting started\n\n\nOpen the file crime_scene_report.csv and search for a murder that occurred on January 15 of 2018 in the SQL City. From there, conduct your investigation!\n\n\n\n\n\nhttps://jthomasmock.github.io/arrow-dplyr"
+  }
+]
