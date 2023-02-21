@@ -1,0 +1,128 @@
+## Test side output
+
+```{r}
+#| output-location: column
+library(palmerpenguins)
+data(penguins)
+
+penguins |> 
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram()
+```
+
+## Columns
+
+```{r}
+#| layout-ncol: 2
+
+knitr::kable(head(mtcars[, 1:2]))
+knitr::kable(head(mtcars[, 3:4]))
+```
+
+## Data
+
+The Palmer penguins
+
+```{r}
+#| eval: false
+install.packages("palmerpenguins")
+```
+
+## Data
+
+```{r}
+library(palmerpenguins)
+data(penguins)
+
+knitr::kable(head(penguins))
+```
+
+
+
+## Font Awesome
+
+{{< fa thumbs-up >}} {{< fa folder >}} {{< fa chess-pawn >}} {{< fa brands bluetooth >}} {{< fa brands twitter size=2xl >}} {{< fa brands github size=5x >}} {{< fa battery-half size=Huge >}} {{< fa envelope title="An envelope" >}}
+
+## Code with columns
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+#| label: fig-airquality
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+library(ggplot2)
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess"
+)
+```
+
+This is text with [special]{style="color:red;"} formatting.
+
+## Columns
+
+::: {layout-ncol="2;" style="color:red;font-size:2em"}
+a b
+:::
+
+## Callouts
+
+::: callout-note
+This is a note
+:::
+
+::: callout-tips
+## Tip With Caption
+
+This is a tips
+:::
+
+::: {.callout-caution collapse="true"}
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+## Callouts 2
+
+No background color.
+
+::: {.callout-caution collapse="true" appearance="simple"}
+## Pay Attention
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+Or a magically [appearing word]{.fragment style="font-weight:bold;font-size:1.5em"} [with an additional point after]{.fragment}
+
+## Options
+
+```{r}
+#| code-line-numbers: "|3"
+#| eval: true
+#| fig-cap: !expr glue::glue("The mean temperature was {mean(airquality$Temp) |> round()}")
+#| fig-alt: |
+#|   "A scatterplot with temperature by ozone levels along with a trend line
+#|   indicating the increase in temperature with increasing ozone levels."
+ggplot(airquality, aes(Ozone, Temp)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE)
+```
+
+## Erratum
+
+::: {.callout-caution collapse="true"}
+## Erratum
+
+I was wrongly using the following extent: `extent(-3837500, 3762500, -5362500, 5837500)`. [Michael Sumner](https://twitter.com/mdsumner) kindly informed me about the error. The proper extent to use is down below.
+:::
+
+# Tessst {background-color="#2C404A"}
+
+[dsfsdf]{.callout-caution}
+
+@MassicotteCDOM
+
+## References
+
+::: {#refs}
+:::

@@ -1,0 +1,1644 @@
+---
+title: "Efficient data manipulation with R"
+# subtitle: "You too can be a pro!!!"
+author: "Philippe Massicotte"
+date: "2023-03-02"
+date-format: "long"
+institute: "Laval University"
+chalkboard:
+  theme: whiteboard
+format: 
+  revealjs:
+    theme: 
+      - solarized
+      - theme.scss
+    fig-dpi: 300
+    fig-align: center
+    footer: "[https://jthomasmock.github.io/arrow-dplyr](https://jthomasmock.github.io/arrow-dplyr)"
+    highlight-style: a11y
+    height: 1080
+    width: 1920
+    slide-number: c/t
+    transition: fade
+    preview-links: true
+    hide-inactive-cursor: true
+
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 1
+    dpi: 300
+
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 6
+  fig-height: 4
+
+editor: source
+
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| cache: false
+#| include: false
+library(tidyverse)
+library(ggpmthemes)
+library(gt)
+library(dm)
+
+# remotes::install_github("gadenbuie/countdown")
+# library(countdown)
+
+theme_set(theme_maven())
+theme_update(
+  panel.border = element_blank(),
+  axis.ticks = element_blank()
+)
+
+# knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+
+# https://quarto.org/docs/presentations/revealjs/themes.html
+```
+
+## Who am I
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+<img src="images/myname.png" width="400px"/>
+
+<br>
+
+::: {layout="[[1,1], [1]]"}
+
+![](images/logos/takuvik.svg)
+
+![](images/logos/sn.png)
+
+![](images/logos/ulaval.svg)
+
+:::
+
+:::
+
+::: {.column width='5%'}
+:::
+
+::: {.column width='55%'}
+
+[Research assistant at Takuvik (Laval University)]{style="font-weight:bold;font-size:1.5em"}
+
+<small>*Remote sensing, modelling, data science, data visualization*</small><br>
+
+{{< fa brands github >}} [My GitHub](https://github.com/PMassicotte){style="font-weight:bold;"}
+
+{{< fa brands twitter >}} [Follow me on Twitter](https://twitter.com/philmassicotte){style="font-weight:bold;"}
+
+{{< fa brands mastodon >}} [Follow me on Mastodon](https://fosstodon.org/@philmassicotte){style="font-weight:bold;"}
+
+{{< fa link >}} [www.pmassicotte.com](https://www.pmassicotte.com){style="font-weight:bold;"}
+
+:::
+::::
+
+## Context
+
+:::: {.columns}
+
+::: {.column width='70%'}
+
+<figure>
+<center>
+<img src="images/environmental-data-science-r4ds-general.png" alt="The expanded version of the classic Grolemund & Wickham R4DS workflow, including environmental data & sci comm bookends! Envisioned by Dr. Julia Lowndes for her useR!2019 keynote. Please cite this illustration as: Updated from Grolemund & Wickham's classis R4DS schematic, envisioned by Dr. Julia Lowndes for her 2019 useR! keynote talk and illustrated by Allison Horst." style="width:85%"/>
+<figcaption>Artwork by Allison Horst</figcaption>
+</center>
+</figure>
+
+:::
+
+::: {.column width='30%'}
+
+> [**It is often said that 80% of data analysis is spent on cleaning and preparing data.** And it's not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.]{style="font-size:0.9em;"}
+
+:::
+
+::::
+
+## Context
+
+:::: {.columns}
+
+::: {.column width='70%'}
+
+<figure>
+<center>
+<img src="images/environmental-data-science-r4ds-general.png" alt="The expanded version of the classic Grolemund & Wickham R4DS workflow, including environmental data & sci comm bookends! Envisioned by Dr. Julia Lowndes for her useR!2019 keynote. Please cite this illustration as: Updated from Grolemund & Wickham's classis R4DS schematic, envisioned by Dr. Julia Lowndes for her 2019 useR! keynote talk and illustrated by Allison Horst." style="width:85%"/>
+<figcaption>Artwork by Allison Horst</figcaption>
+</center>
+</figure>
+
+:::
+
+::: {.column width='30%'}
+
+> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: https://towardsdatascience.com](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
+
+:::
+
+::::
+
+## Objectives
+
+::: {.incremental}
+
+- Understand the basics of data manipulation techniques using R.
+
+- Learn how to clean and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
+
+- Develop the ability to manipulate and analyze datasets: **grouping**, **filtering** and **summarizing**.
+
+- Acquire knowledge on how to **join, merge and aggregate data** from multiple sources to produce meaningful insights.
+
+:::
+
+## Who are you?
+
+- Diverse faculties and academic backgrounds.
+
+- Efforts to offer examples that are pertinent to everyone in the classroom.
+
+```{r}
+#| echo: false
+#| fig-width: 10
+
+df <- readxl::read_excel(here::here("data", "Inscription_Atelier_R.xlsx")) |>
+  janitor::clean_names()
+
+df |>
+  count(statut, faculte_daffiliation_ul, sort = TRUE) |>
+  add_count(statut, name = "n_total", wt = n) |>
+  mutate(statut = fct_reorder(statut, n_total)) |>
+  mutate(faculte_daffiliation_ul = fct_inorder(faculte_daffiliation_ul)) |>
+  mutate(faculte_daffiliation_ul = fct_relevel(faculte_daffiliation_ul, "Autre", after = Inf)) |>
+  ggplot(aes(x = n, y = statut, fill = faculte_daffiliation_ul)) +
+  geom_col(color = "white") +
+  ggthemes::scale_fill_tableau(
+    name = NULL, 
+    labels = \(x) str_wrap(x, 30),
+    guide = guide_legend(
+      direction = "vertical",
+      label.position = "right",
+      label.theme = element_text(size = 10),
+      byrow = TRUE
+    ),
+  ) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
+  labs(
+    x = "Nombre",
+    y = NULL
+  ) +
+  theme(
+    panel.grid = element_blank(), 
+    axis.ticks = element_blank(),
+    panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    plot.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    legend.background = element_rect(fill = "#FDF6E3"),
+    legend.position = "right",
+    strip.text = element_text(size = 8),
+    strip.background = element_blank(),
+    legend.spacing.y = unit(0.25, "cm"),
+    text = element_text(size = 14)
+  ) 
+```
+
+## Prerequisites
+
+- This workshop **is not** an introduction to R programming.
+
+- I am assuming that you already have basic knowledge of R. 
+
+- You should know how to:
+  - Install R packages
+  - Use R Studio or another of your choice
+  - Create R scripts
+  - Import data
+  - Work with data frame
+  - Perform basic calculations
+
+## Getting ready to code!
+
+If you do not have R/R Studio installed on your laptop, I have created a pre-configured cloud instance of R with all the packages needed for this workshop. If you choose this option, you need to have a free [Posit](https://posit.cloud) account.
+
+- **Step 1:** Open the course project
+
+  - Go to this URL: [https://posit.cloud/spaces/338666/](https://posit.cloud/spaces/338666/).
+  - You will have to create or login into your Posit account first.
+
+<p class="" style="margin: 10px;"></p>
+
+- **Step 2:** Make a copy of the project
+
+ <figure>
+  <center>
+  <img src= "images/posit_cloud_copy_project.png" alt="Trulli" style="width:60%">
+  </center>
+</figure> 
+
+::: footer
+ <figure>
+  <center>
+  <img src= "images/Posit-logo-h-full-color-RGB-TM.svg" alt="Trulli" style="width:20%">
+  </center>
+</figure> 
+:::
+
+# Data frames {background-color="#2C404A"}
+
+## Data frames
+
+::: {.incremental}
+
+- **Data frames** are important objects in R which are created when reading (most) tabular text files.
+
+- The most useful data structure for data scientists.
+  
+- They allow for efficient data manipulation:
+  - Filtering
+  - Summarizing
+  - Aggregating
+  - Joining
+  - And much more!
+
+:::
+
+## Data frames
+
+- A data frame can be seen as an Excel tabular sheet: **Lines are observations** and **columns are variables**.
+
+ <figure>
+  <center>
+  <img src="https://rstudio-education.github.io/tidyverse-cookbook/images/tidy-data.png" alt="Trulli" style="width:50%">
+  <figcaption>Source: [Tidyverse cookbook](https://rstudio-education.github.io/tidyverse-cookbook/)</figcaption>
+  </center>
+</figure> 
+
+::: {.callout-note}
+A data frame can be seen as a matrix with the difference that **columns (variables) can be of different types** (numerics, dates, characters, etc.).
+:::
+
+## Data frames
+
+The `mtcars` data frame is included in base R.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+:::
+
+::: {.column width='60%' .small}
+```{r}
+mtcars
+```
+:::
+
+::::
+
+# Importing data in R {background-color="#2C404A"}
+
+## Reading files
+
+- Why bother about **data frame**? Most of the time, this is the data structure that will be created when importing data in R.
+
+- There are many functions to import data in R.
+
+| **File format**                    | **Function**   | **Package** |
+|------------------------------------|----------------|-------------|
+| Comma separated values (.csv)      | `read_csv()`   | readr       |
+| Other text files (.txt, .dat, ...) | `read_delim()` | readr       |
+| Excel (.xls, .xlsx)                | `read_excel()` | readxl      |
+| Stata                              | `read_stata()` | haven       |
+| SPSS                               | `read_spss()`  | haven       |
+| SAS                                | `read_sas()`   | haven       |
+| Matlab file (.mat)                 | `readMat()`    | R.matlab    |
+
+## Reading Excel files
+
+:::: {.columns}
+
+::: {.column width='80%'}
+To read Excel files, we can use `read_excel()` from the `readxl` package.
+
+```{r}
+#| eval: false
+
+# Load the readxl package
+library(readxl)
+
+# Read the first sheet in a file
+mydata <- read_excel("/path/to/myfile.xls")
+
+# Read the third sheet in a file
+mydata <- read_excel("/path/to/myfile.xlsx", sheet = 3)
+```
+:::
+
+::: {.column width='20%'}
+![](https://raw.githubusercontent.com/tidyverse/readxl/main/img/readxl.png){width=400}
+:::
+
+::::
+
+## Reading CSV files
+
+:::: {.columns}
+
+::: {.column width='80%'}
+To read CSV files, we can use `read_csv()` from the `readr` package.
+
+```{r}
+#| eval: false
+#| code-line-numbers: 1-6|7-8
+# Load the readr package
+library(readr)
+
+# If the column delimiter is ","
+mydata <- read_csv("/path/to/myfile.csv")
+
+# If the column delimiter is ";"
+mydata <- read_csv2("/path/to/myfile.csv")
+```
+:::
+
+::: {.column width='20%'}
+![](https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/readr.png){width=400}
+:::
+
+::::
+
+:::: {.fragment}
+
+::: {.callout-important}
+Note that the base R function to read a CSV file is `read.csv()`. Do not confuse with the `read_csv()` function from `readr`.
+:::
+
+::::
+
+## Exporting data
+
+Similarly, exporting a data frame into a file can be done using: `write_*()`.
+
+```{r}
+#| eval: false
+
+write_csv(df, "/path/to/myfile.csv")
+write_csv2(df, "/path/to/myfile.csv")
+write_tsv(df, "/path/to/myfile.tsv")
+write_delim(df, "/path/to/myfile.tab")
+```
+
+For example, you could export the `mtcars` data frame in  tab-delimited and comma-delimited files on your desktop:
+
+```{r}
+#| eval: false
+write_delim(mtcars, "~/Desktop/mtcars.tab")
+write_csv(mtcars, "~/Desktop/mtcars.csv")
+```
+
+## What is a `tibble`?
+
+In base R, the main object holding **sheet-like data** is called a `data.frame`. In the `tidyverse` ecosystem, they are called `tibble`, which can be seen as **a pimped version** of a `data.frame`.
+
+:::: {.columns .small}
+
+::: {.column width='50%' .fragment}
+
+**This is a `data.frame`**
+
+```{r}
+head(mtcars[, 1:5], 12)
+```
+:::
+
+::: {.column width='50%' .fragment}
+
+**This is a `tibble`**
+
+```{r}
+head(as_tibble(mtcars[, 1:5], rownames = "model"), 12)
+```
+:::
+
+::::
+
+## Reading CSV files (an example)
+
+```{r}
+#| echo: false
+fs::dir_create("data")
+
+USArrests |> 
+  as_tibble(rownames = "state") |>
+  write_csv("data/usarrests.csv")
+```
+
+:::: {.columns .small}
+
+::: {.column width="50%"}
+
+[Reading using base R creates a `data frame`]{style="font-size:1.3em;"}
+
+```{r}
+read.csv("data/usarrests.csv")
+```
+:::
+
+::: {.column width="50%"}
+
+[Reading using `readr` creates a `tibble`]{style="font-size:1.3em;"}
+
+```{r}
+read_csv("data/usarrests.csv")
+```
+:::
+
+::::
+
+## Importing data
+
+Your turn: try reading the data (CSV file) located at this location: 
+
+[https://bit.ly/2U487zA](https://bit.ly/2U487zA){style="font-size:2em;"}
+
+. . .
+
+:::: {.columns .small}
+
+::: {.column width='35%'}
+
+This command reads the data, but does not assign it to a variable.
+
+```{r}
+#| eval: false
+library(readr)
+
+read_csv("https://bit.ly/2U487zA")
+```
+:::
+
+::: {.column width='65%'}
+
+Use the [**<-**]{style="font-family:ubuntu;"} operator to create a new variable (ex.: `df`).
+
+```{r}
+library(readr)
+
+df <- read_csv("https://bit.ly/2U487zA")
+df
+```
+:::
+
+::::
+
+
+# Manipulating data in R {background-color="#2C404A"}
+
+## Data manipulation
+
+There are two main characteristics of good data manipulation:
+
+. . .
+
+1. **speed**: results are returned in a reasonable time
+
+. . .
+
+2. **elegance**: easy to use and to understand what the code is doing
+
+. . .
+
+> The **tidyverse** is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.
+
+## The tidyverse
+
+The tidyverse provides a set of packages which provides flexible tools for data manipulation.
+
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
+</center>
+
+<center>
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/>
+</center>
+
+## The tidyverse
+
+The package is not included in the base installation of R.
+
+```{r}
+#| eval: false
+# Install the tidyverse packages
+install.packages("tidyverse")
+```
+
+```{r}
+#| eval: false
+# Load all the packages included in tidyverse
+library(tidyverse)
+```
+
+You can refer to the printed **cheat sheet** for an overview of the package's functions.
+
+# Data manipulation with {dplyr} {background-color="#2C404A"}
+
+## dplyr
+
+> dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges
+
+All `dplyr` functions use the same scheme: **the first argument to provide is a data frame**.
+
+| **Function**       | **Definition**                                                                                                       |
+|------------------------|-----------------------------------------------|
+| `filter(df, ...)`    | Select a subset of the rows of a data frame.                                                                         |
+| `arrange(df, ...)`   | Reorder rows of a data frame.                                                                                        |
+| `select(df, ...)`    | Select columns of a data frame.                                                                                      |
+| `mutate(df, ...)`    | Add or modify columns in a data frame.                                                                                     |
+| `summarise(df, ...)` | Summarize a data frame into a single row. This function is very helpful in combination with the `group_by()` function. |
+| `group_by(df, ...)`  | Group a data frame based on the specified columns.                                                                   |
+
+: Useful functions {tbl-colwidths="[25,75]"} 
+
+## The `nycflights13` datasets
+
+::: {.incremental}
+
+- To learn how to use these functions, we will use datasets from package `nycflights13`.
+
+- This package contains information about all flights that departed from New York airports (i.e., **EWR**, **JFK** and **LGA**) in 2013.
+
+- Not included in base R, we first need to install it.
+
+:::
+
+. . .
+
+```{r, eval = FALSE}
+# Install the dataset package
+install.packages("nycflights13")
+```
+
+## Relationships
+
+ <figure>
+  <center>
+  <img src="https://bookdown.org/asmundhreinn/r4ds-master/diagrams/relational-nycflights.png" alt="Trulli" style="width:50%">
+  <figcaption>Source: [R for Data Science](https://bookdown.org/asmundhreinn/r4ds-master/)</figcaption>
+  </center>
+</figure>
+
+- The `flights` table connects to planes via a single variable, `tailnum`.
+- The `flights` table connects to `airports` in two ways: via the `origin` and `dest` variables.
+
+## nycflights13
+
+For the following examples we are going to use **fights**, **planes**, **airports**, **airlines** tables.
+
+```{r}
+# Libraries for data manipulation and visualization
+library(tidyverse)
+
+# Load the data package
+library(nycflights13)
+
+# Loads all the five data frame included in nycflights13
+data(flights)
+data(planes)
+data(airports)
+data(airlines)
+data(weather)
+```
+
+## The `flights` table
+
+```{r}
+glimpse(flights)
+```
+
+## The `flights` table
+
+```{r}
+#| echo: false
+head(flights) |>
+  gt::gt()
+```
+
+## The `planes` table
+
+```{r}
+glimpse(planes)
+```
+
+## The `planes` table
+
+```{r}
+#| echo: false
+head(planes) |>
+  gt::gt()
+```
+
+## The `airports` table
+
+```{r}
+glimpse(airports)
+```
+
+## The `airlines` table
+
+```{r}
+glimpse(airlines)
+```
+
+## The `weather` table
+
+```{r}
+glimpse(weather)
+```
+
+## Getting more information
+
+If you want more information on a specific table, use the `?` operator. This will open the help file and describe all variables included in the data frame.
+
+```{r}
+#| eval: false
+?flights
+
+?planes
+
+?airports
+
+?airlines
+
+?weather
+```
+
+## The `filter()` function
+
+- The `filter()` allows you to select a subset of the rows of a data frame. 
+
+- The first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame.
+
+![](images/functions/filter.png)
+
+## The `filter()` function
+
+Example 1: select all flights with a tail number equal to "**N14228**".
+
+```{r}
+filter(flights, tailnum == "N14228")
+```
+
+## The `filter()` function
+
+Example 2: select all flights with a departure delay greater than 180 minutes.
+
+```{r}
+filter(flights, dep_delay > 180)
+```
+
+## The `filter()` function
+
+Example 3: select all flights from `carriers` "**MQ**" or "**EV**".
+
+```{r}
+filter(flights, carrier ==  "MQ" | carrier == "EV")
+```
+
+## The `filter()` function
+
+Another option using the `%in%` operator.
+
+```{r}
+filter(flights, carrier %in%  c("MQ", "EV"))
+```
+
+## The `filter()` function
+
+Your turn: write code that uses the `flights` table and return all the flights with delayed departures between 100 and 200 minutes from the "**FL**" carrier.
+
+. . .
+
+```{r}
+filter(flights, dep_delay >= 100 & dep_delay <= 200 & carrier == "FL")
+```
+
+## The `arrange()` function
+
+- `arrange()` reorders the rows of a data frame. 
+
+- The function takes a data frame, and a set of column name(s) to order by.
+
+## The `arrange()` function
+
+Example 1: reorder flights on departure month.
+
+```{r}
+arrange(flights, month)
+```
+
+## The `arrange()` function
+
+Example 2: reorder flights on departure month and departure time.
+
+```{r}
+arrange(flights, month, dep_time)
+```
+
+## The `arrange()` function
+
+Example 3: reorder flights on departure month and by **decreasing** departure time.
+
+```{r}
+arrange(flights, month, desc(dep_time))
+```
+
+## The `select()` function
+
+- `select()` is used to extract column(s) from a data frame.
+
+- Useful when you want to perform data analysis on specific column(s) and not the complete dataset.
+
+## The `select()` function
+
+Example 1: select "**faa**" and "**name**" columns from the `airports` data frame.
+
+```{r}
+select(airports, faa, name)
+```
+
+## The `select()` function
+
+You can also use `select()` to remove columns with the `-` operator.
+
+Example 2: select all columns from `airports` except "**faa**" and "**name**".
+
+```{r}
+select(airports, -faa, -name)
+```
+
+## The `select()` function
+
+It is also possible to select columns using **helper functions**.
+
+Example 3: select "**year**", "**month**" and all columns that start with "**dep_**" from `flights`.
+
+```{r}
+select(flights, year, month, starts_with("dep_"))
+```
+
+## The `mutate()` function
+
+- The `mutate()` function is used to add or modify existing column(s) inside a data frame.
+
+- The function takes a data frame, and one or more expressions that add/modify columns.
+
+## The `mutate()` function
+
+Example 1: add a new column named "**distance_km**" which converts the `distance` column, which shows the flight distance in miles, into km.
+
+```{r}
+#| code-line-numbers: "1-5|2|3|4|1-5"
+mutate(
+  flights, 
+  distance_km = distance / 0.62137, 
+  .keep = "used"
+)
+```
+
+## The `mutate()` function
+
+It is also possible to add many new variables in a single operation.
+
+```{r}
+#| code-line-numbers: "3-4|1-6"
+mutate(
+  flights,
+  distance_km = distance / 0.62137,
+  distance_knot = distance / 1.15078,
+  .keep = "used"
+)
+```
+
+## The `mutate()` function
+
+The `mutate()` function is very powerful as it allows to use of some **helper functions** to **mutate multiple columns at once**.
+
+For the following examples, we will use the `weather` table.
+
+```{r}
+weather
+```
+
+## The `mutate()` function
+
+Let's say we want to **round all the numerical columns** of the `weather` data frame. It could be fastidious to do it manually for the `r ncol(select(weather, where(is.numeric)))` numerical columns.
+
+```{r}
+glimpse(weather)
+```
+
+## The `mutate()` function
+
+Would require a lot of typing (**and I am very lazy!**):
+
+```{r}
+#| eval: false
+mutate(
+  weather,
+  year = round(year),
+  month = round(month),
+  day = round(day),
+  hour = round(hour),
+  temp = round(temp),
+  dewp = round(dewp),
+  humid = round(humid),
+  wind_dir = round(wind_dir),
+  wind_speed = round(wind_speed),
+  wind_gust = round(wind_gust),
+  precip = round(precip),
+  pressure = round(pressure)
+)
+```
+
+## The `mutate()` function
+
+- One option, is to use the `across(cols, function_to_apply)` function.
+
+- The following code says: 
+
+[apply the `mean()` function to all the columns between `temp` and `pressure`]{.text-outline}
+
+```{r}
+mutate(weather, across(year:pressure, round), .keep = "used")
+```
+
+## The `mutate()` function
+
+- Another option is to use a combination of `across()` and `where()` functions.
+
+- The following code says: 
+
+[apply the `mean()` function to **all the numerical columns**]{.text-outline}
+
+```{r}
+mutate(weather, across(where(is.numeric), round), .keep = "used")
+```
+## The `summarise()` function
+
+- The `summarise()` function allows summarising columns from a data frame.
+
+- Compress a data frame into single values (i.e. one row).
+  - Hence, you have to provide a function that will be used to calculate a certain value.
+
+## The `summarise()` function
+
+Example 1: Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.
+
+```{r}
+summarise(
+  flights,
+  average_departure_delay = mean(dep_delay),
+  average_arrival_delay = mean(arr_delay)
+)
+```
+
+. . .
+
+What is going on? Why do we have NA's?
+
+## The `summarise()` function
+
+Example 1: Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.
+
+```{r}
+summarise(
+  flights,
+  average_departure_delay = mean(dep_delay, na.rm = TRUE),
+  average_arrival_delay = mean(arr_delay, na.rm = TRUE)
+)
+```
+
+## The `summarise()` function
+
+- It could be interesting to know how many observations were used in the computation.
+- For this, we can use the `n()` helper function.
+
+```{r}
+#| code-line-numbers: "1-6|5"
+summarise(
+  flights,
+  average_departure_delay = mean(dep_delay, na.rm = TRUE),
+  average_arrival_delay = mean(arr_delay, na.rm = TRUE),
+  n = n() # Adding a new column "n" with the number of used observations
+)
+```
+
+## The `summarise()` function
+
+- Similarly as with `mutate()`, we can use the `across()` function to avoid extra typing.
+
+```{r}
+#| code-line-numbers: "1-5|3"
+summarise(
+  weather, 
+  across(where(is.numeric), mean, na.rm = TRUE),
+  n = n()
+)
+```
+## Working with grouped data
+
+- Alone, the `summarise()` function is not helpful because it collapses a data frame to a single row.
+- Usually, we want to work on **grouped data**.
+- `group_by()` "prepares" a data frame to send it to the `summarise()` function.
+
+## Working with grouped data
+
+Example 1: Calculate the average departure delay **by carrier**.
+
+First, let's group the data by `carrier`.
+
+```{r}
+flights_grouped <- group_by(flights, carrier)
+flights_grouped
+```
+
+## Working with grouped data
+
+Example 1: Calculate the average departure delay **by carrier**.
+
+Secondly, use `summarise()` as we did before by now using `flights_grouped` instead of `flights`.
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "1-5|2-3"
+summarise(
+  flights_grouped,
+  average_departure_delay = mean(dep_delay, na.rm = TRUE),
+  n = n()
+)
+```
+
+## Working with grouped data
+
+- We can also `summarise()` multiple columns at once.
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "1-5|3"
+summarise(
+  flights_grouped, 
+  across(where(is.numeric), mean, na.rm = TRUE),
+  n = n()
+)
+```
+
+```{r}
+
+```
+
+## Working with grouped data
+
+::: {.callout-caution collapse="true" appearance="simple"}
+## New in `dplyr` 1.1.0
+
+`.by/by` is an experimental alternative to `group_by()` that supports per-operation grouping for `mutate()`, `summarise()`, `filter()`, and the `slice()` family.
+:::
+
+[We want to calculate the average `height` for each combination of `species` and `homeworld` in the `starwars` data frame.]{.small}
+
+:::: {.columns .small}
+
+::: {.column width='55%'}
+
+```{r}
+starwars_grouped <- group_by(starwars, species, homeworld)
+summarise(
+  starwars_grouped, 
+  mean_height = mean(height)
+)
+```
+:::
+
+::: {.column width='45%'}
+
+```{r}
+summarise(
+  starwars, 
+  mean_height = mean(height), 
+  .by = c(species, homeworld)
+)
+```
+
+:::
+
+::::
+
+# Exercises {background-color="#2C404A"}
+
+## The Titanic
+
+```{r}
+titanic <- read_csv("https://bit.ly/3xrnh3U")
+glimpse(titanic)
+```
+
+## The Titanic
+
+Using your newly acquired skills, try answering the following questions:
+
+1. What was the average age of passengers on the Titanic?
+2. How many passengers on the Titanic were from first class?
+3. What was the proportion of passengers who survived the Titanic disaster?
+4. What was the average ticket price by cabin class?
+
+```{r}
+#| echo: false
+#| results: hide
+
+titanic |>
+  summarise(mean_age = mean(age, na.rm = TRUE))
+
+titanic |>
+  group_by(pclass) |>
+  summarise(n = n())
+
+titanic |>
+  count(pclass)
+
+titanic |>
+  count(survived) |>
+  mutate(percent = n / sum(n))
+
+titanic |>
+  summarise(mean_ticket_price = mean(fare, na.rm = TRUE), .by = c(pclass)) |>
+  arrange(mean_ticket_price)
+
+```
+
+# Piping operations {background-color="#2C404A"}
+
+![Photo by <a href="https://unsplash.com/@tival?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Val Tievsky</a> on <a href="https://unsplash.com/photos/fzmyw3mgVA0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>](images/unsplash_pipe.jpg){fig-align="center"}
+
+## Piping operations
+
+We have seen that to summarise grouped data, we need to perform two operations:
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1-7|1|3-7"
+flights_grouped <- group_by(flights, carrier)
+
+res <- summarise(
+  flights_grouped,
+  average_departure_delay = mean(dep_delay, na.rm = TRUE),
+  n = n()
+)
+```
+
+The thing is that we never directly use `flights_grouped`; it is only used as an **intermediate** object.
+
+## Piping operations
+
+- With R 4.1.0+, we can use the pipe operator ([**|>**]{style="font-family:ubuntu;"}) to chain operations.
+
+- Basically, ([**|>**]{style="font-family:ubuntu;"}) takes the left-hand side (**lhs**) object and passes it as the first argument in the right-hand side (**rhs**) function.
+
+:::: {.columns .fragment}
+
+::: {.column width="28%"}
+
+```{r}
+# Same as log(10)
+10 |> log()
+```
+
+:::
+
+::: {.column width="38%"}
+
+```{r}
+# Same has:
+# toupper("my string")
+"my string" |> toupper()
+```
+
+:::
+
+::: {.column width="34%"}
+
+```{r}
+# Same has:
+# head(chickwts), 6)
+chickwts |> head(6)
+```
+
+:::
+
+::::
+
+## Piping operations
+
+- Why is this useful? Because we can chain intermediate steps in data analysis.
+
+- For example:
+  1. Take `flights` and pass it as the first argument in `group_by()`.
+  2. Group the data based on the `carrier` column.
+  3. Summarise the data to calculate the average departure delay.
+
+```{r}
+#| code-line-numbers: "|1|2|3-6|1-7"
+#| output-location: slide
+flights |> # Take the flight data frame
+  group_by(carrier) |> # Then group it by carrier
+  summarise( # Then calculate the average departure delay (by group)
+    average_departure_delay = mean(dep_delay, na.rm = TRUE),
+    n = n()
+  )
+```
+
+## Piping operations
+
+- By default, the pipe operator passes the **lhs** object as the first parameter in the **rhs** function. We can control this behaviour using the "**\_**" placeholder.
+
+- For example, `rnorm(n, mean = 0, sd = 1)` has three arguments.
+
+```{r}
+#| eval: false
+10  |> rnorm() # Same as rnorm(n = 10, mean = 0, sd = 1)
+10  |> rnorm(5, mean = _) # Same as rnorm(5, mean = 10, sd = 1)
+```
+
+. . .
+
+::: {.callout-caution}
+## Attention!!!
+
+You have to use the placeholder with named parameters.
+
+:::
+
+```{r}
+#| eval: false
+10  |> rnorm(5, _) # Not good!
+10  |> rnorm(5, mean = _) # Good!
+```
+
+# Joining tables {background-color="#2C404A"}
+
+## Joining tables
+
+- Data are rarely stored in a single data frame or a single file.
+
+- Good database practices recommend having similar data in separate tables.
+
+- Joins are used to **merge data frame** together.
+
+## Understanding joins
+
+<figure>
+  <center>
+  <img src="images/join_types.svg" alt="Trulli" style="width:65%">
+  <figcaption>Types of equality and filtering joins</figcaption>
+  </center>
+</figure> 
+
+## Understanding joins
+
+Suppose that we have two data frames: `sites` and `measurements`.
+
+. . .
+
+```{r}
+#| echo: false
+#| code-line-numbers: false
+sites <- tibble::tribble(
+  ~site_id, ~latitude, ~longitude,
+  "Site A", 45.5231, -122.6765,
+  "Site B", 46.1234, -123.4567,
+  "Site C", 47.3456, -124.5678,
+)
+
+sites |>
+  gt() |>
+  tab_header(
+    title = md("The **sites** table contains information where about sampling locations")
+  ) |>
+  tab_options(
+    table.background.color = "#FFFFFF00"
+  )
+
+```
+
+. . .
+
+```{r}
+#| echo: false
+measurements <- tibble::tribble(
+  ~site_name, ~temperature, ~date,
+  "Site A", 20.5, "2020-01-01",
+  "Site A", 21.3, "2020-01-02",
+  "Site B", 18.9, "2020-02-01"
+) |>
+  type_convert()
+
+measurements |>
+  gt() |>
+  tab_header(
+    title = md("The **measurements** table contains temperature measurements")
+  ) |>
+  tab_options(
+    table.background.color = "#FFFFFF00"
+  )
+```
+
+```{r}
+#| label: export-join-tables
+#| echo: false
+ 
+write_csv(sites, here::here("data", "sites.csv"))
+write_csv(measurements, here::here("data", "measurements.csv"))
+```
+
+## Understanding joins
+
+If you want to follow along, you can read the toy data as this:
+
+```{r}
+#| eval: false
+sites <- read_csv("https://bit.ly/3xAwqr1")
+measurements <- read_csv("https://bit.ly/3Sepl9a")
+```
+
+```{r}
+sites
+measurements
+```
+
+
+## Left joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+sites
+measurements
+```
+
+:::
+
+If we try to join `sites` and `measurements` together, we get the following error.
+
+```{r}
+#| error: true
+left_join(sites, measurements)
+```
+
+. . .
+
+:::{.callout-tip collapse=false appearance='default' icon=true}
+
+## Good practice
+
+The `*_join()` family functions will try to automatically join tables using columns with the same names. However, it is of good practice to be explicit on which columns to use with the `by` argument.
+
+:::
+
+## Left joins
+
+- We can specify the columns to use for the join with the `by` argument.
+
+- The following code says: 
+
+[Use the `site_id` column in `sites`]{.text-outline} [and the `site_name` column in `measurements`]{.text-outline} to join both tables together.
+
+```{r}
+left_join(sites, measurements, by = c("site_id" = "site_name"))
+```
+
+## Inner joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+sites
+measurements
+```
+
+:::
+
+An `inner_join()` [keeps only the observations that match between the tables.]{.text-outline}
+
+```{r}
+inner_join(sites, measurements, by = c("site_id" = "site_name"))
+```
+
+## Full joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+sites
+measurements
+```
+
+:::
+
+A `full_join()` [keeps all the observations contained in the tables.]{.text-outline} `NA` will be used as a fill value when there are no matches.
+
+```{r}
+full_join(sites, measurements, by = c("site_id" = "site_name"))
+```
+
+## Anti joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+sites
+measurements
+```
+
+:::
+
+An `anti-join()` find all observations that have no match between tables. The next bloc of code says:
+
+[find all observations in `sites` that have no match in `measurements`]{.text-outline}
+
+```{r}
+anti_join(sites, measurements, by = c("site_id" = "site_name"))
+```
+
+## Anti joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+sites
+measurements
+```
+
+:::
+
+If we inverse the order of the data frames, we get a different result. The next bloc of code says:
+
+[find all observations in `measurements` that have no match in `sites`]{.text-outline}
+
+
+```{r}
+anti_join(measurements, sites, by = c("site_name" = "site_id"))
+```
+
+## Inequality and rolling joins
+
+So far, we have joined tables on the exact match: **both tables need to have columns sharing the same value**.
+
+```{r}
+#| echo: false
+df_temperature <- tibble(depth_m = c(1.1, 1.4), chla = c(0.1, 0.3))
+df_o2 <- tibble(depth_m = c(1.12, 1.2), doxy = c(200, 250))
+```
+
+Now, consider these two data frames to merge using the `depth_m` column.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+df_temperature
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+df_o2
+```
+
+:::
+
+::::
+
+. . .
+
+What will happen if I try to join them?
+
+## Inequality joins
+
+Joining these table **is not working** because there are no values of `depth_m` that match between `df_temperature` and `df_o2`
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+df_temperature
+df_o2
+```
+:::
+
+:::: {.columns .small}
+
+::: {.column width='50%'}
+
+```{r}
+left_join(df_temperature, df_o2, by = "depth_m")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+inner_join(df_temperature, df_o2, by = "depth_m")
+```
+
+:::
+
+::::
+
+## Inequality joins
+
+Because there are no exact matches in the `depth_m` column, we can use an inequality join with the `join_by()` function.
+
+```{r}
+left_join(df_temperature, df_o2, by = join_by(depth_m <= depth_m))
+```
+
+The previous bloc of code says:
+
+[left join `df_temperature` and `df_o2`]{.fragment .text-outline} [where `depth_m` in `df_temperature` is smaller or equal to `depth_m` in `df_o2`]{.fragment .text-outline}
+
+## Inequality joins
+
+::: {.small}
+
+```{r}
+#| layout-ncol: 2
+df_temperature
+df_o2
+```
+:::
+
+Note that there are two rows in `df_o2` that match the specified condition. This is why we end up with three rows after joining.
+
+```{r}
+left_join(df_temperature, df_o2, by = join_by(depth_m <= depth_m))
+```
+
+## Rolling joins
+
+Instead of using an inequality join, we can try a rolling join. This type of join limits the results returned from an inequality join condition and uses the `closest()` function.
+
+```{r}
+left_join(df_temperature, df_o2, by = join_by(closest(depth_m <= depth_m)))
+```
+
+The previous bloc of code says:
+
+[left join `df_temperature` and `df_o2`]{.fragment .text-outline} [where `depth_m` in `df_temperature` is smaller or equal to `depth_m` in `df_o2`]{.fragment .text-outline} [**but** only keep the closest match]{.fragment .text-outline}
+
+## Exercise
+
+Your turn: question
+
+ <figure>
+  <center>
+  <img src="https://bookdown.org/asmundhreinn/r4ds-master/diagrams/relational-nycflights.png" alt="Trulli" style="width:50%">
+  <figcaption>Source: [R for Data Science](https://bookdown.org/asmundhreinn/r4ds-master/)</figcaption>
+  </center>
+</figure>
+
+
+```{r}
+
+weather |>
+  summarise(mean_temp = mean(temp, na.rm = TRUE), .by = month) |>
+  filter(mean_temp == max(mean_temp)) |>
+  left_join(flights) |>
+  summarise(month = unique(month), n = n(), .by = carrier) |>
+  left_join(airlines) |>
+  arrange(desc(n))
+
+flights |>
+  count(month, day, sort = TRUE)
+```
+
+# Time to practice {background-color="#2C404A"}
+
+1 - Work on your data
+
+2 - SQL Murder Mystery: [https://mystery.knightlab.com/](https://mystery.knightlab.com/)
+
+# SQL Murder Mystery {background-color="#2C404A"}
+
+![Photo by <a href="https://unsplash.com/@mattpopovich?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Matt Popovich</a> on <a href="https://unsplash.com/photos/7mqsZsE6FaU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>](images/unsplash_police_car.jpg){fig-align="center"}
+
+## SQL Murder Mystery
+
+:::: {.columns}
+
+::: {.column width='40%'}
+> There's been a Murder in SQL City! The SQL Murder Mystery is designed to be both a self-directed lesson to learn SQL concepts and commands and a fun game for experienced SQL users to solve an intriguing crime [https://mystery.knightlab.com/](https://mystery.knightlab.com/).
+:::
+
+::: {.column width='60%'}
+![Photo by <a href="https://unsplash.com/@davidvondiemar?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David von Diemar</a> on <a href="https://unsplash.com/photos/jM6Y2nhsAtk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  ](images/unsplash_do_not_cross.jpg){width=6in}
+:::
+
+::::
+
+## SQL Murder Mystery
+
+- A crime has taken place and the detective needs your help. 
+
+- The detective gave you the **crime scene report**, but you somehow lost it. 
+
+- You vaguely remember that the crime was **a ​murder​** that occurred sometime on **​Jan.15, 2018​** and that it took place in **​SQL City​**. 
+
+- Start by retrieving the corresponding **crime scene report** from the police department’s database.
+
+## SQL Murder Mystery
+
+- There are several files (tables) with all the information you need to find the murderer.
+
+```{r}
+#| echo: false
+fs::dir_tree("data/sql_murder_mystery/")
+```
+
+## SQL Murder Mystery
+
+Entity-relationship (ER) diagram of the SQL murder tables
+
+```{r}
+#| echo: false
+#| out-width: 60%
+#| fig-align: center
+#| fig-format: png
+#| fig-asp: 0.5
+
+files <- fs::dir_ls(here::here("data", "sql_murder_mystery"))
+
+walk(files, \(file) {
+  assign(tools::file_path_sans_ext(basename(file)), read_csv(file), envir = globalenv())
+})
+
+crime_dm <- dm(
+  crime_scene_report,
+  person,
+  get_fit_now_member,
+  interview,
+  drivers_license,
+  facebook_event_checkin
+)
+
+crime_dm <- crime_dm |>
+  dm_add_pk(person, id) |>
+  dm_add_pk(get_fit_now_member, id) |>
+  dm_add_pk(drivers_license, id) |>
+  dm_add_pk(facebook_event_checkin, event_id) |>
+  dm_add_fk(person, license_id, drivers_license) |>
+  dm_add_fk(get_fit_now_member, person_id, person) |>
+  dm_add_fk(interview, person_id, person) |>
+  dm_add_fk(facebook_event_checkin, person_id, person)
+
+crime_dm |>
+  dm_draw()
+```
+
+## SQL Murder Mystery
+
+Your challenges consist in:
+
+- Find the murderer
+
+- Find who commissioned the murder
+
+:::{.callout-tip collapse=false appearance='default' icon=true}
+## Getting started
+
+Open the file `crime_scene_report.csv` and search for a **murder that occurred on January 15 of 2018 in the SQL City**. From there, conduct your investigation!
+:::
