@@ -107,6 +107,44 @@ theme_update(
 :::
 ::::
 
+## Training workshop on data management and archiving {style="text-align:center;"}
+
+<br>
+<br>
+
+:::: {.columns}
+
+::: {.column width='60%'}
+<figure>
+<center>
+<img src="https://www.quebec-ocean.ulaval.ca/logo/qo_logo_stricto_3.1_CMYK_black.png" alt="Logo of Québec Océan" style="width:70%"/>
+</center>
+</figure>
+
+<center>
+March 15<sup>th</sup> 2023
+
+**Inscriptions:** [https://bit.ly/3ZcH96P](https://bit.ly/3ZcH96P)
+</center>
+:::
+
+::: {.column width='40%'}
+
+[Outline]{style="font-size:1.5em;font-weight:bold"}
+
+::: {.small}
+- Intellectual Property of Data
+- Data management plan
+- Data acquisition
+- Data cataloguing and dissemination
+- Standards, processing, standardization and importance of metadata
+:::
+
+
+:::
+
+::::
+
 ## Context
 
 :::: {.columns}
@@ -147,7 +185,7 @@ theme_update(
 
 ::: {.column width='30%'}
 
-> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: https://towardsdatascience.com](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
+> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: towards data science](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
 
 :::
 
@@ -157,13 +195,20 @@ theme_update(
 
 ::: {.incremental}
 
-- Understand the basics of data manipulation techniques using R.
+- [**Part 1 (~ 2 hours)**]{style="font-size:1.25em"}
 
-- Learn how to clean and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
+  - Understand the basics of data manipulation techniques using R.
 
-- Develop the ability to manipulate and analyze datasets: **grouping**, **filtering** and **summarizing**.
+  - Learn how to clean and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
 
-- Acquire knowledge on how to **join, merge and aggregate data** from multiple sources to produce meaningful insights.
+  - Develop the ability to manipulate and analyze datasets: **grouping**, **filtering** and **summarizing**.
+
+  - Acquire knowledge on how to **join, merge and aggregate data** from multiple sources to produce meaningful insights.
+
+- [**Part 2 (~ 1 hour)**]{style="font-size:1.25em"}
+
+  1. Working on your own data
+  2. Data challenge: *SQL Murder Mystery*
 
 :::
 
@@ -337,6 +382,7 @@ To read Excel files, we can use `read_excel()` from the `readxl` package.
 
 ```{r}
 #| eval: false
+#| code-line-numbers: 1-2|4-5|7-8
 
 # Load the readxl package
 library(readxl)
@@ -364,7 +410,8 @@ To read CSV files, we can use `read_csv()` from the `readr` package.
 
 ```{r}
 #| eval: false
-#| code-line-numbers: 1-6|7-8
+#| code-line-numbers: 1-2|4-5|7-8
+ 
 # Load the readr package
 library(readr)
 
@@ -406,6 +453,7 @@ mars
 ## Reading files online
 
 ```{r}
+#| echo: false
 #| fig-width: 7
 #| fig-height: 3.5
 #| fig-align: center
@@ -427,12 +475,13 @@ mars |>
   ) +
   theme(
     plot.title = element_text(size = 14),
-    plot.caption = element_text(size = 8, color = "gray65"),
-    legend.title = element_blank(),
-    panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    plot.caption = element_text(size = 8, color = "gray60"),
     plot.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
     legend.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
-    legend.key = element_rect(fill = "#FDF6E3", color = "#FDF6E3")
+    legend.title = element_blank(),
+    legend.key = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    legend.text = element_text(face = "bold"),
+    panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3")
   )
 ```
 
@@ -459,49 +508,34 @@ write_csv(mtcars, "~/Desktop/mtcars.csv")
 
 ## What is a `tibble`?
 
-In base R, the main object holding **sheet-like data** is called a `data.frame`. In the `tidyverse` ecosystem, they are called `tibble`, which can be seen as **a pimped version** of a `data.frame`.
+:::: {.columns}
 
-:::: {.columns .small}
+<br>
 
-::: {.column width='50%' .fragment}
-
-**This is a `data.frame`**
-
-```{r}
-head(mtcars[, 1:5], 12)
-```
+::: {.column width='60%'}
+[In base R, the main object holding **sheet-like data** is called a `data.frame`. In the `tidyverse` ecosystem, they are called `tibble`, which can be seen as **a pimped version** of a `data.frame`.]{style="line-height:2.5"}
 :::
 
-::: {.column width='50%' .fragment}
+::: {.column width='40%'}
 
-**This is a `tibble`**
+<center>
+<img src="https://raw.githubusercontent.com/tidyverse/tibble/main/man/figures/logo.svg" width="400"/>
+</center>
 
-```{r}
-head(as_tibble(mtcars[, 1:5], rownames = "model"), 12)
-```
 :::
 
 ::::
 
-## Reading CSV files (an example)
-
-```{r}
-#| echo: false
-fs::dir_create("data")
-
-USArrests |>
-  as_tibble(rownames = "state") |>
-  write_csv("data/usarrests.csv")
-```
+## What is a `tibble`?
 
 :::: {.columns .small}
 
 ::: {.column width="50%"}
 
-[Reading using base R creates a `data frame`]{style="font-size:1.3em;"}
+[Reading using base R creates a `data.frame`]{style="font-size:1.3em;"}
 
 ```{r}
-read.csv("data/usarrests.csv")
+read.csv("https://bit.ly/3SpfWMg")
 ```
 :::
 
@@ -510,44 +544,11 @@ read.csv("data/usarrests.csv")
 [Reading using `readr` creates a `tibble`]{style="font-size:1.3em;"}
 
 ```{r}
-read_csv("data/usarrests.csv")
+read_csv("https://bit.ly/3SpfWMg")
 ```
 :::
 
 ::::
-
-## Importing data
-
-Your turn: try reading the data (CSV file) located at this location: 
-
-[https://bit.ly/3xrnh3U](https://bit.ly/3xrnh3U){style="font-size:2em;"}
-
-Use the [**<-**]{style="font-family:ubuntu;"} operator to create a new variable (ex.: `df`).
-
-. . .
-
-:::: {.columns .small}
-
-::: {.column width='38%'}
-
-
-```{r}
-library(readr)
-
-df <- read_csv("https://bit.ly/3xrnh3U")
-```
-:::
-
-::: {.column width='62%'}
-
-
-```{r}
-df
-```
-:::
-
-::::
-
 
 # Manipulating data in R {background-color="#2C404A"}
 
@@ -1558,7 +1559,7 @@ The previous bloc of code says:
 
 ## Exercise
 
-Your turn: question
+Your turn: Find the 
 
  <figure>
   <center>
