@@ -9,7 +9,7 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.1.251">
 
   <meta name="author" content="Philippe Massicotte">
   <meta name="dcterms.date" content="2023-03-02">
@@ -68,7 +68,7 @@
     code span { color: #545454; } /* Normal */
     code span.al { color: #7928a1; } /* Alert */
     code span.an { color: #696969; } /* Annotation */
-    code span.at { color: #a55a00; } /* Attribute */
+    code span.at { color: #aa5d00; } /* Attribute */
     code span.bn { color: #7928a1; } /* BaseN */
     code span.bu { } /* BuiltIn */
     code span.cf { color: #d91e18; } /* ControlFlow */
@@ -81,18 +81,18 @@
     code span.dv { color: #7928a1; } /* DecVal */
     code span.er { color: #7928a1; } /* Error */
     code span.ex { } /* Extension */
-    code span.fl { color: #a55a00; } /* Float */
+    code span.fl { color: #aa5d00; } /* Float */
     code span.fu { color: #06287e; } /* Function */
     code span.im { } /* Import */
     code span.in { color: #696969; } /* Information */
     code span.kw { color: #d91e18; } /* Keyword */
-    code span.op { color: #00769e; } /* Operator */
+    code span.op { color: #007faa; } /* Operator */
     code span.ot { color: #d91e18; } /* Other */
     code span.pp { color: #7928a1; } /* Preprocessor */
-    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.sc { color: #007faa; } /* SpecialChar */
     code span.ss { color: #008000; } /* SpecialString */
     code span.st { color: #008000; } /* String */
-    code span.va { color: #a55a00; } /* Variable */
+    code span.va { color: #aa5d00; } /* Variable */
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
@@ -387,31 +387,18 @@
       margin-right: 0; 
     }
   </style>
-  <script src="index_files/libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-  <script src="index_files/libs/viz-1.8.2/viz.js"></script>
-  <link href="index_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-  <script src="index_files/libs/grViz-binding-1.0.9/grViz.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" class="center">
   <h1 class="title">Efficient data manipulation with R</h1>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Philippe Massicotte 
-</div>
-        <p class="quarto-title-affiliation">
-            Laval University
-          </p>
-    </div>
-</div>
-
+  <p class="author">Philippe Massicotte</p>
+  <p class="institute">Laval University</p>
   <p class="date">March 2, 2023</p>
 </section>
+
 <section id="who-am-i" class="slide level2">
 <h2>Who am I</h2>
 <div class="columns">
@@ -29491,19 +29478,12 @@ Types of equality and filtering joins
 </div>
 <p>The previous bloc of code says:</p>
 <p><span class="fragment text-outline">left join <code>df_temperature</code> and <code>df_o2</code></span> <span class="fragment text-outline">where <code>depth_m</code> in <code>df_temperature</code> is smaller or equal to <code>depth_m</code> in <code>df_o2</code></span> <span class="fragment text-outline"><strong>but</strong> only keep the closest match</span></p>
-</section>
-<section id="exercise" class="slide level2">
-<h2>Exercise</h2>
-<p>Your turn: Find the</p>
-<figure>
-<center>
-<img src="https://bookdown.org/asmundhreinn/r4ds-master/diagrams/relational-nycflights.png" alt="Trulli" style="width:50%">
-<figcaption>
-Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Science</a>
-</figcaption>
-</center>
-</figure>
 </section></section>
+<section id="questions" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Questions?</h1>
+
+</section>
+
 <section id="time-to-practice" class="title-slide slide level1 center" data-background-color="#2C404A">
 <h1>Time to practice</h1>
 <p>1 - Work on your data</p>
@@ -29546,7 +29526,10 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
 <ul>
 <li>There are several files (tables) with all the information you need to find the murderer.</li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-87_50f474a2c8342667b80b0353b6d33be5">
+<div class="cell" data-hash="index_cache/revealjs/sql-murder-zip-files_69536cf8bacc27dfeb77da45d09b0fae">
+
+</div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-88_557a6c609d588e036b95722cb4763715">
 <div class="cell-output cell-output-stdout">
 <pre><code>data/sql_murder_mystery/
 ├── crime_scene_report.csv
@@ -29560,17 +29543,19 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
 └── solution.csv</code></pre>
 </div>
 </div>
+<p>You can download a <i class="fa-solid fa-file-archive" aria-hidden="true"></i> with all the <i class="fa-solid fa-file-csv" aria-hidden="true"></i></p>
 </section>
 <section id="sql-murder-mystery-4" class="slide level2">
 <h2>SQL Murder Mystery</h2>
 <p>Entity-relationship (ER) diagram of the SQL murder tables</p>
-<div class="cell" data-layout-align="center" data-fig.format="png" data-fig.asp="0.5" data-hash="index_cache/revealjs/unnamed-chunk-88_6f4146ede6750156ed5d62c8bcaeb796">
-<div class="cell-output-display">
+<div class="cell" data-layout-align="center" data-fig.format="png" data-fig.asp="0.5" data-hash="index_cache/revealjs/unnamed-chunk-89_fbb0e25a07b8f8df7c2fbe875ad4643f">
 
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-36233ef9f53745474802" style="width:60%;height:900px;"></div>
-<script type="application/json" data-for="htmlwidget-36233ef9f53745474802">{"x":{"diagram":"#data_model\ndigraph {\ngraph [rankdir=LR tooltip=\"Data Model\" ]\n\nnode [margin=0 fontcolor = \"#444444\" ]\n\nedge [color = \"#555555\", arrowsize = 1, ]\n\npack=true\npackmode= \"node\"\n\n  \"crime_scene_report\" [id = \"crime_scene_report\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">crime_scene_report<\/FONT>\n<\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n  \"drivers_license\" [id = \"drivers_license\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">drivers_license<\/FONT>\n<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"id\"><U>id<\/U><\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n  \"facebook_event_checkin\" [id = \"facebook_event_checkin\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">facebook_event_checkin<\/FONT>\n<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"person_id\">person_id<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"event_id\"><U>event_id<\/U><\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n  \"get_fit_now_member\" [id = \"get_fit_now_member\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">get_fit_now_member<\/FONT>\n<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"id\"><U>id<\/U><\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"person_id\">person_id<\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n  \"interview\" [id = \"interview\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">interview<\/FONT>\n<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"person_id\">person_id<\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n  \"person\" [id = \"person\", label = <<TABLE ALIGN=\"LEFT\" BORDER=\"1\" CELLBORDER=\"0\" CELLSPACING=\"0\" COLOR=\"#555555\">\n    <TR>\n      <TD COLSPAN=\"1\" BGCOLOR=\"#EFEBDD\" BORDER=\"0\"><FONT COLOR=\"#000000\">person<\/FONT>\n<\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"id\"><U>id<\/U><\/TD>\n    <\/TR>\n    <TR>\n      <TD ALIGN=\"LEFT\" BGCOLOR=\"#FFFFFF\" PORT=\"license_id\">license_id<\/TD>\n    <\/TR>\n  <\/TABLE>>, shape = \"plaintext\"] \n\n\"get_fit_now_member\":\"person_id\"->\"person\":\"id\" [id=\"get_fit_now_member_1\"]\n\"interview\":\"person_id\"->\"person\":\"id\" [id=\"interview_1\"]\n\"facebook_event_checkin\":\"person_id\"->\"person\":\"id\" [id=\"facebook_event_checkin_1\"]\n\"person\":\"license_id\"->\"drivers_license\":\"id\" [id=\"person_1\"]\n}","config":{"engine":null,"options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-</div>
+<figure>
+<center>
+<img src="images/sql_murder_dm.svg" alt="Entity-relationship (ER) diagram of the SQL murder tables" style="width:60%">
+</center>
+</figure>
 </section>
 <section id="sql-murder-mystery-5" class="slide level2">
 <h2>SQL Murder Mystery</h2>
@@ -29815,15 +29800,12 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -29834,6 +29816,13 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
               window.jQuery(currentSlide).trigger("shown");
             }
           }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
         }
 
         // hookup for slidy
@@ -29885,24 +29874,7 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
         setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -29940,42 +29912,24 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
           return note.innerHTML;
         });
       }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
           });
-        }
+          return popup.innerHTML;
+        });
       }
     });
     </script>

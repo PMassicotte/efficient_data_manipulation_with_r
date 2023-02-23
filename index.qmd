@@ -1557,16 +1557,7 @@ The previous bloc of code says:
 
 [left join `df_temperature` and `df_o2`]{.fragment .text-outline} [where `depth_m` in `df_temperature` is smaller or equal to `depth_m` in `df_o2`]{.fragment .text-outline} [**but** only keep the closest match]{.fragment .text-outline}
 
-## Exercise
-
-Your turn: Find the 
-
- <figure>
-  <center>
-  <img src="https://bookdown.org/asmundhreinn/r4ds-master/diagrams/relational-nycflights.png" alt="Trulli" style="width:50%">
-  <figcaption>Source: [R for Data Science](https://bookdown.org/asmundhreinn/r4ds-master/)</figcaption>
-  </center>
-</figure>
+# Questions? {background-color="#2C404A"}
 
 # Time to practice {background-color="#2C404A"}
 
@@ -1608,9 +1599,26 @@ Your turn: Find the
 - There are several files (tables) with all the information you need to find the murderer.
 
 ```{r}
+#| label: sql-murder-zip-files
+#| echo: false
+files <- fs::dir_ls(here::here("data", "sql_murder_mystery"))
+
+zip(here::here(
+  "data/sql_murder_mystery.zip"),
+  files,
+  extras = "-FSj"
+)
+```
+
+```{r}
 #| echo: false
 fs::dir_tree("data/sql_murder_mystery/")
 ```
+
+You can download a {{< fa file-archive >}} with all the {{< fa file-csv >}} files here:
+
+
+
 
 ## SQL Murder Mystery
 
@@ -1622,8 +1630,6 @@ Entity-relationship (ER) diagram of the SQL murder tables
 #| fig-align: center
 #| fig-format: png
 #| fig-asp: 0.5
-
-files <- fs::dir_ls(here::here("data", "sql_murder_mystery"))
 
 walk(files, \(file) {
   assign(tools::file_path_sans_ext(basename(file)), read_csv(file), envir = globalenv())
@@ -1648,9 +1654,20 @@ crime_dm <- crime_dm |>
   dm_add_fk(interview, person_id, person) |>
   dm_add_fk(facebook_event_checkin, person_id, person)
 
-crime_dm |>
-  dm_draw()
+svg <- crime_dm |>
+  dm_draw() |>
+  DiagrammeRsvg::export_svg()
+
+writeLines(svg, 
+here::here("images/sql_murder_dm.svg")
+)
 ```
+
+<figure>
+<center>
+<img src="images/sql_murder_dm.svg" alt="Entity-relationship (ER) diagram of the SQL murder tables" style="width:60%"/>
+</center>
+</figure>
 
 ## SQL Murder Mystery
 
