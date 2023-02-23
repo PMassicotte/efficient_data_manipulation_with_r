@@ -29271,7 +29271,7 @@ Types of equality and filtering joins
 </div>
 </div>
 </div>
-<p>An <code>anti-join()</code> find all observations that have no match between tables. The next bloc of code says:</p>
+<p>An <code>anti-join()</code> finds all observations that have no match between tables. The next block of code says:</p>
 <p><span class="text-outline">find all observations in <code>sites</code> that have no match in <code>measurements</code></span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-74_69bf947305d22cd5990cf0b519a35ab6">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">anti_join</span>(sites, measurements, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"site_name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -29311,7 +29311,7 @@ Types of equality and filtering joins
 </div>
 </div>
 </div>
-<p>If we inverse the order of the data frames, we get a different result. The next bloc of code says:</p>
+<p>If we inverse the order of the data frames, we get a different result. The next block of code says:</p>
 <p><span class="text-outline">find all observations in <code>measurements</code> that have no match in <code>sites</code></span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-76_826495bbb412e334e964904f051a773e">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a><span class="fu">anti_join</span>(measurements, sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_name"</span> <span class="ot">=</span> <span class="st">"site_id"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

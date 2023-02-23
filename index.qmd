@@ -1418,7 +1418,7 @@ measurements
 
 :::
 
-An `anti-join()` find all observations that have no match between tables. The next bloc of code says:
+An `anti-join()` finds all observations that have no match between tables. The next block of code says:
 
 [find all observations in `sites` that have no match in `measurements`]{.text-outline}
 
@@ -1438,7 +1438,7 @@ measurements
 
 :::
 
-If we inverse the order of the data frames, we get a different result. The next bloc of code says:
+If we inverse the order of the data frames, we get a different result. The next block of code says:
 
 [find all observations in `measurements` that have no match in `sites`]{.text-outline}
 
