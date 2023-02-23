@@ -1596,7 +1596,7 @@ The previous bloc of code says:
 
 ## SQL Murder Mystery
 
-- There are several files (tables) with all the information you need to find the murderer.
+There are several files (tables) with all the information you need to find the murderer.
 
 ```{r}
 #| label: sql-murder-zip-files
@@ -1610,15 +1610,25 @@ zip(here::here(
 )
 ```
 
+:::: {.columns}
+
+::: {.column width='40%'}
+
 ```{r}
 #| echo: false
 fs::dir_tree("data/sql_murder_mystery/")
 ```
+:::
+
+::: {.column width='60%'}
 
 You can download a {{< fa file-archive >}} with all the {{< fa file-csv >}} files here:
 
+[[https://bit.ly/3EzqimN](https://bit.ly/3EzqimN)]{style="font-size:2em"}
 
+:::
 
+::::
 
 ## SQL Murder Mystery
 
