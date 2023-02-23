@@ -1632,6 +1632,16 @@ You can download a {{< fa file-archive >}} with all the {{< fa file-csv >}} file
 
 ## SQL Murder Mystery
 
+If you are using RStudio in the cloud, all files are already included in the `data/sql_murder_mystery/` folder.
+
+<figure>
+<center>
+<img src="images/sql_murder_data.png" alt="Screenshot showing the location of CSV files for the SQL murder mystery challenge." style="width:100%"/>
+</center>
+</figure>
+
+## SQL Murder Mystery
+
 Entity-relationship (ER) diagram of the SQL murder tables
 
 ```{r}
