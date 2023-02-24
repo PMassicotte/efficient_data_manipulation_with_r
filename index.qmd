@@ -736,7 +736,11 @@ If you want more information on a specific table, use the `?` operator. This wil
 
 - The first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame.
 
-![](images/functions/filter.png)
+<figure>
+  <center>
+  <img src="images/functions/filter.png" alt="The filter function" style="width:65%">
+  </center>
+</figure> 
 
 ## The `filter()` function
 
@@ -785,6 +789,13 @@ filter(flights, dep_delay >= 100 & dep_delay <= 200 & carrier == "FL")
 - `arrange()` reorders the rows of a data frame. 
 
 - The function takes a data frame, and a set of column name(s) to order by.
+
+<figure>
+  <center>
+  <img src="images/functions/arrange.png" alt="The filter function" style="width:65%">
+  </center>
+</figure> 
+
 
 ## The `arrange()` function
 
