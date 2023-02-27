@@ -726,6 +726,26 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </tbody>
 </table>
 </section>
+<section id="reading-files-1" class="slide level2">
+<h2>Reading files</h2>
+<p>Functions to read files in <i class="fa-brands fa-r-project" aria-hidden="true"></i> often have the same schema:</p>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>read_*(<span class="fragment highlight-orange">"file"</span>, <span class="fragment highlight-pastel">&lt;options&gt;</span>)</p>
+</div>
+</div>
+<p><br></p>
+</div>
+<div class="fragment">
+<p>Examples of <span class="background-pastel code">&lt;options&gt;</span> can be:</p>
+<ul>
+<li>Single character used to separate fields within a record: Ex.: <code>","</code>, <code>";"</code>, <code>"\t"</code>.</li>
+<li>The names of the columns to read.</li>
+<li>The number of rows to read.</li>
+</ul>
+</div>
+</section>
 <section id="reading-excel-files" class="slide level2">
 <h2>Reading Excel files</h2>
 <div class="columns">
@@ -816,6 +836,11 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <section id="exporting-data" class="slide level2">
 <h2>Exporting data</h2>
 <p>Similarly, exporting a data frame into a file can be done using: <code>write_*()</code>.</p>
+<div class="r-fit-text">
+<div class="code">
+<p>write_*(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">"file"</span>)</p>
+</div>
+</div>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-8_5cb0b8f59b3b787b9760f519e8ccee7a">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">write_csv</span>(df, <span class="st">"/path/to/myfile.csv"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">write_csv2</span>(df, <span class="st">"/path/to/myfile.csv"</span>)</span>
@@ -25929,12 +25954,15 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </section>
 <section id="dplyr" class="slide level2">
 <h2>dplyr</h2>
-<blockquote>
-<p>dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges</p>
-</blockquote>
-<p>All <code>dplyr</code> functions use the same scheme: <strong>the first argument to provide is a data frame</strong>.</p>
+<p>A lot of <code>dplyr</code> / <code>tidyverse</code> functions have the same scheme: <strong>the first argument is a data frame</strong>:</p>
+<div class="r-fit-text">
+<div class="code">
+<p>function(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
+</div>
+</div>
+<div class="fragment">
 <table>
-<caption>Useful functions</caption>
+<caption>Useful functions in <code>dplyr</code></caption>
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -25972,6 +26000,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="the-nycflights13-datasets" class="slide level2">
 <h2>The <code>nycflights13</code> datasets</h2>
@@ -27204,15 +27233,22 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>The <code>filter()</code> allows you to select a subset of the rows of a data frame.</p></li>
 <li><p>The first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame.</p></li>
 </ul>
-<figure>
-<center>
-<img src="images/functions/filter.png" alt="The filter function" style="width:65%">
-</center>
-</figure>
+<!-- <figure>
+  <center>
+  <img src="images/functions/filter.png" alt="The filter function" style="width:65%">
+  </center>
+</figure>  -->
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>filter(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;logical expression&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-filter-function-1" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
-<p>Example 1: select all flights with a tail number equal to “<strong>N14228</strong>”.</p>
+<p>Example 1: <span class="text-outline">select all flights with a tail number equal to “<strong>N14228</strong>”.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-24_b0a171d207e32094156b4a9e4ebc535c">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">filter</span>(flights, tailnum <span class="sc">==</span> <span class="st">"N14228"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27238,7 +27274,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-filter-function-2" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
-<p>Example 2: select all flights with a departure delay greater than 180 minutes.</p>
+<p>Example 2: <span class="text-outline">select all flights with a departure delay greater than 180 minutes.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-25_41f88f109f607a4d0ed7810f61c32379">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">filter</span>(flights, dep_delay <span class="sc">&gt;</span> <span class="dv">180</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27264,7 +27300,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-filter-function-3" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
-<p>Example 3: select all flights from <code>carriers</code> “<strong>MQ</strong>” or “<strong>EV</strong>”.</p>
+<p>Example 3: <span class="text-outline">select all flights from <code>carriers</code> “<strong>MQ</strong>” or “<strong>EV</strong>”.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-26_0c4f5244f4f8bf720d5cd7081c3d58bf">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">filter</span>(flights, carrier <span class="sc">==</span> <span class="st">"MQ"</span> <span class="sc">|</span> carrier <span class="sc">==</span> <span class="st">"EV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27348,15 +27384,22 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p><code>arrange()</code> reorders the rows of a data frame.</p></li>
 <li><p>The function takes a data frame, and a set of column name(s) to order by.</p></li>
 </ul>
-<figure>
-<center>
-<img src="images/functions/arrange.png" alt="The filter function" style="width:65%">
-</center>
-</figure>
+<!-- <figure>
+  <center>
+  <img src="images/functions/arrange.png" alt="The filter function" style="width:65%">
+  </center>
+</figure>  -->
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>arrange(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;variables&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-arrange-function-1" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
-<p>Example 1: reorder flights on departure month.</p>
+<p>Example 1: <span class="text-outline">reorder flights on departure month.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-29_77c5212316c67db812374f17535e08eb">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">arrange</span>(flights, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27382,7 +27425,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-arrange-function-2" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
-<p>Example 2: reorder flights on departure month and departure time.</p>
+<p>Example 2: <span class="text-outline">reorder flights on departure month and departure time.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-30_d73d8f03330d8a978a0b8ba8d44427c0">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">arrange</span>(flights, month, dep_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27408,7 +27451,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-arrange-function-3" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
-<p>Example 3: reorder flights on departure month and by <strong>decreasing</strong> departure time.</p>
+<p>Example 3: <span class="text-outline">reorder flights on departure month and by <strong>decreasing</strong> departure time.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-31_9bd6638c8c78800592d98413332176be">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">arrange</span>(flights, month, <span class="fu">desc</span>(dep_time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27438,10 +27481,17 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p><code>select()</code> is used to extract column(s) from a data frame.</p></li>
 <li><p>Useful when you want to perform data analysis on specific column(s) and not the complete dataset.</p></li>
 </ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>select(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;variables&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-select-function-1" class="slide level2">
 <h2>The <code>select()</code> function</h2>
-<p>Example 1: select “<strong>faa</strong>” and “<strong>name</strong>” columns from the <code>airports</code> data frame.</p>
+<p>Example 1: <span class="text-outline">select “<strong>faa</strong>” and “<strong>name</strong>” columns from the <code>airports</code> data frame.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-32_0dc8e9a165aef263a2e72833632e6f97">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">select</span>(airports, faa, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27465,7 +27515,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-select-function-2" class="slide level2">
 <h2>The <code>select()</code> function</h2>
 <p>You can also use <code>select()</code> to remove columns with the <code>-</code> operator.</p>
-<p>Example 2: select all columns from <code>airports</code> except “<strong>faa</strong>” and “<strong>name</strong>”.</p>
+<p>Example 2: <span class="text-outline">select all columns from <code>airports</code> except “<strong>faa</strong>” and “<strong>name</strong>”.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-33_812ee7a8bde8b0cb2739ec311d57777c">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">select</span>(airports, <span class="sc">-</span>faa, <span class="sc">-</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27489,7 +27539,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-select-function-3" class="slide level2">
 <h2>The <code>select()</code> function</h2>
 <p>It is also possible to select columns using <strong>helper functions</strong>.</p>
-<p>Example 3: select “<strong>year</strong>”, “<strong>month</strong>” and all columns that start with “<strong>dep_</strong>” from <code>flights</code>.</p>
+<p>Example 3: <span class="text-outline">select “<strong>year</strong>”, “<strong>month</strong>” and all columns that start with “<strong>dep_</strong>” from <code>flights</code>.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-34_cfd0453c87e98ca7764956daa4b71170">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">select</span>(flights, year, month, <span class="fu">starts_with</span>(<span class="st">"dep_"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27516,10 +27566,18 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>The <code>mutate()</code> function is used to add or modify existing column(s) inside a data frame.</p></li>
 <li><p>The function takes a data frame, and one or more expressions that add/modify columns.</p></li>
 </ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>mutate(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-mutate-function-1" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
-<p>Example 1: add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance in miles, into km.</p>
+<p>Example 1:</p>
+<p><span class="text-outline r-fit-text">add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance in miles, into km.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-35_463d422bf7c1c6b8a1b3284f738382c2">
 <div class="sourceCode cell-code" id="cb50" data-code-line-numbers="1-5|2|3|4|1-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">mutate</span>(</span>
 <span id="cb50-2"><a href="#cb50-2"></a>  flights,</span>
@@ -27709,10 +27767,17 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li>Hence, you have to provide a function that will be used to calculate a certain value.</li>
 </ul></li>
 </ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>summarise(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="the-summarise-function-1" class="slide level2">
 <h2>The <code>summarise()</code> function</h2>
-<p>Example 1: Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</p>
+<p>Example 1: <span class="text-outline">Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-42_775a6bd7da0b9c24e97506353564ad60">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb63-2"><a href="#cb63-2"></a>  flights,</span>
@@ -27732,7 +27797,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-summarise-function-2" class="slide level2">
 <h2>The <code>summarise()</code> function</h2>
-<p>Example 1: Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</p>
+<p>Example 1: <span class="text-outline">Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-43_45da93a374ed17a363ecd6f25dfd4c30">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb65-2"><a href="#cb65-2"></a>  flights,</span>
@@ -27798,7 +27863,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="working-with-grouped-data-1" class="slide level2">
 <h2>Working with grouped data</h2>
-<p>Example 1: Calculate the average departure delay <strong>by carrier</strong>.</p>
+<p>Example 1: <span class="text-outline">Calculate the average departure delay <strong>by carrier</strong>.</span></p>
 <p>First, let’s group the data by <code>carrier</code>.</p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-46_1d3cd90d3d1d105f77c4a1cadb5f8410">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>flights_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, carrier)</span>
@@ -27827,7 +27892,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="working-with-grouped-data-2" class="slide level2">
 <h2>Working with grouped data</h2>
-<p>Example 1: Calculate the average departure delay <strong>by carrier</strong>.</p>
+<p>Example 1: <span class="text-outline">Calculate the average departure delay <strong>by carrier</strong>.</span></p>
 <p>Secondly, use <code>summarise()</code> as we did before by now using <code>flights_grouped</code> instead of <code>flights</code>.</p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-47_06c7b7aab070e1eb48085a94b985ec03">
 <div class="sourceCode cell-code" id="cb73" data-code-line-numbers="1-5|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">summarise</span>(</span>
@@ -27998,13 +28063,27 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </section>
 <section id="the-titanic-1" class="slide level2">
 <h2>The Titanic</h2>
-<p>Using your newly acquired skills, try answering the following questions:</p>
+<p><span style="font-size:1.3em"><strong>Using your newly acquired skills, try answering the following questions:</strong></span></p>
+<div style="line-height: 60px;">
 <ol type="1">
-<li>What was the average age of passengers on the Titanic?</li>
-<li>How many passengers on the Titanic were from first class?</li>
-<li>What was the proportion of passengers who survived the Titanic disaster?</li>
-<li>What was the average ticket price by cabin class?</li>
+<li>What was the average age of passengers on the Titanic?
+<ul>
+<li><span class="small">Hint: use <code>summarise()</code></span></li>
+</ul></li>
+<li>How many passengers on the Titanic were from first class?
+<ul>
+<li><span class="small">Hint: use <code>filter()</code></span></li>
+</ul></li>
+<li>What was the proportion of passengers who survived the Titanic disaster?
+<ul>
+<li><span class="small">Hint: use <code>group_by()</code>, <code>summarise()</code> and <code>mutate()</code></span></li>
+</ul></li>
+<li>What was the average ticket price by cabin class (sort the results be decreasing price)?
+<ul>
+<li><span class="small">Hint: use <code>group_by()</code>, <code>summarise()</code>, <code>mutate()</code> and <code>arrange()</code></span></li>
+</ul></li>
 </ol>
+</div>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-53_46512318249fffb27cdc5d32cbe44bcb">
 
 </div>
@@ -28155,6 +28234,13 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 <li><p>Good database practices recommend having similar data in separate tables.</p></li>
 <li><p>Joins are used to <strong>merge data frame</strong> together.</p></li>
 </ul>
+<div class="fragment">
+<div class="r-fit-text">
+<div class="code">
+<p>summarise(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;dataframe&gt;</span>)</p>
+</div>
+</div>
+</div>
 </section>
 <section id="understanding-joins" class="slide level2">
 <h2>Understanding joins</h2>
@@ -29431,7 +29517,9 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>The previous bloc of code says:</p>
+<div class="r-fit-text">
 <p><span class="fragment text-outline">left join <code>df_temperature</code> and <code>df_o2</code></span> <span class="fragment text-outline">where <code>depth_m</code> in <code>df_temperature</code> is smaller or equal to <code>depth_m</code> in <code>df_o2</code></span></p>
+</div>
 </section>
 <section id="inequality-joins-2" class="slide level2">
 <h2>Inequality joins</h2>
@@ -29486,7 +29574,9 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>The previous bloc of code says:</p>
+<div class="r-fit-text">
 <p><span class="fragment text-outline">left join <code>df_temperature</code> and <code>df_o2</code></span> <span class="fragment text-outline">where <code>depth_m</code> in <code>df_temperature</code> is smaller or equal to <code>depth_m</code> in <code>df_o2</code></span> <span class="fragment text-outline"><strong>but</strong> only keep the closest match</span></p>
+</div>
 </section></section>
 <section id="questions" class="title-slide slide level1 center" data-background-color="#2C404A">
 <h1>Questions?</h1>

@@ -63,6 +63,8 @@ theme_update(
 # knitr::knit_hooks$set(optipng = knitr::hook_optipng)
 
 # https://quarto.org/docs/presentations/revealjs/themes.html
+# https://emilhvitfeldt.github.io/talk-purrr-ocrug-2023/#/creating-data.frames
+# https://github.com/EmilHvitfeldt/talk-purrr-ocrug-2023/blob/main/index.qmd
 ```
 
 ## Who am I
@@ -373,6 +375,31 @@ mtcars
 | SAS                                | `read_sas()`   | haven       |
 | Matlab file (.mat)                 | `readMat()`    | R.matlab    |
 
+
+## Reading files
+
+Functions to read files in {{< fa brands r-project >}} often have the same schema:
+
+. . .
+
+::: {.r-fit-text}
+::: {.code}
+
+read_*([\"file\"]{.fragment .highlight-orange}, [\<options\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+<br>
+
+. . .
+
+Examples of [\<options\>]{.background-pastel .code} can be:
+
+- Single character used to separate fields within a record: Ex.: `","`, `";"`, `"\t"`.
+- The names of the columns to read.
+- The number of rows to read.
+
 ## Reading Excel files
 
 :::: {.columns}
@@ -489,6 +516,15 @@ mars |>
 
 Similarly, exporting a data frame into a file can be done using: `write_*()`.
 
+::: {.r-fit-text}
+
+::: {.code}
+
+write_*([\<dataframe\>]{.fragment .highlight-orange}, [\"file\"]{.fragment .highlight-pastel})
+
+:::
+:::
+
 ```{r}
 #| eval: false
 
@@ -602,9 +638,18 @@ You can refer to the printed **cheat sheet** for an overview of the package's fu
 
 ## dplyr
 
-> dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges
+A lot of `dplyr` / `tidyverse` functions have the same scheme: **the first argument is a data frame**:
 
-All `dplyr` functions use the same scheme: **the first argument to provide is a data frame**.
+::: {.r-fit-text}
+
+::: {.code}
+
+function([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+. . .
 
 | **Function**       | **Definition**                                                                                                       |
 |------------------------|-----------------------------------------------|
@@ -615,7 +660,7 @@ All `dplyr` functions use the same scheme: **the first argument to provide is a 
 | `summarise(df, ...)` | Summarize a data frame into a single row. This function is very helpful in combination with the `group_by()` function. |
 | `group_by(df, ...)`  | Group a data frame based on the specified columns.                                                                   |
 
-: Useful functions {tbl-colwidths="[25,75]"} 
+: Useful functions in `dplyr` {tbl-colwidths="[25,75]"} 
 
 ## The `nycflights13` datasets
 
@@ -736,15 +781,28 @@ If you want more information on a specific table, use the `?` operator. This wil
 
 - The first argument is the name of the data frame, and the second and subsequent are filtering expressions evaluated in the context of that data frame.
 
-<figure>
+<!-- <figure>
   <center>
   <img src="images/functions/filter.png" alt="The filter function" style="width:65%">
   </center>
-</figure> 
+</figure>  -->
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+filter([\<dataframe\>]{.fragment .highlight-orange}, [\<logical expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
 
 ## The `filter()` function
 
-Example 1: select all flights with a tail number equal to "**N14228**".
+Example 1: [select all flights with a tail number equal to "**N14228**".]{.text-outline}
 
 ```{r}
 filter(flights, tailnum == "N14228")
@@ -752,7 +810,7 @@ filter(flights, tailnum == "N14228")
 
 ## The `filter()` function
 
-Example 2: select all flights with a departure delay greater than 180 minutes.
+Example 2: [select all flights with a departure delay greater than 180 minutes.]{.text-outline}
 
 ```{r}
 filter(flights, dep_delay > 180)
@@ -760,7 +818,7 @@ filter(flights, dep_delay > 180)
 
 ## The `filter()` function
 
-Example 3: select all flights from `carriers` "**MQ**" or "**EV**".
+Example 3: [select all flights from `carriers` "**MQ**" or "**EV**".]{.text-outline}
 
 ```{r}
 filter(flights, carrier == "MQ" | carrier == "EV")
@@ -790,16 +848,29 @@ filter(flights, dep_delay >= 100 & dep_delay <= 200 & carrier == "FL")
 
 - The function takes a data frame, and a set of column name(s) to order by.
 
-<figure>
+<!-- <figure>
   <center>
   <img src="images/functions/arrange.png" alt="The filter function" style="width:65%">
   </center>
-</figure> 
+</figure>  -->
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+arrange([\<dataframe\>]{.fragment .highlight-orange}, [\<variables\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
 
 
 ## The `arrange()` function
 
-Example 1: reorder flights on departure month.
+Example 1: [reorder flights on departure month.]{.text-outline}
 
 ```{r}
 arrange(flights, month)
@@ -807,7 +878,7 @@ arrange(flights, month)
 
 ## The `arrange()` function
 
-Example 2: reorder flights on departure month and departure time.
+Example 2: [reorder flights on departure month and departure time.]{.text-outline}
 
 ```{r}
 arrange(flights, month, dep_time)
@@ -815,7 +886,7 @@ arrange(flights, month, dep_time)
 
 ## The `arrange()` function
 
-Example 3: reorder flights on departure month and by **decreasing** departure time.
+Example 3: [reorder flights on departure month and by **decreasing** departure time.]{.text-outline}
 
 ```{r}
 arrange(flights, month, desc(dep_time))
@@ -827,9 +898,22 @@ arrange(flights, month, desc(dep_time))
 
 - Useful when you want to perform data analysis on specific column(s) and not the complete dataset.
 
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+select([\<dataframe\>]{.fragment .highlight-orange}, [\<variables\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
 ## The `select()` function
 
-Example 1: select "**faa**" and "**name**" columns from the `airports` data frame.
+Example 1: [select "**faa**" and "**name**" columns from the `airports` data frame.]{.text-outline}
 
 ```{r}
 select(airports, faa, name)
@@ -839,7 +923,7 @@ select(airports, faa, name)
 
 You can also use `select()` to remove columns with the `-` operator.
 
-Example 2: select all columns from `airports` except "**faa**" and "**name**".
+Example 2: [select all columns from `airports` except "**faa**" and "**name**".]{.text-outline}
 
 ```{r}
 select(airports, -faa, -name)
@@ -849,7 +933,7 @@ select(airports, -faa, -name)
 
 It is also possible to select columns using **helper functions**.
 
-Example 3: select "**year**", "**month**" and all columns that start with "**dep_**" from `flights`.
+Example 3: [select "**year**", "**month**" and all columns that start with "**dep_**" from `flights`.]{.text-outline}
 
 ```{r}
 select(flights, year, month, starts_with("dep_"))
@@ -861,9 +945,24 @@ select(flights, year, month, starts_with("dep_"))
 
 - The function takes a data frame, and one or more expressions that add/modify columns.
 
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+mutate([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
 ## The `mutate()` function
 
-Example 1: add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km.
+Example 1: 
+
+[add a new column named `distance_km` which converts the `distance` column, which is the flight distance in miles, into km.]{.text-outline .r-fit-text}
 
 ```{r}
 #| code-line-numbers: "1-5|2|3|4|1-5"
@@ -959,9 +1058,23 @@ mutate(weather, across(where(is.numeric), round), .keep = "used")
 - Compress a data frame into single values (i.e. one row).
   - Hence, you have to provide a function that will be used to calculate a certain value.
 
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
+
+
 ## The `summarise()` function
 
-Example 1: Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.
+Example 1: [Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.]{.text-outline}
 
 ```{r}
 summarise(
@@ -977,7 +1090,7 @@ What is going on? Why do we have NA's?
 
 ## The `summarise()` function
 
-Example 1: Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.
+Example 1: [Calculate the mean/average values for the `dep_delay` and `arr_delay` columns.]{.text-outline}
 
 ```{r}
 summarise(
@@ -1022,7 +1135,7 @@ summarise(
 
 ## Working with grouped data
 
-Example 1: Calculate the average departure delay **by carrier**.
+Example 1: [Calculate the average departure delay **by carrier**.]{.text-outline}
 
 First, let's group the data by `carrier`.
 
@@ -1033,7 +1146,7 @@ flights_grouped
 
 ## Working with grouped data
 
-Example 1: Calculate the average departure delay **by carrier**.
+Example 1: [Calculate the average departure delay **by carrier**.]{.text-outline}
 
 Secondly, use `summarise()` as we did before by now using `flights_grouped` instead of `flights`.
 
@@ -1112,12 +1225,23 @@ glimpse(titanic)
 
 ## The Titanic
 
-Using your newly acquired skills, try answering the following questions:
+[**Using your newly acquired skills, try answering the following questions:**]{style="font-size:1.3em"}
+
+::: {style="line-height: 60px;"}
 
 1. What was the average age of passengers on the Titanic?
+    - [Hint: use `summarise()`]{.small}
+
 2. How many passengers on the Titanic were from first class?
+    - [Hint: use `filter()`]{.small}
+
 3. What was the proportion of passengers who survived the Titanic disaster?
-4. What was the average ticket price by cabin class?
+    - [Hint: use `group_by()`, `summarise()` and `mutate()`]{.small}
+
+4. What was the average ticket price by cabin class (sort the results be decreasing price)?
+    - [Hint: use `group_by()`, `summarise()`, `mutate()` and `arrange()`]{.small}
+
+:::
 
 ```{r}
 #| echo: false
@@ -1259,6 +1383,19 @@ You have to use the placeholder with named parameters.
 - Good database practices recommend having similar data in separate tables.
 
 - Joins are used to **merge data frame** together.
+
+::: fragment
+
+::: {.r-fit-text}
+
+::: {.code}
+
+summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<dataframe\>]{.fragment .highlight-pastel})
+
+:::
+:::
+
+:::
 
 ## Understanding joins
 
@@ -1537,7 +1674,11 @@ left_join(df_temperature, df_o2, by = join_by(depth_m <= depth_m))
 
 The previous bloc of code says:
 
+::: {.r-fit-text}
+
 [left join `df_temperature` and `df_o2`]{.fragment .text-outline} [where `depth_m` in `df_temperature` is smaller or equal to `depth_m` in `df_o2`]{.fragment .text-outline}
+
+:::
 
 ## Inequality joins
 
@@ -1566,7 +1707,11 @@ left_join(df_temperature, df_o2, by = join_by(closest(depth_m <= depth_m)))
 
 The previous bloc of code says:
 
+::: {.r-fit-text}
+
 [left join `df_temperature` and `df_o2`]{.fragment .text-outline} [where `depth_m` in `df_temperature` is smaller or equal to `depth_m` in `df_o2`]{.fragment .text-outline} [**but** only keep the closest match]{.fragment .text-outline}
+
+:::
 
 # Questions? {background-color="#2C404A"}
 
