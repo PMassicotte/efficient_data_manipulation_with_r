@@ -1238,7 +1238,7 @@ glimpse(titanic)
 3. What was the proportion of passengers who survived the Titanic disaster?
     - [Hint: use `group_by()`, `summarise()` and `mutate()`]{.small}
 
-4. What was the average ticket price by cabin class (sort the results be decreasing price)?
+4. What was the average ticket price by cabin class (sort the results by decreasing price)?
     - [Hint: use `group_by()`, `summarise()`, `mutate()` and `arrange()`]{.small}
 
 :::
