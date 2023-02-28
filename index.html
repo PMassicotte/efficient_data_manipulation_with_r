@@ -9,7 +9,7 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.1.251">
 
   <meta name="author" content="Philippe Massicotte">
   <meta name="dcterms.date" content="2023-03-02">
@@ -68,7 +68,7 @@
     code span { color: #545454; } /* Normal */
     code span.al { color: #7928a1; } /* Alert */
     code span.an { color: #696969; } /* Annotation */
-    code span.at { color: #a55a00; } /* Attribute */
+    code span.at { color: #aa5d00; } /* Attribute */
     code span.bn { color: #7928a1; } /* BaseN */
     code span.bu { } /* BuiltIn */
     code span.cf { color: #d91e18; } /* ControlFlow */
@@ -81,18 +81,18 @@
     code span.dv { color: #7928a1; } /* DecVal */
     code span.er { color: #7928a1; } /* Error */
     code span.ex { } /* Extension */
-    code span.fl { color: #a55a00; } /* Float */
+    code span.fl { color: #aa5d00; } /* Float */
     code span.fu { color: #06287e; } /* Function */
     code span.im { } /* Import */
     code span.in { color: #696969; } /* Information */
     code span.kw { color: #d91e18; } /* Keyword */
-    code span.op { color: #00769e; } /* Operator */
+    code span.op { color: #007faa; } /* Operator */
     code span.ot { color: #d91e18; } /* Other */
     code span.pp { color: #7928a1; } /* Preprocessor */
-    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.sc { color: #007faa; } /* SpecialChar */
     code span.ss { color: #008000; } /* SpecialString */
     code span.st { color: #008000; } /* String */
-    code span.va { color: #a55a00; } /* Variable */
+    code span.va { color: #aa5d00; } /* Variable */
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
@@ -392,22 +392,13 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" class="center">
   <h1 class="title">Efficient data manipulation with R</h1>
-
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Philippe Massicotte 
-</div>
-        <p class="quarto-title-affiliation">
-            Laval University
-          </p>
-    </div>
-</div>
-
+  <p class="author">Philippe Massicotte</p>
+  <p class="institute">Laval University</p>
   <p class="date">March 2, 2023</p>
 </section>
+
 <section id="who-am-i" class="slide level2">
 <h2>Who am I</h2>
 <div class="columns">
@@ -26038,7 +26029,7 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
 </center>
 </figure>
 <ul>
-<li>The <code>flights</code> table connects to planes via a single variable, <code>tailnum</code>.</li>
+<li>The <code>flights</code> table connects to <code>planes</code> via a single variable, <code>tailnum</code>.</li>
 <li>The <code>flights</code> table connects to <code>airports</code> in two ways: via the <code>origin</code> and <code>dest</code> variables.</li>
 </ul>
 </section>
@@ -29922,15 +29913,12 @@ Types of equality and filtering joins
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -29941,6 +29929,13 @@ Types of equality and filtering joins
               window.jQuery(currentSlide).trigger("shown");
             }
           }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
         }
 
         // hookup for slidy
@@ -29992,24 +29987,7 @@ Types of equality and filtering joins
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
         setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -30047,42 +30025,24 @@ Types of equality and filtering joins
           return note.innerHTML;
         });
       }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
           });
-        }
+          return popup.innerHTML;
+        });
       }
     });
     </script>
