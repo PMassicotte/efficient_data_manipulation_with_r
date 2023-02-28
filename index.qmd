@@ -690,7 +690,7 @@ install.packages("nycflights13")
   </center>
 </figure>
 
-- The `flights` table connects to planes via a single variable, `tailnum`.
+- The `flights` table connects to `planes` via a single variable, `tailnum`.
 - The `flights` table connects to `airports` in two ways: via the `origin` and `dest` variables.
 
 ## nycflights13
