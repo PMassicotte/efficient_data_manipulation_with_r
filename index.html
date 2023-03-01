@@ -505,9 +505,12 @@ Artwork by Allison Horst
 <li class="fragment"><p><span style="font-size:1.25em"><strong>Part 1 (~ 2 hours)</strong></span></p>
 <ul>
 <li class="fragment"><p>Understand the basics of data manipulation techniques using R.</p></li>
-<li class="fragment"><p>Learn how to clean and transform raw data into a format suitable for analysis using <code>dplyr</code> and <code>tidyr</code>.</p></li>
-<li class="fragment"><p>Develop the ability to manipulate and analyze datasets: <strong>grouping</strong>, <strong>filtering</strong> and <strong>summarizing</strong>.</p></li>
-<li class="fragment"><p>Acquire knowledge on how to <strong>join, merge and aggregate data</strong> from multiple sources to produce meaningful insights.</p></li>
+<li class="fragment"><p>Learn how to manipulate and transform raw data into a format suitable for analysis using <code>dplyr</code> and <code>tidyr</code>.</p>
+<ul>
+<li class="fragment"><strong>filtering</strong></li>
+<li class="fragment"><strong>grouping</strong>, <strong>summarizing</strong> / <strong>aggregating</strong></li>
+<li class="fragment"><strong>joining</strong> data from multiple sources</li>
+</ul></li>
 </ul></li>
 <li class="fragment"><p><span style="font-size:1.25em"><strong>Part 2 (~ 1 hour)</strong></span></p>
 <ol type="1">
@@ -533,7 +536,7 @@ Artwork by Allison Horst
 <li><p>You should know how to:</p>
 <ul>
 <li>Install R packages</li>
-<li>Use R Studio or another of your choice</li>
+<li>Use R Studio or another IDE of your choice</li>
 <li>Create R scripts</li>
 <li>Import data</li>
 <li>Work with data frame</li>
@@ -593,15 +596,10 @@ Artwork by Allison Horst
 </section>
 <section id="data-frames-2" class="slide level2">
 <h2>Data frames</h2>
-<ul>
-<li>A data frame can be seen as an Excel tabular sheet: <strong>Lines are observations</strong> and <strong>columns are variables</strong>.</li>
-</ul>
+<p>A data frame can be seen as an Excel tabular sheet: <strong>Lines are observations</strong> and <strong>columns are variables</strong>.</p>
 <figure>
 <center>
-<img src="https://rstudio-education.github.io/tidyverse-cookbook/images/tidy-data.png" alt="Trulli" style="width:50%">
-<figcaption>
-Source: <a href="https://rstudio-education.github.io/tidyverse-cookbook/">Tidyverse cookbook</a>
-</figcaption>
+<img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:450px">
 </center>
 </figure>
 <div class="callout callout-note callout-captioned callout-style-default">
@@ -740,7 +738,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <div class="fragment">
 <p>Examples of <span class="background-pastel code">&lt;options&gt;</span> can be:</p>
 <ul>
-<li>Single character used to separate fields within a record: Ex.: <code>","</code>, <code>";"</code>, <code>"\t"</code>.</li>
+<li>A single character used to separate fields within a record: Ex.: <code>","</code>, <code>";"</code>, <code>"\t"</code>.</li>
 <li>The names of the columns to read.</li>
 <li>The number of rows to read.</li>
 </ul>
@@ -751,15 +749,18 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <div class="columns">
 <div class="column" style="width:80%;">
 <p>To read Excel files, we can use <code>read_excel()</code> from the <code>readxl</code> package.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-4_9250a135b2281f79614eaf6509fcaee9">
-<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="1-2|4-5|7-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load the readxl package</span></span>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-4_e8f96c90d45481271a486b586b5eed7e">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="1-2|4-5|7-8|10-11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load the readxl package</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb3-3"><a href="#cb3-3"></a></span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Read the first sheet in a file</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/path/to/myfile.xls"</span>)</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
 <span id="cb3-7"><a href="#cb3-7"></a><span class="co"># Read the third sheet in a file</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/path/to/myfile.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/path/to/myfile.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">3</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># Read the sheet named "data"</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"/path/to/myfile.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:20%;">
 <p><img data-src="https://raw.githubusercontent.com/tidyverse/readxl/main/img/readxl.png" width="400"></p>
@@ -771,21 +772,26 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <div class="columns">
 <div class="column" style="width:80%;">
 <p>To read CSV files, we can use <code>read_csv()</code> from the <code>readr</code> package.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-5_cede236b71416381227c6c24f34a4dd3">
-<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="1-2|4-5|7-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Load the readr package</span></span>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-5_81f653dc0b874a87ec49c1678b0347a9">
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="1-2|4-5|7-8|10-11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Load the readr package</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="fu">library</span>(readr)</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="co"># If the column delimiter is ","</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/path/to/myfile.csv"</span>)</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co"># If the column delimiter is ";"</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"/path/to/myfile.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"/path/to/myfile.csv"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co"># Read only the first 100 rows</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/path/to/myfile.csv"</span>, <span class="at">n_max =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:20%;">
 <p><img data-src="https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/readr.png" width="400"></p>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="reading-csv-files-1" class="slide level2">
+<h2>Reading CSV files</h2>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -799,13 +805,13 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </div>
 </div>
 </div>
-</div>
-</section>
+
+<img data-src="index_files/figure-revealjs/readr-vs-base-r-1.png" width="3600" class="r-stretch quarto-figure-center"></section>
 <section id="reading-files-online" class="slide level2">
 <h2>Reading files online</h2>
 <p>It is also possible to read files hosted online by providing an URL. For example, let’s read daily weather updates from the Curiosity Rover on Mars.</p>
 <div class="small">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-6_af608a145c32b67a3dda952e27cafd2b">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-7_3166fc1ead4e3dcf3e773da652cf08b3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>mars <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://query.data.world/s/nig6iktbywlhnws22gfz6tvstwtmuu"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a>mars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -832,7 +838,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <section id="reading-files-online-1" class="slide level2">
 <h2>Reading files online</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-7-1.png" width="2100" class="r-stretch quarto-figure-center"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="2100" class="r-stretch quarto-figure-center"></section>
 <section id="exporting-data" class="slide level2">
 <h2>Exporting data</h2>
 <p>Similarly, exporting a data frame into a file can be done using: <code>write_*()</code>.</p>
@@ -841,16 +847,18 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <p>write_*(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">"file"</span>)</p>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-8_5cb0b8f59b3b787b9760f519e8ccee7a">
+<div class="fragment">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-9_abad4d8a8c12c7c78f38497013f736c2">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">write_csv</span>(df, <span class="st">"/path/to/myfile.csv"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">write_csv2</span>(df, <span class="st">"/path/to/myfile.csv"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="fu">write_tsv</span>(df, <span class="st">"/path/to/myfile.tsv"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="fu">write_delim</span>(df, <span class="st">"/path/to/myfile.tab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For example, you could export the <code>mtcars</code> data frame in tab-delimited and comma-delimited files on your desktop:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-9_0660de567f6a976139bfb4dc85adcabc">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_acdd2899b73d7fa4d1f3d47629cd8b04">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">write_delim</span>(mtcars, <span class="st">"~/Desktop/mtcars.tab"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="fu">write_csv</span>(mtcars, <span class="st">"~/Desktop/mtcars.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="what-is-a-tibble" class="slide level2">
@@ -870,7 +878,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <div class="columns small">
 <div class="column" style="width:50%;">
 <p><span style="font-size:1.3em;">Reading using base R creates a <code>data.frame</code></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_e456b2bc9de82c972446ddacf087a56a">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-11_6280d1a765b0f4132d5c92f377fbc365">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">read.csv</span>(<span class="st">"https://bit.ly/3SpfWMg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year        name  percent sex
@@ -25878,7 +25886,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </div>
 </div><div class="column" style="width:50%;">
 <p><span style="font-size:1.3em;">Reading using <code>readr</code> creates a <code>tibble</code></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-11_1be317341d454b48f4ba1d39c599f692">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-12_fabf611fc4241caab44b9378ac8d6780">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">read_csv</span>(<span class="st">"https://bit.ly/3SpfWMg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 258,000 × 4
@@ -25926,35 +25934,34 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </section>
 <section id="the-tidyverse" class="slide level2">
 <h2>The tidyverse</h2>
-<p>The tidyverse provides a set of packages which provides flexible tools for data manipulation.</p>
+<p>The tidyverse is a <strong>meta package</strong> that provides a collection of tools (across different packages) that are designed for data science.</p>
 <center>
 <img src="https://tidyverse.tidyverse.org/logo.png" width="400">
 </center>
 <center>
-<img src="https://dplyr.tidyverse.org/logo.png" width="200"> <img src="https://tidyr.tidyverse.org/logo.png" width="200"> <img src="https://readr.tidyverse.org/logo.png" width="200"> <img src="https://readxl.tidyverse.org/logo.png" width="200"> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"><img src="https://stringr.tidyverse.org/logo.png" width="200"><img src="https://lubridate.tidyverse.org/logo.png" width="200">
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"> <img src="https://tidyr.tidyverse.org/logo.png" width="200"> <img src="https://readr.tidyverse.org/logo.png" width="200"> <img src="https://readxl.tidyverse.org/logo.png" width="200"> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"><img src="https://stringr.tidyverse.org/logo.png" width="200"><img src="https://lubridate.tidyverse.org/logo.png" width="200"><img src="https://purrr.tidyverse.org/logo.png" width="200"><img src="https://forcats.tidyverse.org/logo.png" width="200">
 </center>
 </section>
 <section id="the-tidyverse-1" class="slide level2">
 <h2>The tidyverse</h2>
 <p>The package is not included in the base installation of R.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-12_e02f71f0e1ee218f2b4b2128c38edbba">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-13_3a91df11b8b48f8f0d1153efaa954d1c">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Install the tidyverse packages</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-13_5057a0658ace49fc6c400ed010789eb7">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-14_8c94df8ec6d3821fbaf625083010b3cd">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Load all the packages included in tidyverse</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can refer to the printed <strong>cheat sheet</strong> for an overview of the package’s functions.</p>
 </section></section>
 <section>
-<section id="data-manipulation-with-dplyr" class="title-slide slide level1 center" data-background-color="#2C404A">
-<h1>Data manipulation with {dplyr}</h1>
+<section id="data-manipulation-with-dplyr-and-tidyr" class="title-slide slide level1 center" data-background-color="#2C404A">
+<h1>Data manipulation with {dplyr} and {tidyr}</h1>
 
 </section>
-<section id="dplyr" class="slide level2">
-<h2>dplyr</h2>
-<p>A lot of <code>dplyr</code> / <code>tidyverse</code> functions have the same scheme: <strong>the first argument is a data frame</strong>:</p>
+<section id="tidyverse" class="slide level2">
+<h2>Tidyverse</h2>
+<p>A lot of <code>tidyverse</code> functions have the same scheme: <strong>the first argument is a data frame</strong>:</p>
 <div class="r-fit-text">
 <div class="code">
 <p>function(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;expression&gt;</span>)</p>
@@ -25962,7 +25969,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </div>
 <div class="fragment">
 <table>
-<caption>Useful functions in <code>dplyr</code></caption>
+<caption>Useful functions in <code>dplyr</code> / <code>tidyr</code></caption>
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -25998,6 +26005,10 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <td><code>group_by(df, ...)</code></td>
 <td>Group a data frame based on the specified columns.</td>
 </tr>
+<tr class="odd">
+<td><code>*_join(df, ...)</code></td>
+<td>Join/merge two data frames.</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -26012,7 +26023,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </ul>
 </div>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-14_9c89c0d8ad89955719a8b72669c826fe">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-15_77e3869475bc0a717efbd87ddfabd695">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Install the dataset package</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="fu">install.packages</span>(<span class="st">"nycflights13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -26036,7 +26047,7 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
 <section id="nycflights13" class="slide level2">
 <h2>nycflights13</h2>
 <p>For the following examples we are going to use <strong>fights</strong>, <strong>planes</strong>, <strong>airports</strong>, <strong>airlines</strong> tables.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-15_5a9f8b8d5359feec6ad8e4891ac5de22">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-16_2cc41f7ca8c8870d0577a541e07d025e">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Libraries for data manipulation and visualization</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb16-3"><a href="#cb16-3"></a></span>
@@ -26053,7 +26064,7 @@ Source: <a href="https://bookdown.org/asmundhreinn/r4ds-master/">R for Data Scie
 </section>
 <section id="the-flights-table" class="slide level2">
 <h2>The <code>flights</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-16_2057c8790a8f14b2a5fbcc1335a84825">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-17_0c68ec12aa2f87df9ee82c286dd33ed0">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">glimpse</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 336,776
@@ -26082,15 +26093,15 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </section>
 <section id="the-flights-table-1" class="slide level2">
 <h2>The <code>flights</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-17_1e72f2c1e228dc5db1ed3ed453eb3bed">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-18_281eaa002fe2a5e565972c20f07c8595">
 <div class="cell-output-display">
 
-<div id="bqgotgcxqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="otgcxqzzsl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#bqgotgcxqz) .gt_table {
+:where(#otgcxqzzsl) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -26115,7 +26126,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-left-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_heading {
+:where(#otgcxqzzsl) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -26127,12 +26138,12 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-right-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_caption {
+:where(#otgcxqzzsl) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#bqgotgcxqz) .gt_title {
+:where(#otgcxqzzsl) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -26144,7 +26155,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-bottom-width: 0;
 }
 
-:where(#bqgotgcxqz) .gt_subtitle {
+:where(#otgcxqzzsl) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -26156,13 +26167,13 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-top-width: 0;
 }
 
-:where(#bqgotgcxqz) .gt_bottom_border {
+:where(#otgcxqzzsl) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_col_headings {
+:where(#otgcxqzzsl) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -26177,7 +26188,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-right-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_col_heading {
+:where(#otgcxqzzsl) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26197,7 +26208,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   overflow-x: hidden;
 }
 
-:where(#bqgotgcxqz) .gt_column_spanner_outer {
+:where(#otgcxqzzsl) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26209,15 +26220,15 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 4px;
 }
 
-:where(#bqgotgcxqz) .gt_column_spanner_outer:first-child {
+:where(#otgcxqzzsl) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#bqgotgcxqz) .gt_column_spanner_outer:last-child {
+:where(#otgcxqzzsl) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#bqgotgcxqz) .gt_column_spanner {
+:where(#otgcxqzzsl) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -26229,7 +26240,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   width: 100%;
 }
 
-:where(#bqgotgcxqz) .gt_group_heading {
+:where(#otgcxqzzsl) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26255,7 +26266,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   text-align: left;
 }
 
-:where(#bqgotgcxqz) .gt_empty_group_heading {
+:where(#otgcxqzzsl) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -26270,15 +26281,15 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   vertical-align: middle;
 }
 
-:where(#bqgotgcxqz) .gt_from_md > :first-child {
+:where(#otgcxqzzsl) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#bqgotgcxqz) .gt_from_md > :last-child {
+:where(#otgcxqzzsl) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#bqgotgcxqz) .gt_row {
+:where(#otgcxqzzsl) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26297,7 +26308,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   overflow-x: hidden;
 }
 
-:where(#bqgotgcxqz) .gt_stub {
+:where(#otgcxqzzsl) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26310,7 +26321,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_stub_row_group {
+:where(#otgcxqzzsl) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26324,11 +26335,11 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   vertical-align: top;
 }
 
-:where(#bqgotgcxqz) .gt_row_group_first td {
+:where(#otgcxqzzsl) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#bqgotgcxqz) .gt_summary_row {
+:where(#otgcxqzzsl) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -26338,16 +26349,16 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_first_summary_row {
+:where(#otgcxqzzsl) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_first_summary_row.thick {
+:where(#otgcxqzzsl) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#bqgotgcxqz) .gt_last_summary_row {
+:where(#otgcxqzzsl) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26357,7 +26368,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_grand_summary_row {
+:where(#otgcxqzzsl) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -26367,7 +26378,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_first_grand_summary_row {
+:where(#otgcxqzzsl) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26377,11 +26388,11 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-top-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_striped {
+:where(#otgcxqzzsl) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#bqgotgcxqz) .gt_table_body {
+:where(#otgcxqzzsl) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -26390,7 +26401,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-bottom-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_footnotes {
+:where(#otgcxqzzsl) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -26404,7 +26415,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-right-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_footnote {
+:where(#otgcxqzzsl) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -26413,7 +26424,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_sourcenotes {
+:where(#otgcxqzzsl) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -26427,7 +26438,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   border-right-color: #D3D3D3;
 }
 
-:where(#bqgotgcxqz) .gt_sourcenote {
+:where(#otgcxqzzsl) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -26435,64 +26446,64 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
   padding-right: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_left {
+:where(#otgcxqzzsl) .gt_left {
   text-align: left;
 }
 
-:where(#bqgotgcxqz) .gt_center {
+:where(#otgcxqzzsl) .gt_center {
   text-align: center;
 }
 
-:where(#bqgotgcxqz) .gt_right {
+:where(#otgcxqzzsl) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#bqgotgcxqz) .gt_font_normal {
+:where(#otgcxqzzsl) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#bqgotgcxqz) .gt_font_bold {
+:where(#otgcxqzzsl) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#bqgotgcxqz) .gt_font_italic {
+:where(#otgcxqzzsl) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#bqgotgcxqz) .gt_super {
+:where(#otgcxqzzsl) .gt_super {
   font-size: 65%;
 }
 
-:where(#bqgotgcxqz) .gt_footnote_marks {
+:where(#otgcxqzzsl) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#bqgotgcxqz) .gt_asterisk {
+:where(#otgcxqzzsl) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#bqgotgcxqz) .gt_indent_1 {
+:where(#otgcxqzzsl) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#bqgotgcxqz) .gt_indent_2 {
+:where(#otgcxqzzsl) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#bqgotgcxqz) .gt_indent_3 {
+:where(#otgcxqzzsl) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#bqgotgcxqz) .gt_indent_4 {
+:where(#otgcxqzzsl) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#bqgotgcxqz) .gt_indent_5 {
+:where(#otgcxqzzsl) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -26646,7 +26657,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </section>
 <section id="the-planes-table" class="slide level2">
 <h2>The <code>planes</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-18_b9f952de0844a39bfbe1e50ceb7aec96">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-19_edba0b86e6cd0fd56bdbd4e39fff1034">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">glimpse</span>(planes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,322
@@ -26665,15 +26676,15 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
 </section>
 <section id="the-planes-table-1" class="slide level2">
 <h2>The <code>planes</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-19_d837a22dc9d007412acb5d980f9158f2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-20_4c2630d368161a71e38f45eb228f6fdc">
 <div class="cell-output-display">
 
-<div id="zslsyqvswn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="syqvswnkea" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#zslsyqvswn) .gt_table {
+:where(#syqvswnkea) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -26698,7 +26709,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-left-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_heading {
+:where(#syqvswnkea) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -26710,12 +26721,12 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-right-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_caption {
+:where(#syqvswnkea) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#zslsyqvswn) .gt_title {
+:where(#syqvswnkea) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -26727,7 +26738,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-bottom-width: 0;
 }
 
-:where(#zslsyqvswn) .gt_subtitle {
+:where(#syqvswnkea) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -26739,13 +26750,13 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-top-width: 0;
 }
 
-:where(#zslsyqvswn) .gt_bottom_border {
+:where(#syqvswnkea) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_col_headings {
+:where(#syqvswnkea) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -26760,7 +26771,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-right-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_col_heading {
+:where(#syqvswnkea) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26780,7 +26791,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   overflow-x: hidden;
 }
 
-:where(#zslsyqvswn) .gt_column_spanner_outer {
+:where(#syqvswnkea) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26792,15 +26803,15 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 4px;
 }
 
-:where(#zslsyqvswn) .gt_column_spanner_outer:first-child {
+:where(#syqvswnkea) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#zslsyqvswn) .gt_column_spanner_outer:last-child {
+:where(#syqvswnkea) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#zslsyqvswn) .gt_column_spanner {
+:where(#syqvswnkea) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -26812,7 +26823,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   width: 100%;
 }
 
-:where(#zslsyqvswn) .gt_group_heading {
+:where(#syqvswnkea) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26838,7 +26849,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   text-align: left;
 }
 
-:where(#zslsyqvswn) .gt_empty_group_heading {
+:where(#syqvswnkea) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -26853,15 +26864,15 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   vertical-align: middle;
 }
 
-:where(#zslsyqvswn) .gt_from_md > :first-child {
+:where(#syqvswnkea) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#zslsyqvswn) .gt_from_md > :last-child {
+:where(#syqvswnkea) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#zslsyqvswn) .gt_row {
+:where(#syqvswnkea) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26880,7 +26891,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   overflow-x: hidden;
 }
 
-:where(#zslsyqvswn) .gt_stub {
+:where(#syqvswnkea) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26893,7 +26904,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 5px;
 }
 
-:where(#zslsyqvswn) .gt_stub_row_group {
+:where(#syqvswnkea) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -26907,11 +26918,11 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   vertical-align: top;
 }
 
-:where(#zslsyqvswn) .gt_row_group_first td {
+:where(#syqvswnkea) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#zslsyqvswn) .gt_summary_row {
+:where(#syqvswnkea) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -26921,16 +26932,16 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 5px;
 }
 
-:where(#zslsyqvswn) .gt_first_summary_row {
+:where(#syqvswnkea) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_first_summary_row.thick {
+:where(#syqvswnkea) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#zslsyqvswn) .gt_last_summary_row {
+:where(#syqvswnkea) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26940,7 +26951,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_grand_summary_row {
+:where(#syqvswnkea) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -26950,7 +26961,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 5px;
 }
 
-:where(#zslsyqvswn) .gt_first_grand_summary_row {
+:where(#syqvswnkea) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -26960,11 +26971,11 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-top-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_striped {
+:where(#syqvswnkea) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#zslsyqvswn) .gt_table_body {
+:where(#syqvswnkea) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -26973,7 +26984,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-bottom-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_footnotes {
+:where(#syqvswnkea) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -26987,7 +26998,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-right-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_footnote {
+:where(#syqvswnkea) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -26996,7 +27007,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 5px;
 }
 
-:where(#zslsyqvswn) .gt_sourcenotes {
+:where(#syqvswnkea) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -27010,7 +27021,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   border-right-color: #D3D3D3;
 }
 
-:where(#zslsyqvswn) .gt_sourcenote {
+:where(#syqvswnkea) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -27018,64 +27029,64 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
   padding-right: 5px;
 }
 
-:where(#zslsyqvswn) .gt_left {
+:where(#syqvswnkea) .gt_left {
   text-align: left;
 }
 
-:where(#zslsyqvswn) .gt_center {
+:where(#syqvswnkea) .gt_center {
   text-align: center;
 }
 
-:where(#zslsyqvswn) .gt_right {
+:where(#syqvswnkea) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#zslsyqvswn) .gt_font_normal {
+:where(#syqvswnkea) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#zslsyqvswn) .gt_font_bold {
+:where(#syqvswnkea) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#zslsyqvswn) .gt_font_italic {
+:where(#syqvswnkea) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#zslsyqvswn) .gt_super {
+:where(#syqvswnkea) .gt_super {
   font-size: 65%;
 }
 
-:where(#zslsyqvswn) .gt_footnote_marks {
+:where(#syqvswnkea) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#zslsyqvswn) .gt_asterisk {
+:where(#syqvswnkea) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#zslsyqvswn) .gt_indent_1 {
+:where(#syqvswnkea) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#zslsyqvswn) .gt_indent_2 {
+:where(#syqvswnkea) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#zslsyqvswn) .gt_indent_3 {
+:where(#syqvswnkea) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#zslsyqvswn) .gt_indent_4 {
+:where(#syqvswnkea) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#zslsyqvswn) .gt_indent_5 {
+:where(#syqvswnkea) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -27159,7 +27170,7 @@ $ engine       &lt;chr&gt; "Turbo-fan", "Turbo-fan", "Turbo-fan", "Turbo-fan", "
 </section>
 <section id="the-airports-table" class="slide level2">
 <h2>The <code>airports</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-20_194341668c8e30eb4064288900c8c846">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-21_a43e2d7b898078bfab1472e1f3db6a4b">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">glimpse</span>(airports)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,458
@@ -27177,7 +27188,7 @@ $ tzone &lt;chr&gt; "America/New_York", "America/Chicago", "America/Chicago", "A
 </section>
 <section id="the-airlines-table" class="slide level2">
 <h2>The <code>airlines</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-21_7cb4422899d2e11c29451f6f6752f4e4">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-22_f033ceb60fcc0467c8fed209cad1fa8b">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">glimpse</span>(airlines)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 16
@@ -27189,7 +27200,7 @@ $ name    &lt;chr&gt; "Endeavor Air Inc.", "American Airlines Inc.", "Alaska Air
 </section>
 <section id="the-weather-table" class="slide level2">
 <h2>The <code>weather</code> table</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-22_4ac7a475d1c7c5bd2e116da1b860c46f">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-23_c556eec0eb09eaeb2782b22786d8564f">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">glimpse</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 26,115
@@ -27215,7 +27226,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="getting-more-information" class="slide level2">
 <h2>Getting more information</h2>
 <p>If you want more information on a specific table, use the <code>?</code> operator. This will open the help file and describe all variables included in the data frame.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-23_2cd01d38c946d90d5766d0acf1d46c70">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-24_ff1768fa58da025fe118e6e2f81c8fc0">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>?flights</span>
 <span id="cb27-2"><a href="#cb27-2"></a></span>
 <span id="cb27-3"><a href="#cb27-3"></a>?planes</span>
@@ -27249,7 +27260,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-filter-function-1" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
 <p>Example 1: <span class="text-outline">select all flights with a tail number equal to “<strong>N14228</strong>”.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-24_b0a171d207e32094156b4a9e4ebc535c">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-25_05e48e30592b989c0749d2f98f677c5d">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">filter</span>(flights, tailnum <span class="sc">==</span> <span class="st">"N14228"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 111 × 19
@@ -27275,7 +27286,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-filter-function-2" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
 <p>Example 2: <span class="text-outline">select all flights with a departure delay greater than 180 minutes.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-25_41f88f109f607a4d0ed7810f61c32379">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-26_951ef520c1adab47df3899b145da242f">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">filter</span>(flights, dep_delay <span class="sc">&gt;</span> <span class="dv">180</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3,893 × 19
@@ -27301,7 +27312,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-filter-function-3" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
 <p>Example 3: <span class="text-outline">select all flights from <code>carriers</code> “<strong>MQ</strong>” or “<strong>EV</strong>”.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-26_0c4f5244f4f8bf720d5cd7081c3d58bf">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-27_556925f150387810ad5404088014b1fc">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">filter</span>(flights, carrier <span class="sc">==</span> <span class="st">"MQ"</span> <span class="sc">|</span> carrier <span class="sc">==</span> <span class="st">"EV"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 80,570 × 19
@@ -27327,7 +27338,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-filter-function-4" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
 <p>Another option using the <code>%in%</code> operator.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-27_94f8a8444b23d538a2b5175bded36df5">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-28_9b2855db22add381e46f5cf63cde5570">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">filter</span>(flights, carrier <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"MQ"</span>, <span class="st">"EV"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 80,570 × 19
@@ -27352,9 +27363,9 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-filter-function-5" class="slide level2">
 <h2>The <code>filter()</code> function</h2>
-<p>Your turn: write code that uses the <code>flights</code> table and return all the flights with delayed departures between 100 and 200 minutes from the “<strong>FL</strong>” carrier.</p>
+<p><strong>Your turn:</strong> write code that uses the <code>flights</code> table and return all the flights with delayed departures between 100 and 200 minutes from the “<strong>FL</strong>” carrier.</p>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-28_4240a70483041d2a75e5b4e9b88d0b87">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-29_99068bdff7445d7f18f434f540cf2738">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">filter</span>(flights, dep_delay <span class="sc">&gt;=</span> <span class="dv">100</span> <span class="sc">&amp;</span> dep_delay <span class="sc">&lt;=</span> <span class="dv">200</span> <span class="sc">&amp;</span> carrier <span class="sc">==</span> <span class="st">"FL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 127 × 19
@@ -27400,7 +27411,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-arrange-function-1" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
 <p>Example 1: <span class="text-outline">reorder flights on departure month.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-29_77c5212316c67db812374f17535e08eb">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-30_b32305049d3ce1293df0bd1e088ecdcd">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">arrange</span>(flights, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -27426,7 +27437,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-arrange-function-2" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
 <p>Example 2: <span class="text-outline">reorder flights on departure month and departure time.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-30_d73d8f03330d8a978a0b8ba8d44427c0">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-31_0cc5886ef33bd9a9f81967323169e42c">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">arrange</span>(flights, month, dep_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -27452,7 +27463,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-arrange-function-3" class="slide level2">
 <h2>The <code>arrange()</code> function</h2>
 <p>Example 3: <span class="text-outline">reorder flights on departure month and by <strong>decreasing</strong> departure time.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-31_9bd6638c8c78800592d98413332176be">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-32_e478ea3bd0d22ef69747a14194bf8758">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">arrange</span>(flights, month, <span class="fu">desc</span>(dep_time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
@@ -27492,7 +27503,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-select-function-1" class="slide level2">
 <h2>The <code>select()</code> function</h2>
 <p>Example 1: <span class="text-outline">select “<strong>faa</strong>” and “<strong>name</strong>” columns from the <code>airports</code> data frame.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-32_0dc8e9a165aef263a2e72833632e6f97">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-33_86bdb9a226c793a9d0d534a5fc6c1663">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">select</span>(airports, faa, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,458 × 2
@@ -27516,7 +27527,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>The <code>select()</code> function</h2>
 <p>You can also use <code>select()</code> to remove columns with the <code>-</code> operator.</p>
 <p>Example 2: <span class="text-outline">select all columns from <code>airports</code> except “<strong>faa</strong>” and “<strong>name</strong>”.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-33_812ee7a8bde8b0cb2739ec311d57777c">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-34_289ecbf08f2c47f901ddbe314b2f45f7">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">select</span>(airports, <span class="sc">-</span>faa, <span class="sc">-</span>name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,458 × 6
@@ -27540,7 +27551,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>The <code>select()</code> function</h2>
 <p>It is also possible to select columns using <strong>helper functions</strong>.</p>
 <p>Example 3: <span class="text-outline">select “<strong>year</strong>”, “<strong>month</strong>” and all columns that start with “<strong>dep_</strong>” from <code>flights</code>.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-34_cfd0453c87e98ca7764956daa4b71170">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-35_1453ebd6e0ac61ea78d5088f1d406235">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">select</span>(flights, year, month, <span class="fu">starts_with</span>(<span class="st">"dep_"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 4
@@ -27578,7 +27589,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>The <code>mutate()</code> function</h2>
 <p>Example 1:</p>
 <p><span class="text-outline r-fit-text">add a new column named <code>distance_km</code> which converts the <code>distance</code> column, which is the flight distance in miles, into km.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-35_463d422bf7c1c6b8a1b3284f738382c2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-36_7199bf379c04ad6270654be8d5248509">
 <div class="sourceCode cell-code" id="cb50" data-code-line-numbers="1-5|2|3|4|1-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">mutate</span>(</span>
 <span id="cb50-2"><a href="#cb50-2"></a>  flights,</span>
 <span id="cb50-3"><a href="#cb50-3"></a>  <span class="at">distance_km =</span> distance <span class="sc">/</span> <span class="fl">0.62137</span>,</span>
@@ -27605,7 +27616,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-mutate-function-2" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
 <p>It is also possible to add many new variables in a single operation.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-36_5ef405a735f0cf28345c7d7658d00a87">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-37_0f51c68850babfe716de2c4be1e181b4">
 <div class="sourceCode cell-code" id="cb52" data-code-line-numbers="3-4|1-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">mutate</span>(</span>
 <span id="cb52-2"><a href="#cb52-2"></a>  flights,</span>
 <span id="cb52-3"><a href="#cb52-3"></a>  <span class="at">distance_km =</span> distance <span class="sc">/</span> <span class="fl">0.62137</span>,</span>
@@ -27634,7 +27645,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>The <code>mutate()</code> function</h2>
 <p>The <code>mutate()</code> function is very powerful as it allows to use of some <strong>helper functions</strong> to <strong>mutate multiple columns at once</strong>.</p>
 <p>For the following examples, we will use the <code>weather</code> table.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-37_3e0d032985e03406cd50484e8f3f7e61">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-38_fa46ca77e69ec264184ba4f50aa071f8">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26,115 × 15
@@ -27658,7 +27669,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-mutate-function-4" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
 <p>Let’s say we want to <strong>round all the numerical columns</strong> of the <code>weather</code> data frame. It could be fastidious to do it manually for the 13 numerical columns.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-38_d8528011e9deac63c8d03e9792c700f3">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-39_4c950675bdbd63137a7fb7c6356cb682">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">glimpse</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 26,115
@@ -27684,7 +27695,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-mutate-function-5" class="slide level2">
 <h2>The <code>mutate()</code> function</h2>
 <p>Would require a lot of typing (<strong>and I am very lazy!</strong>):</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-39_eddf33d04fd0a41c42b84d7cf7d39caa">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-40_7338fc7e616af8a868598f034e342b57">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">mutate</span>(</span>
 <span id="cb58-2"><a href="#cb58-2"></a>  weather,</span>
 <span id="cb58-3"><a href="#cb58-3"></a>  <span class="at">year =</span> <span class="fu">round</span>(year),</span>
@@ -27709,7 +27720,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>The following code says:</p></li>
 </ul>
 <p><span class="text-outline">apply the <code>mean()</code> function to all the columns between <code>temp</code> and <code>pressure</code></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-40_bcbe018ac9dcdf6afbe1b7b4f373a1bf">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-41_7837e97e52043fa526c86979463698b9">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">mutate</span>(weather, <span class="fu">across</span>(year<span class="sc">:</span>pressure, round), <span class="at">.keep =</span> <span class="st">"used"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26,115 × 12
@@ -27737,7 +27748,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>The following code says:</p></li>
 </ul>
 <p><span class="text-outline">apply the <code>mean()</code> function to <strong>all the numerical columns</strong></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-41_f4c49b07f8f9e37c53c2fe7f4be60e94">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-42_74980c46dae1580c1820eaf46aa7d945">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">mutate</span>(weather, <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round), <span class="at">.keep =</span> <span class="st">"used"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 26,115 × 13
@@ -27778,7 +27789,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-summarise-function-1" class="slide level2">
 <h2>The <code>summarise()</code> function</h2>
 <p>Example 1: <span class="text-outline">Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-42_775a6bd7da0b9c24e97506353564ad60">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-43_775cb47890b86c04928842503a3fed45">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb63-2"><a href="#cb63-2"></a>  flights,</span>
 <span id="cb63-3"><a href="#cb63-3"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay),</span>
@@ -27798,7 +27809,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <section id="the-summarise-function-2" class="slide level2">
 <h2>The <code>summarise()</code> function</h2>
 <p>Example 1: <span class="text-outline">Calculate the mean/average values for the <code>dep_delay</code> and <code>arr_delay</code> columns.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-43_45da93a374ed17a363ecd6f25dfd4c30">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-44_ff8e4347b117be81e4b0a9edb50fa612">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb65-2"><a href="#cb65-2"></a>  flights,</span>
 <span id="cb65-3"><a href="#cb65-3"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -27818,7 +27829,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li>It could be interesting to know how many observations were used in the computation.</li>
 <li>For this, we can use the <code>n()</code> helper function.</li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-44_27235946fa6d01abfdcad624ed2c4af4">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-45_b779277ea497b172bad27caa46f06b96">
 <div class="sourceCode cell-code" id="cb67" data-code-line-numbers="1-6|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb67-2"><a href="#cb67-2"></a>  flights,</span>
 <span id="cb67-3"><a href="#cb67-3"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -27838,7 +27849,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <ul>
 <li>Similarly as with <code>mutate()</code>, we can use the <code>across()</code> function to avoid extra typing.</li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-45_d106ea0dc6ccdd1fb4bc8baa154fc491">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-46_4fd29fd9c7839016697178c54400c574">
 <div class="sourceCode cell-code" id="cb69" data-code-line-numbers="1-5|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb69-2"><a href="#cb69-2"></a>  weather,</span>
 <span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -27866,7 +27877,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>Working with grouped data</h2>
 <p>Example 1: <span class="text-outline">Calculate the average departure delay <strong>by carrier</strong>.</span></p>
 <p>First, let’s group the data by <code>carrier</code>.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-46_1d3cd90d3d1d105f77c4a1cadb5f8410">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-47_13326644a987daa444f00ccae930b4be">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>flights_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, carrier)</span>
 <span id="cb71-2"><a href="#cb71-2"></a>flights_grouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27895,7 +27906,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <h2>Working with grouped data</h2>
 <p>Example 1: <span class="text-outline">Calculate the average departure delay <strong>by carrier</strong>.</span></p>
 <p>Secondly, use <code>summarise()</code> as we did before by now using <code>flights_grouped</code> instead of <code>flights</code>.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-47_06c7b7aab070e1eb48085a94b985ec03">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-48_95cbc6ca9e1826b220d78f26a4bc3d93">
 <div class="sourceCode cell-code" id="cb73" data-code-line-numbers="1-5|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb73-2"><a href="#cb73-2"></a>  flights_grouped,</span>
 <span id="cb73-3"><a href="#cb73-3"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -27904,7 +27915,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </div>
 
 </section>
-<section id="working-with-grouped-data-2-output" class="slide level2 output-location-slide"><h2>Working with grouped data</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-47_06c7b7aab070e1eb48085a94b985ec03">
+<section id="working-with-grouped-data-2-output" class="slide level2 output-location-slide"><h2>Working with grouped data</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-48_95cbc6ca9e1826b220d78f26a4bc3d93">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 3
    carrier average_departure_delay     n
@@ -27931,7 +27942,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <ul>
 <li>We can also <code>summarise()</code> multiple columns at once.</li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-48_523483320f5478e7aa0ae32fa54d7ab2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-49_153e09ba159ffd531a476dcf8b670772">
 <div class="sourceCode cell-code" id="cb75" data-code-line-numbers="1-5|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb75-2"><a href="#cb75-2"></a>  flights_grouped,</span>
 <span id="cb75-3"><a href="#cb75-3"></a>  <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
@@ -27939,11 +27950,11 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <span id="cb75-5"><a href="#cb75-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-49_21286a31f64fdbf5bf977594945223a3">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-50_e431996a5dfde0f569df40f1180857af">
 
 </div>
 </section>
-<section id="working-with-grouped-data-3-output" class="slide level2 output-location-slide"><h2>Working with grouped data</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-48_523483320f5478e7aa0ae32fa54d7ab2">
+<section id="working-with-grouped-data-3-output" class="slide level2 output-location-slide"><h2>Working with grouped data</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-49_153e09ba159ffd531a476dcf8b670772">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 16
    carrier  year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵
@@ -27986,7 +27997,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <p><span class="small">We want to calculate the average <code>height</code> for each combination of <code>species</code> and <code>homeworld</code> in the <code>starwars</code> data frame.</span></p>
 <div class="columns small">
 <div class="column" style="width:55%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-50_7fb9851d06c458ae1b823fb222888a87">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-51_7e02e556b23566217be03f2b49b22a7d">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a>starwars_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(starwars, species, homeworld)</span>
 <span id="cb77-2"><a href="#cb77-2"></a><span class="fu">summarise</span>(</span>
 <span id="cb77-3"><a href="#cb77-3"></a>  starwars_grouped,</span>
@@ -28011,7 +28022,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </div>
 </div>
 </div><div class="column" style="width:45%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-51_ed7114f4f94011d9003317bff0b35547">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-52_36999fc080a6996a23dcc9cbdc73c859">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">summarise</span>(</span>
 <span id="cb79-2"><a href="#cb79-2"></a>  starwars,</span>
 <span id="cb79-3"><a href="#cb79-3"></a>  <span class="at">mean_height =</span> <span class="fu">mean</span>(height),</span>
@@ -28044,7 +28055,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 </section>
 <section id="the-titanic" class="slide level2">
 <h2>The Titanic</h2>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-52_18fc8e43f733c6034c5ecdcc303d7a54">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-53_1a01c34abcaf055690bdc3641985e918">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/3xrnh3U"</span>)</span>
 <span id="cb81-2"><a href="#cb81-2"></a><span class="fu">glimpse</span>(titanic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -28085,7 +28096,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </ul></li>
 </ol>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-53_46512318249fffb27cdc5d32cbe44bcb">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-54_07896f6c9df325fcdffef543b66303c0">
 
 </div>
 </section></section>
@@ -28096,27 +28107,32 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 <img data-src="images/unsplash_pipe.jpg" class="r-stretch quarto-figure-center"><p class="caption">Photo by <a href="https://unsplash.com/@tival?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Val Tievsky</a> on <a href="https://unsplash.com/photos/fzmyw3mgVA0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p></section>
 <section id="piping-operations-1" class="slide level2">
 <h2>Piping operations</h2>
-<p>We have seen that to summarise grouped data, we need to perform two operations:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-54_55cc8d0c2f1aca949678e738e66b4dbd">
-<div class="sourceCode cell-code" id="cb83" data-code-line-numbers="1-7|1|3-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a>flights_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, carrier)</span>
-<span id="cb83-2"><a href="#cb83-2"></a></span>
-<span id="cb83-3"><a href="#cb83-3"></a>res <span class="ot">&lt;-</span> <span class="fu">summarise</span>(</span>
-<span id="cb83-4"><a href="#cb83-4"></a>  flights_grouped,</span>
-<span id="cb83-5"><a href="#cb83-5"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb83-6"><a href="#cb83-6"></a>  <span class="at">n =</span> <span class="fu">n</span>()</span>
-<span id="cb83-7"><a href="#cb83-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>We have seen that to summarise grouped data, we need to perform two operations.</li>
+<li>Here we want to calculate the average departure delay for each carrier.</li>
+</ul>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-55_ab4a6ff35848aa1543ee959b542d115c">
+<div class="sourceCode cell-code" id="cb83" data-code-line-numbers="1-9|1-2|4-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="co"># Group the data</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a>flights_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(flights, carrier)</span>
+<span id="cb83-3"><a href="#cb83-3"></a></span>
+<span id="cb83-4"><a href="#cb83-4"></a><span class="co"># Do the calculation</span></span>
+<span id="cb83-5"><a href="#cb83-5"></a>res <span class="ot">&lt;-</span> <span class="fu">summarise</span>(</span>
+<span id="cb83-6"><a href="#cb83-6"></a>  flights_grouped,</span>
+<span id="cb83-7"><a href="#cb83-7"></a>  <span class="at">average_departure_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb83-8"><a href="#cb83-8"></a>  <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb83-9"><a href="#cb83-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The thing is that we never directly use <code>flights_grouped</code>; it is only used as an <strong>intermediate</strong> object.</p>
+<p>The thing is that we never directly use <code>flights_grouped</code>; it is <strong>only used as an intermediate object</strong>.</p>
 </section>
 <section id="piping-operations-2" class="slide level2">
 <h2>Piping operations</h2>
 <ul>
 <li><p>With R 4.1.0+, we can use the pipe operator (<span style="font-family:ubuntu;"><strong>|&gt;</strong></span>) to chain operations.</p></li>
-<li><p>Basically, (<span style="font-family:ubuntu;"><strong>|&gt;</strong></span>) takes the left-hand side (<strong>lhs</strong>) object and passes it as the first argument in the right-hand side (<strong>rhs</strong>) function.</p></li>
+<li><p>Basically, (<span style="font-family:ubuntu;"><strong>|&gt;</strong></span>) takes the <strong>left-hand side (lhs)</strong> object and passes it as the first argument in the <strong>right-hand side (rhs)</strong> function.</p></li>
 </ul>
 <div class="columns fragment">
 <div class="column" style="width:28%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-55_56e2b14498f94858d1d64dd95a36963b">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-56_b248061a581366eff3fec7104941b5ac">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="co"># Same as log(10)</span></span>
 <span id="cb84-2"><a href="#cb84-2"></a><span class="dv">10</span> <span class="sc">|&gt;</span> <span class="fu">log</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -28124,7 +28140,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </div>
 </div>
 </div><div class="column" style="width:38%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-56_50a90adc0140883dab949d1f1d6db988">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-57_77a4e58e87f921b3fff6383f93035172">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="co"># Same has:</span></span>
 <span id="cb86-2"><a href="#cb86-2"></a><span class="co"># toupper("my string")</span></span>
 <span id="cb86-3"><a href="#cb86-3"></a><span class="st">"my string"</span> <span class="sc">|&gt;</span> <span class="fu">toupper</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -28133,7 +28149,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </div>
 </div>
 </div><div class="column" style="width:34%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-57_0295deb87a43fd9f2a5a8d24e50d6fe3">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-58_9ddd822b0c496d6e439363b4d539e448">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="co"># Same has:</span></span>
 <span id="cb88-2"><a href="#cb88-2"></a><span class="co"># head(chickwts), 6)</span></span>
 <span id="cb88-3"><a href="#cb88-3"></a>chickwts <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -28161,7 +28177,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 <li>Summarise the data to calculate the average departure delay.</li>
 </ol></li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-58_e1a3ed6423b15df4553a0d6a5601883d">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-59_25d18e4f9864d21ffdff7e21523bf3e6">
 <div class="sourceCode cell-code" id="cb90" data-code-line-numbers="|1|2|3-6|1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>flights <span class="sc">|&gt;</span> <span class="co"># Take the flight data frame</span></span>
 <span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> <span class="co"># Then group it by carrier</span></span>
 <span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">summarise</span>( <span class="co"># Then calculate the average departure delay (by group)</span></span>
@@ -28171,7 +28187,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </div>
 
 </section>
-<section id="piping-operations-3-output" class="slide level2 output-location-slide"><h2>Piping operations</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-58_e1a3ed6423b15df4553a0d6a5601883d">
+<section id="piping-operations-3-output" class="slide level2 output-location-slide"><h2>Piping operations</h2><div class="cell output-location-slide" data-hash="index_cache/revealjs/unnamed-chunk-59_25d18e4f9864d21ffdff7e21523bf3e6">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 3
    carrier average_departure_delay     n
@@ -28199,7 +28215,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 <li><p>By default, the pipe operator passes the <strong>lhs</strong> object as the first parameter in the <strong>rhs</strong> function. We can control this behaviour using the “<strong>_</strong>” placeholder.</p></li>
 <li><p>For example, <code>rnorm(n, mean = 0, sd = 1)</code> has three arguments.</p></li>
 </ul>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-59_0bdd1c4fc84ff84565b7348ddd1ee791">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-60_a8ae27ead103a24f7ce729ce30d07644">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="dv">10</span> <span class="sc">|&gt;</span> <span class="fu">rnorm</span>() <span class="co"># Same as rnorm(n = 10, mean = 0, sd = 1)</span></span>
 <span id="cb92-2"><a href="#cb92-2"></a><span class="dv">10</span> <span class="sc">|&gt;</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> _) <span class="co"># Same as rnorm(5, mean = 10, sd = 1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -28217,7 +28233,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 </div>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-60_fbd340df0bf5cbe4e35a0b4af9055df2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-61_e0652b487ba34f3f58ab194d8e69753e">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="dv">10</span>  <span class="sc">|&gt;</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, _) <span class="co"># Not good!</span></span>
 <span id="cb93-2"><a href="#cb93-2"></a><span class="dv">10</span> <span class="sc">|&gt;</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> _) <span class="co"># Good!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -28258,15 +28274,15 @@ Types of equality and filtering joins
 <h2>Understanding joins</h2>
 <p>Suppose that we have two data frames: <code>sites</code> and <code>measurements</code>.</p>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-61_cd1e9d370b82312a9f9feda24d6e052b">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-62_84e5d4c433b2c45cfc2ff76d8ee8aca8">
 <div class="cell-output-display">
 
-<div id="keartvxyoi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rtvxyoidgq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#keartvxyoi) .gt_table {
+:where(#rtvxyoidgq) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -28291,7 +28307,7 @@ Types of equality and filtering joins
   border-left-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_heading {
+:where(#rtvxyoidgq) .gt_heading {
   background-color: rgba(255, 255, 255, 0);
   text-align: center;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -28303,12 +28319,12 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_caption {
+:where(#rtvxyoidgq) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#keartvxyoi) .gt_title {
+:where(#rtvxyoidgq) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -28320,7 +28336,7 @@ Types of equality and filtering joins
   border-bottom-width: 0;
 }
 
-:where(#keartvxyoi) .gt_subtitle {
+:where(#rtvxyoidgq) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -28332,13 +28348,13 @@ Types of equality and filtering joins
   border-top-width: 0;
 }
 
-:where(#keartvxyoi) .gt_bottom_border {
+:where(#rtvxyoidgq) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_col_headings {
+:where(#rtvxyoidgq) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -28353,7 +28369,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_col_heading {
+:where(#rtvxyoidgq) .gt_col_heading {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28373,7 +28389,7 @@ Types of equality and filtering joins
   overflow-x: hidden;
 }
 
-:where(#keartvxyoi) .gt_column_spanner_outer {
+:where(#rtvxyoidgq) .gt_column_spanner_outer {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28385,15 +28401,15 @@ Types of equality and filtering joins
   padding-right: 4px;
 }
 
-:where(#keartvxyoi) .gt_column_spanner_outer:first-child {
+:where(#rtvxyoidgq) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#keartvxyoi) .gt_column_spanner_outer:last-child {
+:where(#rtvxyoidgq) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#keartvxyoi) .gt_column_spanner {
+:where(#rtvxyoidgq) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -28405,7 +28421,7 @@ Types of equality and filtering joins
   width: 100%;
 }
 
-:where(#keartvxyoi) .gt_group_heading {
+:where(#rtvxyoidgq) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28431,7 +28447,7 @@ Types of equality and filtering joins
   text-align: left;
 }
 
-:where(#keartvxyoi) .gt_empty_group_heading {
+:where(#rtvxyoidgq) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
@@ -28446,15 +28462,15 @@ Types of equality and filtering joins
   vertical-align: middle;
 }
 
-:where(#keartvxyoi) .gt_from_md > :first-child {
+:where(#rtvxyoidgq) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#keartvxyoi) .gt_from_md > :last-child {
+:where(#rtvxyoidgq) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#keartvxyoi) .gt_row {
+:where(#rtvxyoidgq) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28473,7 +28489,7 @@ Types of equality and filtering joins
   overflow-x: hidden;
 }
 
-:where(#keartvxyoi) .gt_stub {
+:where(#rtvxyoidgq) .gt_stub {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28486,7 +28502,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#keartvxyoi) .gt_stub_row_group {
+:where(#rtvxyoidgq) .gt_stub_row_group {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28500,11 +28516,11 @@ Types of equality and filtering joins
   vertical-align: top;
 }
 
-:where(#keartvxyoi) .gt_row_group_first td {
+:where(#rtvxyoidgq) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#keartvxyoi) .gt_summary_row {
+:where(#rtvxyoidgq) .gt_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -28514,16 +28530,16 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#keartvxyoi) .gt_first_summary_row {
+:where(#rtvxyoidgq) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_first_summary_row.thick {
+:where(#rtvxyoidgq) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#keartvxyoi) .gt_last_summary_row {
+:where(#rtvxyoidgq) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28533,7 +28549,7 @@ Types of equality and filtering joins
   border-bottom-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_grand_summary_row {
+:where(#rtvxyoidgq) .gt_grand_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -28543,7 +28559,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#keartvxyoi) .gt_first_grand_summary_row {
+:where(#rtvxyoidgq) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28553,11 +28569,11 @@ Types of equality and filtering joins
   border-top-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_striped {
+:where(#rtvxyoidgq) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#keartvxyoi) .gt_table_body {
+:where(#rtvxyoidgq) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -28566,7 +28582,7 @@ Types of equality and filtering joins
   border-bottom-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_footnotes {
+:where(#rtvxyoidgq) .gt_footnotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -28580,7 +28596,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_footnote {
+:where(#rtvxyoidgq) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -28589,7 +28605,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#keartvxyoi) .gt_sourcenotes {
+:where(#rtvxyoidgq) .gt_sourcenotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -28603,7 +28619,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#keartvxyoi) .gt_sourcenote {
+:where(#rtvxyoidgq) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -28611,64 +28627,64 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#keartvxyoi) .gt_left {
+:where(#rtvxyoidgq) .gt_left {
   text-align: left;
 }
 
-:where(#keartvxyoi) .gt_center {
+:where(#rtvxyoidgq) .gt_center {
   text-align: center;
 }
 
-:where(#keartvxyoi) .gt_right {
+:where(#rtvxyoidgq) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#keartvxyoi) .gt_font_normal {
+:where(#rtvxyoidgq) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#keartvxyoi) .gt_font_bold {
+:where(#rtvxyoidgq) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#keartvxyoi) .gt_font_italic {
+:where(#rtvxyoidgq) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#keartvxyoi) .gt_super {
+:where(#rtvxyoidgq) .gt_super {
   font-size: 65%;
 }
 
-:where(#keartvxyoi) .gt_footnote_marks {
+:where(#rtvxyoidgq) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#keartvxyoi) .gt_asterisk {
+:where(#rtvxyoidgq) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#keartvxyoi) .gt_indent_1 {
+:where(#rtvxyoidgq) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#keartvxyoi) .gt_indent_2 {
+:where(#rtvxyoidgq) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#keartvxyoi) .gt_indent_3 {
+:where(#rtvxyoidgq) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#keartvxyoi) .gt_indent_4 {
+:where(#rtvxyoidgq) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#keartvxyoi) .gt_indent_5 {
+:where(#rtvxyoidgq) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -28705,15 +28721,15 @@ Types of equality and filtering joins
 </div>
 </div>
 <div class="fragment">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-62_d93b91dfcb3f3fe55d6a52a671e30573">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-63_637387e4c59adefe64afe78bcde4043c">
 <div class="cell-output-display">
 
-<div id="dgqmdhvxtg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="mdhvxtguyr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#dgqmdhvxtg) .gt_table {
+:where(#mdhvxtguyr) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -28738,7 +28754,7 @@ Types of equality and filtering joins
   border-left-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_heading {
+:where(#mdhvxtguyr) .gt_heading {
   background-color: rgba(255, 255, 255, 0);
   text-align: center;
   border-bottom-color: rgba(255, 255, 255, 0);
@@ -28750,12 +28766,12 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_caption {
+:where(#mdhvxtguyr) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#dgqmdhvxtg) .gt_title {
+:where(#mdhvxtguyr) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -28767,7 +28783,7 @@ Types of equality and filtering joins
   border-bottom-width: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_subtitle {
+:where(#mdhvxtguyr) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -28779,13 +28795,13 @@ Types of equality and filtering joins
   border-top-width: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_bottom_border {
+:where(#mdhvxtguyr) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_col_headings {
+:where(#mdhvxtguyr) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -28800,7 +28816,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_col_heading {
+:where(#mdhvxtguyr) .gt_col_heading {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28820,7 +28836,7 @@ Types of equality and filtering joins
   overflow-x: hidden;
 }
 
-:where(#dgqmdhvxtg) .gt_column_spanner_outer {
+:where(#mdhvxtguyr) .gt_column_spanner_outer {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28832,15 +28848,15 @@ Types of equality and filtering joins
   padding-right: 4px;
 }
 
-:where(#dgqmdhvxtg) .gt_column_spanner_outer:first-child {
+:where(#mdhvxtguyr) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_column_spanner_outer:last-child {
+:where(#mdhvxtguyr) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_column_spanner {
+:where(#mdhvxtguyr) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -28852,7 +28868,7 @@ Types of equality and filtering joins
   width: 100%;
 }
 
-:where(#dgqmdhvxtg) .gt_group_heading {
+:where(#mdhvxtguyr) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28878,7 +28894,7 @@ Types of equality and filtering joins
   text-align: left;
 }
 
-:where(#dgqmdhvxtg) .gt_empty_group_heading {
+:where(#mdhvxtguyr) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
@@ -28893,15 +28909,15 @@ Types of equality and filtering joins
   vertical-align: middle;
 }
 
-:where(#dgqmdhvxtg) .gt_from_md > :first-child {
+:where(#mdhvxtguyr) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_from_md > :last-child {
+:where(#mdhvxtguyr) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_row {
+:where(#mdhvxtguyr) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28920,7 +28936,7 @@ Types of equality and filtering joins
   overflow-x: hidden;
 }
 
-:where(#dgqmdhvxtg) .gt_stub {
+:where(#mdhvxtguyr) .gt_stub {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28933,7 +28949,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_stub_row_group {
+:where(#mdhvxtguyr) .gt_stub_row_group {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   font-size: 100%;
@@ -28947,11 +28963,11 @@ Types of equality and filtering joins
   vertical-align: top;
 }
 
-:where(#dgqmdhvxtg) .gt_row_group_first td {
+:where(#mdhvxtguyr) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#dgqmdhvxtg) .gt_summary_row {
+:where(#mdhvxtguyr) .gt_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -28961,16 +28977,16 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_first_summary_row {
+:where(#mdhvxtguyr) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_first_summary_row.thick {
+:where(#mdhvxtguyr) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#dgqmdhvxtg) .gt_last_summary_row {
+:where(#mdhvxtguyr) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -28980,7 +28996,7 @@ Types of equality and filtering joins
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_grand_summary_row {
+:where(#mdhvxtguyr) .gt_grand_summary_row {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   text-transform: inherit;
@@ -28990,7 +29006,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_first_grand_summary_row {
+:where(#mdhvxtguyr) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -29000,11 +29016,11 @@ Types of equality and filtering joins
   border-top-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_striped {
+:where(#mdhvxtguyr) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#dgqmdhvxtg) .gt_table_body {
+:where(#mdhvxtguyr) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -29013,7 +29029,7 @@ Types of equality and filtering joins
   border-bottom-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_footnotes {
+:where(#mdhvxtguyr) .gt_footnotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -29027,7 +29043,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_footnote {
+:where(#mdhvxtguyr) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -29036,7 +29052,7 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_sourcenotes {
+:where(#mdhvxtguyr) .gt_sourcenotes {
   color: #333333;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-style: none;
@@ -29050,7 +29066,7 @@ Types of equality and filtering joins
   border-right-color: #D3D3D3;
 }
 
-:where(#dgqmdhvxtg) .gt_sourcenote {
+:where(#mdhvxtguyr) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -29058,64 +29074,64 @@ Types of equality and filtering joins
   padding-right: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_left {
+:where(#mdhvxtguyr) .gt_left {
   text-align: left;
 }
 
-:where(#dgqmdhvxtg) .gt_center {
+:where(#mdhvxtguyr) .gt_center {
   text-align: center;
 }
 
-:where(#dgqmdhvxtg) .gt_right {
+:where(#mdhvxtguyr) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#dgqmdhvxtg) .gt_font_normal {
+:where(#mdhvxtguyr) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#dgqmdhvxtg) .gt_font_bold {
+:where(#mdhvxtguyr) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#dgqmdhvxtg) .gt_font_italic {
+:where(#mdhvxtguyr) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#dgqmdhvxtg) .gt_super {
+:where(#mdhvxtguyr) .gt_super {
   font-size: 65%;
 }
 
-:where(#dgqmdhvxtg) .gt_footnote_marks {
+:where(#mdhvxtguyr) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#dgqmdhvxtg) .gt_asterisk {
+:where(#mdhvxtguyr) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#dgqmdhvxtg) .gt_indent_1 {
+:where(#mdhvxtguyr) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#dgqmdhvxtg) .gt_indent_2 {
+:where(#mdhvxtguyr) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#dgqmdhvxtg) .gt_indent_3 {
+:where(#mdhvxtguyr) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#dgqmdhvxtg) .gt_indent_4 {
+:where(#mdhvxtguyr) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#dgqmdhvxtg) .gt_indent_5 {
+:where(#mdhvxtguyr) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -29158,11 +29174,11 @@ Types of equality and filtering joins
 <section id="understanding-joins-2" class="slide level2">
 <h2>Understanding joins</h2>
 <p>If you want to follow along, you can read the toy data as this:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-64_bbb797ea3360b3f5d354e6e494715610">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-65_6d1e047bd0f76767a3774adea7c7c602">
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/3xAwqr1"</span>)</span>
 <span id="cb94-2"><a href="#cb94-2"></a>measurements <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/3Sepl9a"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-65_df3b3d23fbc88272116b416e5fcd76c4">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-66_bf7ca87f9b6891045139759851f70f4a">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>sites</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -29189,7 +29205,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>sites</span>
 <span id="cb99-2"><a href="#cb99-2"></a>measurements</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-66_a11ceaa5f4501b68c608390008610df0">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-67_7839e7a4f7c87c1c1ef21aa34a10b743">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 3 × 3
@@ -29212,7 +29228,7 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>If we try to join <code>sites</code> and <code>measurements</code> together, we get the following error.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-67_a14685206efb83ef8d6aeb1e0d573cad">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-68_c395e1b6fe0142bca730827e51b5c0af">
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">left_join</span>(sites, measurements)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `left_join()`:
@@ -29243,7 +29259,7 @@ Types of equality and filtering joins
 <li><p>The following code says:</p></li>
 </ul>
 <p><span class="text-outline">Use the <code>site_id</code> column in <code>sites</code></span> <span class="text-outline">and the <code>site_name</code> column in <code>measurements</code></span> to join both tables together.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-68_c70bd2d85f6a07e81564f6ae79b87597">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-69_a6177dd538522062be47d0b697890e97">
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a><span class="fu">left_join</span>(sites, measurements, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"site_name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
@@ -29262,7 +29278,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a>sites</span>
 <span id="cb106-2"><a href="#cb106-2"></a>measurements</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-69_cc285147a454e00ca426cb62d03bcb48">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-70_912c1d2e29cd6f286446d6570fc76e0c">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 3 × 3
@@ -29285,7 +29301,7 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>An <code>inner_join()</code> <span class="text-outline">keeps only the observations that match between the tables.</span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-70_e6675eabbb7f2203d20b5db378c1c099">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-71_f76afe32afb97d2a77cf5ef57f6ef675">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">inner_join</span>(sites, measurements, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"site_name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
@@ -29303,7 +29319,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a>sites</span>
 <span id="cb111-2"><a href="#cb111-2"></a>measurements</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-71_97d715202f2e2462629c7e4916779e96">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-72_719e0ef843a2017360327da516788865">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 3 × 3
@@ -29326,7 +29342,7 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>A <code>full_join()</code> <span class="text-outline">keeps all the observations contained in the tables.</span> <code>NA</code> will be used as a fill value when there are no matches.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-72_9bcd8182459d2adcd18b066e7dec91e6">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-73_d4e9d1f5761edea56b6334f0dee67442">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a><span class="fu">full_join</span>(sites, measurements, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"site_name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
@@ -29345,7 +29361,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a>sites</span>
 <span id="cb116-2"><a href="#cb116-2"></a>measurements</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-73_e75221c72874da730993c978d6f6d203">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-74_cb4e808f840c6f281aef898a284533df">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 3 × 3
@@ -29369,7 +29385,7 @@ Types of equality and filtering joins
 </div>
 <p>An <code>anti-join()</code> finds all observations that have no match between tables. The next block of code says:</p>
 <p><span class="text-outline">find all observations in <code>sites</code> that have no match in <code>measurements</code></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-74_69bf947305d22cd5990cf0b519a35ab6">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-75_210f0ffb88aab365f78073dadf3595d6">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">anti_join</span>(sites, measurements, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"site_name"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
@@ -29385,7 +29401,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1"></a>sites</span>
 <span id="cb121-2"><a href="#cb121-2"></a>measurements</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-75_58eac05ad5d59d6bf4656935ad2b85b0">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-76_17347aa522ed3899f293f1508189faa8">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 3 × 3
@@ -29409,7 +29425,7 @@ Types of equality and filtering joins
 </div>
 <p>If we inverse the order of the data frames, we get a different result. The next block of code says:</p>
 <p><span class="text-outline">find all observations in <code>measurements</code> that have no match in <code>sites</code></span></p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-76_826495bbb412e334e964904f051a773e">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-77_ef697ad9aea90f102c11e3919205996b">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a><span class="fu">anti_join</span>(measurements, sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_name"</span> <span class="ot">=</span> <span class="st">"site_id"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 3
@@ -29420,13 +29436,25 @@ Types of equality and filtering joins
 <section id="inequality-and-rolling-joins" class="slide level2">
 <h2>Inequality and rolling joins</h2>
 <p>So far, we have joined tables on the exact match: <strong>both tables need to have columns sharing the same value</strong>.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-77_9663b484c7c871768f11678b8cee890f">
+<figure>
+<center>
+<figcaption>
+Source: <a href="https://www.ifremer.fr/fr">https://www.ifremer.fr/fr</a>
+</figcaption>
+<img src="https://s3-us-west-2.amazonaws.com/media.ooica.net/wp-content/uploads/2019/01/02231816/ctd_20180725_104738_sb.jpg" alt="A CTD hanging on a cable, ready to be deployed in the ocean." style="width:60%">
+</center>
+</figure>
+</section>
+<section id="inequality-and-rolling-joins-1" class="slide level2">
+<h2>Inequality and rolling joins</h2>
+<p>So far, we have joined tables on the exact match: <strong>both tables need to have columns sharing the same value</strong>.</p>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-78_135d5ae5d6e1399688a797d160b28b82">
 
 </div>
 <p>Now, consider these two data frames to merge using the <code>depth_m</code> column.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-78_89d3ba76e36f748ef415d10ca2fc4c3c">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-79_e621e3d3105166b12f696fd56400274c">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>df_temperature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
@@ -29437,7 +29465,7 @@ Types of equality and filtering joins
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-79_37a1bc4bf9031aca68bad8d4197cbfce">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-80_e7a40233ac6068fb677e1d98628eee57">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a>df_o2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
@@ -29460,7 +29488,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a>df_temperature</span>
 <span id="cb130-2"><a href="#cb130-2"></a>df_o2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-80_8b4a8d7f4a8cb2a4a794bd473ffe7540">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-81_c1e5060b56565f98179b156de627ab5a">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 2 × 2
@@ -29482,7 +29510,7 @@ Types of equality and filtering joins
 </div>
 <div class="columns small">
 <div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-81_cd8ee3c869178de07d1381c6441f7ec6">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-82_b707c154249995d2b6cacf8e4d8079c5">
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1"></a><span class="fu">left_join</span>(df_temperature, df_o2, <span class="at">by =</span> <span class="st">"depth_m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
@@ -29493,7 +29521,7 @@ Types of equality and filtering joins
 </div>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-82_68d977018b9dfe8c979ed4d562ba36b2">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-83_09ab095b8a71646953e7cf8093bc250c">
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1"></a><span class="fu">inner_join</span>(df_temperature, df_o2, <span class="at">by =</span> <span class="st">"depth_m"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 3
@@ -29506,7 +29534,7 @@ Types of equality and filtering joins
 <section id="inequality-joins-1" class="slide level2">
 <h2>Inequality joins</h2>
 <p>Because there are no exact matches in the <code>depth_m</code> column, we can use an inequality join with the <code>join_by()</code> function.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-83_ad98b9b0b749da088c70e9a92c2a3240">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-84_1f940ff1b59ac87f4ae0978bbe57bc84">
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1"></a><span class="fu">left_join</span>(df_temperature, df_o2, <span class="at">by =</span> <span class="fu">join_by</span>(depth_m <span class="sc">&lt;=</span> depth_m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
@@ -29528,7 +29556,7 @@ Types of equality and filtering joins
 <div>
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1"></a>df_temperature</span>
 <span id="cb139-2"><a href="#cb139-2"></a>df_o2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-84_a4a4162210887bfcae6168227fe1e409">
+<div class="cell quarto-layout-panel" data-hash="index_cache/revealjs/unnamed-chunk-85_454a77fd361406c033f4ed67770930a9">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code># A tibble: 2 × 2
@@ -29549,7 +29577,7 @@ Types of equality and filtering joins
 </div>
 </div>
 <p>Note that there are two rows in <code>df_o2</code> that match the specified condition. This is why we end up with three rows after joining.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-85_0d71e335a1ce1382d3ee9c5f815893a6">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-86_8cb997564efa711367558111fc75f77e">
 <div class="sourceCode cell-code" id="cb142"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1"></a><span class="fu">left_join</span>(df_temperature, df_o2, <span class="at">by =</span> <span class="fu">join_by</span>(depth_m <span class="sc">&lt;=</span> depth_m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
@@ -29564,7 +29592,7 @@ Types of equality and filtering joins
 <section id="rolling-joins" class="slide level2">
 <h2>Rolling joins</h2>
 <p>Instead of using an inequality join, we can try a rolling join. This type of join limits the results returned from an inequality join condition and uses the <code>closest()</code> function.</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-86_da8c30e8541773397c2f1e0fa411a0b1">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-87_0ff2fffa6e37693268e9833ca26e25c6">
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1"></a><span class="fu">left_join</span>(df_temperature, df_o2, <span class="at">by =</span> <span class="fu">join_by</span>(<span class="fu">closest</span>(depth_m <span class="sc">&lt;=</span> depth_m)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
@@ -29629,7 +29657,7 @@ Types of equality and filtering joins
 </div>
 <div class="columns">
 <div class="column" style="width:40%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-88_557a6c609d588e036b95722cb4763715">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-89_409c02ff3857c98948d60bb95fefaa81">
 <div class="cell-output cell-output-stdout">
 <pre><code>data/sql_murder_mystery/
 ├── crime_scene_report.csv
@@ -29661,7 +29689,7 @@ Types of equality and filtering joins
 <section id="sql-murder-mystery-5" class="slide level2">
 <h2>SQL Murder Mystery</h2>
 <p>Entity-relationship (ER) diagram of the SQL murder tables</p>
-<div class="cell" data-layout-align="center" data-fig.format="png" data-fig.asp="0.5" data-hash="index_cache/revealjs/unnamed-chunk-89_fbb0e25a07b8f8df7c2fbe875ad4643f">
+<div class="cell" data-layout-align="center" data-fig.format="png" data-fig.asp="0.5" data-hash="index_cache/revealjs/unnamed-chunk-90_e18417dc2ce8e2e0db0c745b486580c5">
 
 </div>
 <figure>
