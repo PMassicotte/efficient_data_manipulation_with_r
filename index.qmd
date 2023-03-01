@@ -201,11 +201,10 @@ March 15<sup>th</sup> 2023
 
   - Understand the basics of data manipulation techniques using R.
 
-  - Learn how to clean and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
-
-  - Develop the ability to manipulate and analyze datasets: **grouping**, **filtering** and **summarizing**.
-
-  - Acquire knowledge on how to **join, merge and aggregate data** from multiple sources to produce meaningful insights.
+  - Learn how to manipulate and transform raw data into a format suitable for analysis using `dplyr` and `tidyr`.
+    - **filtering**
+    - **grouping**, **summarizing** / **aggregating**
+    - **joining** data from multiple sources
 
 - [**Part 2 (~ 1 hour)**]{style="font-size:1.25em"}
 
@@ -272,7 +271,7 @@ df |>
 
 - You should know how to:
   - Install R packages
-  - Use R Studio or another of your choice
+  - Use R Studio or another IDE of your choice
   - Create R scripts
   - Import data
   - Work with data frame
@@ -326,12 +325,11 @@ If you do not have R/R Studio installed on your laptop, I have created a pre-con
 
 ## Data frames
 
-- A data frame can be seen as an Excel tabular sheet: **Lines are observations** and **columns are variables**.
+A data frame can be seen as an Excel tabular sheet: **Lines are observations** and **columns are variables**.
 
  <figure>
   <center>
-  <img src="https://rstudio-education.github.io/tidyverse-cookbook/images/tidy-data.png" alt="Trulli" style="width:50%">
-  <figcaption>Source: [Tidyverse cookbook](https://rstudio-education.github.io/tidyverse-cookbook/)</figcaption>
+  <img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:450px">
   </center>
 </figure> 
 
@@ -396,7 +394,7 @@ read_*([\"file\"]{.fragment .highlight-orange}, [\<options\>]{.fragment .highlig
 
 Examples of [\<options\>]{.background-pastel .code} can be:
 
-- Single character used to separate fields within a record: Ex.: `","`, `";"`, `"\t"`.
+- A single character used to separate fields within a record: Ex.: `","`, `";"`, `"\t"`.
 - The names of the columns to read.
 - The number of rows to read.
 
@@ -409,7 +407,7 @@ To read Excel files, we can use `read_excel()` from the `readxl` package.
 
 ```{r}
 #| eval: false
-#| code-line-numbers: 1-2|4-5|7-8
+#| code-line-numbers: 1-2|4-5|7-8|10-11
 
 # Load the readxl package
 library(readxl)
@@ -419,6 +417,9 @@ mydata <- read_excel("/path/to/myfile.xls")
 
 # Read the third sheet in a file
 mydata <- read_excel("/path/to/myfile.xlsx", sheet = 3)
+
+# Read the sheet named "data"
+mydata <- read_excel("/path/to/myfile.xlsx", sheet = "data")
 ```
 :::
 
@@ -437,7 +438,7 @@ To read CSV files, we can use `read_csv()` from the `readr` package.
 
 ```{r}
 #| eval: false
-#| code-line-numbers: 1-2|4-5|7-8
+#| code-line-numbers: 1-2|4-5|7-8|10-11
  
 # Load the readr package
 library(readr)
@@ -447,6 +448,9 @@ mydata <- read_csv("/path/to/myfile.csv")
 
 # If the column delimiter is ";"
 mydata <- read_csv2("/path/to/myfile.csv")
+
+# Read only the first 100 rows
+mydata <- read_csv("/path/to/myfile.csv", n_max = 100)
 ```
 :::
 
@@ -456,13 +460,53 @@ mydata <- read_csv2("/path/to/myfile.csv")
 
 ::::
 
-:::: {.fragment}
+## Reading CSV files
 
 ::: {.callout-important}
 Note that the base R function to read a CSV file is `read.csv()`. Do not confuse with the `read_csv()` function from `readr`.
 :::
 
-::::
+```{r}
+#| label: readr-vs-base-r
+#| echo: false
+#| fig-pos: center
+#| fig-width: 12
+#| fig-height: 5
+library(pins)
+file <- pin("http://eforexcel.com/wp/wp-content/uploads/2017/07/500000-Sales-Records.zip")
+
+bm <- microbenchmark::microbenchmark(
+  "read.csv" = read.csv(file),
+  "readr::read_csv" = readr::read_csv(file),
+  "data.table::fread" = data.table::fread(file),
+  times = 1,
+  unit = "seconds"
+)
+
+bm |>
+  summary() |>
+  as_tibble() |>
+  mutate(expr = fct_reorder(expr, mean)) |>
+  ggplot(aes(x = mean, y = expr, fill = expr)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 6)) +
+  ggthemes::scale_fill_tableau() +
+  labs(
+    title = str_wrap("Benchmarks of various R functions to read a CSV file", 70),
+    subtitle = "Time to read a CSV file with 500 000 rows and 14 columns (7 000 000 entries).",
+    y = NULL,
+    x = "Time (seconds)"
+  ) +
+  theme(
+    plot.title = element_text(size = 24),
+    plot.subtitle = element_text(size = 16, color = "gray40"),
+    plot.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3"),
+    axis.text = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 18, face = "bold"),
+    legend.position = "none",
+    panel.background = element_rect(fill = "#FDF6E3", color = "#FDF6E3")
+  )
+```
 
 ## Reading files online
 
@@ -524,6 +568,8 @@ write_*([\<dataframe\>]{.fragment .highlight-orange}, [\"file\"]{.fragment .high
 
 :::
 :::
+
+. . .
 
 ```{r}
 #| eval: false
@@ -606,14 +652,14 @@ There are two main characteristics of good data manipulation:
 
 ## The tidyverse
 
-The tidyverse provides a set of packages which provides flexible tools for data manipulation.
+The tidyverse is a **meta package** that provides a collection of tools (across different packages) that are designed for data science.
 
 <center>
 <img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
 </center>
 
 <center>
-<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/>
+<img src="https://dplyr.tidyverse.org/logo.png" width="200"/> <img src="https://tidyr.tidyverse.org/logo.png" width="200"/> <img src="https://readr.tidyverse.org/logo.png" width="200"/> <img src="https://readxl.tidyverse.org/logo.png" width="200"/> <img src="https://ggplot2.tidyverse.org/logo.png" width="200"/><img src="https://stringr.tidyverse.org/logo.png" width="200"/><img src="https://lubridate.tidyverse.org/logo.png" width="200"/><img src="https://purrr.tidyverse.org/logo.png" width="200"/><img src="https://forcats.tidyverse.org/logo.png" width="200"/>
 </center>
 
 ## The tidyverse
@@ -632,13 +678,11 @@ install.packages("tidyverse")
 library(tidyverse)
 ```
 
-You can refer to the printed **cheat sheet** for an overview of the package's functions.
+# Data manipulation with {dplyr} and {tidyr} {background-color="#2C404A"}
 
-# Data manipulation with {dplyr} {background-color="#2C404A"}
+## Tidyverse
 
-## dplyr
-
-A lot of `dplyr` / `tidyverse` functions have the same scheme: **the first argument is a data frame**:
+A lot of `tidyverse` functions have the same scheme: **the first argument is a data frame**:
 
 ::: {.r-fit-text}
 
@@ -651,16 +695,17 @@ function([\<dataframe\>]{.fragment .highlight-orange}, [\<expression\>]{.fragmen
 
 . . .
 
-| **Function**       | **Definition**                                                                                                       |
-|------------------------|-----------------------------------------------|
-| `filter(df, ...)`    | Select a subset of the rows of a data frame.                                                                         |
-| `arrange(df, ...)`   | Reorder rows of a data frame.                                                                                        |
-| `select(df, ...)`    | Select columns of a data frame.                                                                                      |
-| `mutate(df, ...)`    | Add or modify columns in a data frame.                                                                                     |
+| **Function**         | **Definition**                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `filter(df, ...)`    | Select a subset of the rows of a data frame.                                                                           |
+| `arrange(df, ...)`   | Reorder rows of a data frame.                                                                                          |
+| `select(df, ...)`    | Select columns of a data frame.                                                                                        |
+| `mutate(df, ...)`    | Add or modify columns in a data frame.                                                                                 |
 | `summarise(df, ...)` | Summarize a data frame into a single row. This function is very helpful in combination with the `group_by()` function. |
-| `group_by(df, ...)`  | Group a data frame based on the specified columns.                                                                   |
+| `group_by(df, ...)`  | Group a data frame based on the specified columns.                                                                     |
+| `*_join(df, ...)`    | Join/merge two data frames.                                                                                            |
 
-: Useful functions in `dplyr` {tbl-colwidths="[25,75]"} 
+: Useful functions in `dplyr` / `tidyr` {tbl-colwidths="[25,75]"} 
 
 ## The `nycflights13` datasets
 
@@ -834,7 +879,7 @@ filter(flights, carrier %in% c("MQ", "EV"))
 
 ## The `filter()` function
 
-Your turn: write code that uses the `flights` table and return all the flights with delayed departures between 100 and 200 minutes from the "**FL**" carrier.
+**Your turn:** write code that uses the `flights` table and return all the flights with delayed departures between 100 and 200 minutes from the "**FL**" carrier.
 
 . . .
 
@@ -1272,13 +1317,17 @@ titanic |>
 
 ## Piping operations
 
-We have seen that to summarise grouped data, we need to perform two operations:
+- We have seen that to summarise grouped data, we need to perform two operations.
+- Here we want to calculate the average departure delay for each carrier.
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "1-7|1|3-7"
+#| code-line-numbers: "1-9|1-2|4-9"
+
+# Group the data
 flights_grouped <- group_by(flights, carrier)
 
+# Do the calculation
 res <- summarise(
   flights_grouped,
   average_departure_delay = mean(dep_delay, na.rm = TRUE),
@@ -1286,13 +1335,13 @@ res <- summarise(
 )
 ```
 
-The thing is that we never directly use `flights_grouped`; it is only used as an **intermediate** object.
+The thing is that we never directly use `flights_grouped`; it is **only used as an intermediate object**.
 
 ## Piping operations
 
 - With R 4.1.0+, we can use the pipe operator ([**|>**]{style="font-family:ubuntu;"}) to chain operations.
 
-- Basically, ([**|>**]{style="font-family:ubuntu;"}) takes the left-hand side (**lhs**) object and passes it as the first argument in the right-hand side (**rhs**) function.
+- Basically, ([**|>**]{style="font-family:ubuntu;"}) takes the **left-hand side (lhs)** object and passes it as the first argument in the **right-hand side (rhs)** function.
 
 :::: {.columns .fragment}
 
@@ -1594,6 +1643,17 @@ If we inverse the order of the data frames, we get a different result. The next 
 ```{r}
 anti_join(measurements, sites, by = c("site_name" = "site_id"))
 ```
+
+## Inequality and rolling joins
+
+So far, we have joined tables on the exact match: **both tables need to have columns sharing the same value**.
+
+<figure>
+<center>
+<figcaption>Source: [https://www.ifremer.fr/fr](https://www.ifremer.fr/fr)</figcaption>
+<img src="https://s3-us-west-2.amazonaws.com/media.ooica.net/wp-content/uploads/2019/01/02231816/ctd_20180725_104738_sb.jpg" alt="A CTD hanging on a cable, ready to be deployed in the ocean." style="width:60%"/>
+</center>
+</figure>
 
 ## Inequality and rolling joins
 
