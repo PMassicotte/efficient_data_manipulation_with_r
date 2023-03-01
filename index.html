@@ -9,7 +9,7 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.1.251">
+  <meta name="generator" content="quarto-1.2.335">
 
   <meta name="author" content="Philippe Massicotte">
   <meta name="dcterms.date" content="2023-03-02">
@@ -68,7 +68,7 @@
     code span { color: #545454; } /* Normal */
     code span.al { color: #7928a1; } /* Alert */
     code span.an { color: #696969; } /* Annotation */
-    code span.at { color: #aa5d00; } /* Attribute */
+    code span.at { color: #a55a00; } /* Attribute */
     code span.bn { color: #7928a1; } /* BaseN */
     code span.bu { } /* BuiltIn */
     code span.cf { color: #d91e18; } /* ControlFlow */
@@ -81,18 +81,18 @@
     code span.dv { color: #7928a1; } /* DecVal */
     code span.er { color: #7928a1; } /* Error */
     code span.ex { } /* Extension */
-    code span.fl { color: #aa5d00; } /* Float */
+    code span.fl { color: #a55a00; } /* Float */
     code span.fu { color: #06287e; } /* Function */
     code span.im { } /* Import */
     code span.in { color: #696969; } /* Information */
     code span.kw { color: #d91e18; } /* Keyword */
-    code span.op { color: #007faa; } /* Operator */
+    code span.op { color: #00769e; } /* Operator */
     code span.ot { color: #d91e18; } /* Other */
     code span.pp { color: #7928a1; } /* Preprocessor */
-    code span.sc { color: #007faa; } /* SpecialChar */
+    code span.sc { color: #00769e; } /* SpecialChar */
     code span.ss { color: #008000; } /* SpecialString */
     code span.st { color: #008000; } /* String */
-    code span.va { color: #aa5d00; } /* Variable */
+    code span.va { color: #a55a00; } /* Variable */
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
@@ -392,13 +392,22 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Efficient data manipulation with R</h1>
-  <p class="author">Philippe Massicotte</p>
-  <p class="institute">Laval University</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Philippe Massicotte 
+</div>
+        <p class="quarto-title-affiliation">
+            Laval University
+          </p>
+    </div>
+</div>
+
   <p class="date">March 2, 2023</p>
 </section>
-
 <section id="who-am-i" class="slide level2">
 <h2>Who am I</h2>
 <div class="columns">
@@ -596,10 +605,9 @@ Artwork by Allison Horst
 </section>
 <section id="data-frames-2" class="slide level2">
 <h2>Data frames</h2>
-<p>A data frame can be seen as an Excel tabular sheet: <strong>Lines are observations</strong> and <strong>columns are variables</strong>.</p>
 <figure>
 <center>
-<img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:450px">
+<img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:600px">
 </center>
 </figure>
 <div class="callout callout-note callout-captioned callout-style-default">
@@ -674,8 +682,11 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <section id="reading-files" class="slide level2">
 <h2>Reading files</h2>
 <ul>
-<li><p>Why bother about <strong>data frame</strong>? Most of the time, this is the data structure that will be created when importing data in R.</p></li>
-<li><p>There are many functions to import data in R.</p></li>
+<li>Why bother about <strong>data frame</strong>?
+<ul>
+<li>Most of the time, this is the data structure that will be created when importing data in R.</li>
+</ul></li>
+<li>There are many functions to import data in R.</li>
 </ul>
 <table>
 <thead>
@@ -855,9 +866,10 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <span id="cb7-4"><a href="#cb7-4"></a><span class="fu">write_delim</span>(df, <span class="st">"/path/to/myfile.tab"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For example, you could export the <code>mtcars</code> data frame in tab-delimited and comma-delimited files on your desktop:</p>
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_acdd2899b73d7fa4d1f3d47629cd8b04">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">write_delim</span>(mtcars, <span class="st">"~/Desktop/mtcars.tab"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">write_csv</span>(mtcars, <span class="st">"~/Desktop/mtcars.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_b502fa1a0ee2d0fd24e4d33ba0a4f246">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">write_delim</span>(mtcars, <span class="st">"~/Desktop/mtcars.txt"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">write_delim</span>(mtcars, <span class="st">"~/Desktop/mtcars.txt"</span>, <span class="at">delim =</span> <span class="st">"---"</span>) <span class="co"># Don't do that!</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">write_csv</span>(mtcars, <span class="st">"~/Desktop/mtcars.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -25915,7 +25927,7 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 </section>
 <section id="data-manipulation" class="slide level2">
 <h2>Data manipulation</h2>
-<p>There are two main characteristics of good data manipulation:</p>
+<p>There are at least two characteristics that a good data manipulation software should have:</p>
 <div class="fragment">
 <ol type="1">
 <li><strong>speed</strong>: results are returned in a reasonable time</li>
@@ -25953,6 +25965,9 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Load all the packages included in tidyverse</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400">
+</center>
 </section></section>
 <section>
 <section id="data-manipulation-with-dplyr-and-tidyr" class="title-slide slide level1 center" data-background-color="#2C404A">
@@ -27403,7 +27418,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <div class="fragment">
 <div class="r-fit-text">
 <div class="code">
-<p>arrange(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;variables&gt;</span>)</p>
+<p>arrange(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;column(s)&gt;</span>)</p>
 </div>
 </div>
 </div>
@@ -27495,7 +27510,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <div class="fragment">
 <div class="r-fit-text">
 <div class="code">
-<p>select(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;variables&gt;</span>)</p>
+<p>select(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;column(s)&gt;</span>)</p>
 </div>
 </div>
 </div>
@@ -29941,12 +29956,15 @@ Source: <a href="https://www.ifremer.fr/fr">https://www.ifremer.fr/fr</a>
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          // dispatch for htmlwidgets
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -29957,13 +29975,6 @@ Source: <a href="https://www.ifremer.fr/fr">https://www.ifremer.fr/fr</a>
               window.jQuery(currentSlide).trigger("shown");
             }
           }
-        }
-
-        // hookup for reveal
-        if (window.Reveal) {
-          window.Reveal.addEventListener("slidechanged", function(event) {
-            fireSlideChanged(event.previousSlide, event.currentSlide);
-          });
         }
 
         // hookup for slidy
@@ -30015,7 +30026,24 @@ Source: <a href="https://www.ifremer.fr/fr">https://www.ifremer.fr/fr</a>
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
         setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -30053,24 +30081,42 @@ Source: <a href="https://www.ifremer.fr/fr">https://www.ifremer.fr/fr</a>
           return note.innerHTML;
         });
       }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-        tippyHover(ref, function() {
-          var popup = window.document.createElement('div');
-          cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
           });
-          return popup.innerHTML;
-        });
+        }
       }
     });
     </script>
