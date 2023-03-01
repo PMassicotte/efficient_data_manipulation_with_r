@@ -325,11 +325,9 @@ If you do not have R/R Studio installed on your laptop, I have created a pre-con
 
 ## Data frames
 
-A data frame can be seen as an Excel tabular sheet: **Lines are observations** and **columns are variables**.
-
  <figure>
   <center>
-  <img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:450px">
+  <img src="images/data_frame.png" alt="A data frame can be seen as an Excel tabular sheet: Lines are observations and columns are variables." style="height:600px">
   </center>
 </figure> 
 
@@ -359,7 +357,8 @@ mtcars
 
 ## Reading files
 
-- Why bother about **data frame**? Most of the time, this is the data structure that will be created when importing data in R.
+- Why bother about **data frame**? 
+  - Most of the time, this is the data structure that will be created when importing data in R.
 
 - There are many functions to import data in R.
 
@@ -584,7 +583,8 @@ For example, you could export the `mtcars` data frame in  tab-delimited and comm
 
 ```{r}
 #| eval: false
-write_delim(mtcars, "~/Desktop/mtcars.tab")
+write_delim(mtcars, "~/Desktop/mtcars.txt")
+write_delim(mtcars, "~/Desktop/mtcars.txt", delim = "---") # Don't do that!
 write_csv(mtcars, "~/Desktop/mtcars.csv")
 ```
 
@@ -636,7 +636,7 @@ read_csv("https://bit.ly/3SpfWMg")
 
 ## Data manipulation
 
-There are two main characteristics of good data manipulation:
+There are at least two characteristics that a good data manipulation software should have:
 
 . . .
 
@@ -677,6 +677,9 @@ install.packages("tidyverse")
 # Load all the packages included in tidyverse
 library(tidyverse)
 ```
+<center>
+<img src="https://tidyverse.tidyverse.org/logo.png" width="400"/>
+</center>
 
 # Data manipulation with {dplyr} and {tidyr} {background-color="#2C404A"}
 
@@ -905,7 +908,7 @@ filter(flights, dep_delay >= 100 & dep_delay <= 200 & carrier == "FL")
 
 ::: {.code}
 
-arrange([\<dataframe\>]{.fragment .highlight-orange}, [\<variables\>]{.fragment .highlight-pastel})
+arrange([\<dataframe\>]{.fragment .highlight-orange}, [\<column(s)\>]{.fragment .highlight-pastel})
 
 :::
 :::
@@ -949,7 +952,7 @@ arrange(flights, month, desc(dep_time))
 
 ::: {.code}
 
-select([\<dataframe\>]{.fragment .highlight-orange}, [\<variables\>]{.fragment .highlight-pastel})
+select([\<dataframe\>]{.fragment .highlight-orange}, [\<column(s)\>]{.fragment .highlight-pastel})
 
 :::
 :::
