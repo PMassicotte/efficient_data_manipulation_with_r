@@ -483,7 +483,7 @@ Artwork by Allison Horst
 </figure>
 </div><div class="column" style="width:30%;">
 <blockquote>
-<p><span style="font-size:0.9em;"><strong>It is often said that 80% of data analysis is spent on cleaning and preparing data.</strong> And it’s not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.</span></p>
+<p><span style="font-size:0.9em;">Data preprocessing is one of the main steps in the data science project life cycle which involves <strong>converting raw data into a refined form amenable to data analysis</strong>. <a href="https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7">Source: towards data science</a></span></p>
 </blockquote>
 </div>
 </div>
@@ -502,7 +502,7 @@ Artwork by Allison Horst
 </figure>
 </div><div class="column" style="width:30%;">
 <blockquote>
-<p><span style="font-size:0.9em;">Data preprocessing is one of the main steps in the data science project life cycle which involves <strong>converting raw data into a refined form amenable to data analysis</strong>. <a href="https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7">Source: towards data science</a></span></p>
+<p><span style="font-size:0.9em;"><strong>It is often said that 80% of data analysis is spent on cleaning and preparing data.</strong> And it’s not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.</span></p>
 </blockquote>
 </div>
 </div>
@@ -27734,7 +27734,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>One option, is to use the <code>across(cols, function_to_apply)</code> function.</p></li>
 <li><p>The following code says:</p></li>
 </ul>
-<p><span class="text-outline">apply the <code>mean()</code> function to all the columns between <code>temp</code> and <code>pressure</code></span></p>
+<p><span class="text-outline">apply the <code>round()</code> function to all the columns between <code>temp</code> and <code>pressure</code></span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-41_7837e97e52043fa526c86979463698b9">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">mutate</span>(weather, <span class="fu">across</span>(year<span class="sc">:</span>pressure, round), <span class="at">.keep =</span> <span class="st">"used"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -27762,7 +27762,7 @@ $ time_hour  &lt;dttm&gt; 2013-01-01 01:00:00, 2013-01-01 02:00:00, 2013-01-01 0
 <li><p>Another option is to use a combination of <code>across()</code> and <code>where()</code> functions.</p></li>
 <li><p>The following code says:</p></li>
 </ul>
-<p><span class="text-outline">apply the <code>mean()</code> function to <strong>all the numerical columns</strong></span></p>
+<p><span class="text-outline">apply the <code>round()</code> function to <strong>all the numerical columns</strong></span></p>
 <div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-42_74980c46dae1580c1820eaf46aa7d945">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">mutate</span>(weather, <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round), <span class="at">.keep =</span> <span class="st">"used"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -28269,7 +28269,7 @@ $ survived    &lt;dbl&gt; 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 
 <div class="fragment">
 <div class="r-fit-text">
 <div class="code">
-<p>summarise(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;dataframe&gt;</span>)</p>
+<p>*_join(<span class="fragment highlight-orange">&lt;dataframe&gt;</span>, <span class="fragment highlight-pastel">&lt;dataframe&gt;</span>)</p>
 </div>
 </div>
 </div>
