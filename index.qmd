@@ -164,11 +164,12 @@ March 15<sup>th</sup> 2023
 
 ::: {.column width='30%'}
 
-> [**It is often said that 80% of data analysis is spent on cleaning and preparing data.** And it's not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.]{style="font-size:0.9em;"}
+> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: towards data science](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
 
 :::
 
 ::::
+
 
 ## Context
 
@@ -187,7 +188,7 @@ March 15<sup>th</sup> 2023
 
 ::: {.column width='30%'}
 
-> [Data preprocessing is one of the main steps in the data science project life cycle which involves **converting raw data into a refined form amenable to data analysis**. [Source: towards data science](https://towardsdatascience.com/three-critical-elements-of-data-preprocessing-part-2-2078110ae8e7)]{style="font-size:0.9em;"}
+> [**It is often said that 80% of data analysis is spent on cleaning and preparing data.** And it's not just a first step, but it must be repeated many over the course of analysis as new problems come to light or new data is collected.]{style="font-size:0.9em;"}
 
 :::
 
@@ -1082,7 +1083,7 @@ mutate(
 
 - The following code says: 
 
-[apply the `mean()` function to all the columns between `temp` and `pressure`]{.text-outline}
+[apply the `round()` function to all the columns between `temp` and `pressure`]{.text-outline}
 
 ```{r}
 mutate(weather, across(year:pressure, round), .keep = "used")
@@ -1094,7 +1095,7 @@ mutate(weather, across(year:pressure, round), .keep = "used")
 
 - The following code says: 
 
-[apply the `mean()` function to **all the numerical columns**]{.text-outline}
+[apply the `round()` function to **all the numerical columns**]{.text-outline}
 
 ```{r}
 mutate(weather, across(where(is.numeric), round), .keep = "used")
@@ -1442,7 +1443,7 @@ You have to use the placeholder with named parameters.
 
 ::: {.code}
 
-summarise([\<dataframe\>]{.fragment .highlight-orange}, [\<dataframe\>]{.fragment .highlight-pastel})
+*_join([\<dataframe\>]{.fragment .highlight-orange}, [\<dataframe\>]{.fragment .highlight-pastel})
 
 :::
 :::
